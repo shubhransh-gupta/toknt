@@ -276,6 +276,8 @@ cd toknt && npm install && npm test && npm run build
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) · [ROADMAP.md](ROADMAP.md) · [LAUNCH.md](LAUNCH.md) (share with your network)
 
+**`main` is protected** — PRs required, CI must pass. See [.github/BRANCH_PROTECTION.md](.github/BRANCH_PROTECTION.md).
+
 ---
 
 ## 📢 Share the loot
