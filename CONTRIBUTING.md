@@ -14,15 +14,15 @@ npm run build
 
 ## Pick something to work on
 
-| Difficulty | Task | Package |
-|------------|------|---------|
-| 🟢 Easy | Add Jest test output parser | `packages/optimizer` |
-| 🟢 Easy | Add pytest output parser | `packages/optimizer` |
-| 🟢 Easy | Improve README / docs | `docs/` |
-| 🟡 Medium | File watcher cache invalidation | `packages/core` |
-| 🟡 Medium | Observatory dark mode polish | `apps/observatory` |
-| 🟡 Medium | Windsurf / Cline adapter | `integrations/` |
-| 🔴 Hard | Real Cursor hook integration test | `integrations/cursor` |
+| Difficulty | Task | Issue |
+|------------|------|-------|
+| 🟢 Easy | Add Go test output parser | [#12](https://github.com/shubhransh-gupta/toknt/issues/12) |
+| 🟢 Easy | Add Rust cargo test parser | [#13](https://github.com/shubhransh-gupta/toknt/issues/13) |
+| 🟢 Easy | Add Java/Maven test parser | [#14](https://github.com/shubhransh-gupta/toknt/issues/14) |
+| 🟡 Medium | MCP server (recall + stats) | [#15](https://github.com/shubhransh-gupta/toknt/issues/15) |
+| 🟡 Medium | VS Code extension | [#16](https://github.com/shubhransh-gupta/toknt/issues/16) |
+| 🟡 Medium | Observatory session import | [#17](https://github.com/shubhransh-gupta/toknt/issues/17) |
+| 🔴 Hard | Real agent session benchmarks | [#18](https://github.com/shubhransh-gupta/toknt/issues/18) |
 
 Full list: [ROADMAP.md](./ROADMAP.md) · [open issues](https://github.com/shubhransh-gupta/toknt/issues)
 
