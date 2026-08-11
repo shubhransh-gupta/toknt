@@ -20,6 +20,65 @@ export const ACCURACY_2000 = {
   },
 };
 
+export const ACCURACY_2000_CATEGORIES = [
+  {
+    id: 'duplicate_file',
+    count: 350,
+    pass: 350,
+    label: 'Duplicate file reads',
+    outcome: '2–3 reads of same path → compressed with recall',
+  },
+  {
+    id: 'terminal_output',
+    count: 350,
+    pass: 350,
+    label: 'Terminal output',
+    outcome: 'Jest/Vitest/pytest/generic — compressed when mode thresholds met',
+  },
+  {
+    id: 'directory_listing',
+    count: 350,
+    pass: 350,
+    label: 'Directory listings',
+    outcome: 'Large listings compressed in balanced/aggressive, not in safe',
+  },
+  {
+    id: 'duplicate_tool_output',
+    count: 200,
+    pass: 200,
+    label: 'Duplicate tool output',
+    outcome: 'Identical grep/JSON results deduped with recall',
+  },
+  {
+    id: 'critical_passthrough',
+    count: 250,
+    pass: 250,
+    label: 'Critical content',
+    outcome: 'User requests, diffs, errors, patches — never compressed',
+  },
+  {
+    id: 'secret_passthrough',
+    count: 150,
+    pass: 150,
+    label: 'Secret detection',
+    outcome: 'API keys, tokens, passwords — never compressed',
+  },
+  {
+    id: 'file_invalidation',
+    count: 200,
+    pass: 200,
+    label: 'File change invalidation',
+    outcome: 'Same file twice OK; changed content not treated as duplicate',
+  },
+  {
+    id: 'token_estimator',
+    count: 150,
+    pass: 150,
+    label: 'Token estimator',
+    outcome: 'Heuristic counts within 50% of tiktoken on sample texts',
+  },
+] as const;
+
 export const MEASURED_AUDIT = {
   source: 'Local accuracy audit (Aug 2026)',
   method: 'tiktoken cl100k_base vs Tokn\'t engine',

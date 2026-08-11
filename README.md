@@ -144,6 +144,19 @@ We measured Tokn't across **2,000 automated test cases** and validated token cou
 | **Token reduction % vs tiktoken** | **~4pp avg delta** |
 | **Absolute token counts** | **~27.5% avg underestimate** (not for billing) |
 
+### Outcomes by category (2,000 cases)
+
+| Category | Cases | Result | What was tested |
+|----------|------:|--------|-----------------|
+| Duplicate file reads | 350 | 350/350 ✓ | Same path read 2–3× → compressed with recall |
+| Terminal output | 350 | 350/350 ✓ | Jest/Vitest/pytest/generic — compressed when mode thresholds met |
+| Directory listings | 350 | 350/350 ✓ | Large listings compressed in balanced/aggressive, not safe |
+| Duplicate tool output | 200 | 200/200 ✓ | Identical grep/JSON results deduped with recall |
+| Critical content | 250 | 250/250 ✓ | User requests, diffs, errors, patches — never compressed |
+| Secret detection | 150 | 150/150 ✓ | API keys, tokens, passwords — never compressed |
+| File change invalidation | 200 | 200/200 ✓ | Same file twice OK; changed content not treated as duplicate |
+| Token estimator | 150 | 150/150 ✓ | Heuristic counts within 50% of tiktoken on sample texts |
+
 ### How much do you actually save?
 
 | Mode | What it does | Measured reduction (tiktoken) |

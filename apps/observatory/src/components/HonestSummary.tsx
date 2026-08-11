@@ -1,5 +1,6 @@
 import {
   ACCURACY_2000,
+  ACCURACY_2000_CATEGORIES,
   MEASURED_BY_MODE,
   MEASURED_BY_STRATEGY,
   MEASURED_ESTIMATOR,
@@ -44,6 +45,34 @@ export function HonestSummary() {
             <p style={{ fontSize: 11, color: 'var(--text-muted)', marginBottom: 4 }}>Est. count error</p>
             <p className="mono" style={{ fontSize: 22 }}>~{ACCURACY_2000.avgEstimatorErrorPct}%</p>
           </div>
+        </div>
+
+        <h3 style={{ fontSize: 13, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 12 }}>
+          2,000 test case outcomes
+        </h3>
+        <div style={{ overflowX: 'auto', marginBottom: 24 }}>
+          <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
+            <thead>
+              <tr style={{ borderBottom: '1px solid var(--border)', textAlign: 'left' }}>
+                <th style={{ padding: '10px 12px 10px 0', color: 'var(--text-muted)', fontWeight: 500 }}>Category</th>
+                <th style={{ padding: '10px 12px', color: 'var(--text-muted)', fontWeight: 500 }}>Cases</th>
+                <th style={{ padding: '10px 12px', color: 'var(--text-muted)', fontWeight: 500 }}>Result</th>
+                <th style={{ padding: '10px 0 10px 12px', color: 'var(--text-muted)', fontWeight: 500 }}>What passed</th>
+              </tr>
+            </thead>
+            <tbody>
+              {ACCURACY_2000_CATEGORIES.map((row) => (
+                <tr key={row.id} style={{ borderBottom: '1px solid var(--border)' }}>
+                  <td style={{ padding: '10px 12px 10px 0', color: 'var(--text-secondary)' }}>{row.label}</td>
+                  <td className="mono" style={{ padding: '10px 12px' }}>{row.count}</td>
+                  <td className="mono" style={{ padding: '10px 12px', color: 'var(--accent)' }}>
+                    {row.pass}/{row.count} ✓
+                  </td>
+                  <td style={{ padding: '10px 0 10px 12px', color: 'var(--text-muted)' }}>{row.outcome}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
 
         <p style={{ color: 'var(--text-secondary)', fontSize: 14, marginBottom: 24, lineHeight: 1.7 }}>
