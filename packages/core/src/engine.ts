@@ -217,9 +217,8 @@ Reference: ${uri}`;
     return entry.content;
   }
 
-  invalidateFile(path: string, newContent: string): void {
-    const hash = this.hashContent(newContent);
-    this.fileHashes.set(path, hash);
+  invalidateFile(path: string): void {
+    this.fileHashes.delete(path);
   }
 
   private hashContent(content: string): string {
