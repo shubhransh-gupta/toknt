@@ -67,7 +67,17 @@ npm test -- --watch   # Watch mode
 - Update docs when user-facing behavior changes
 - CI must pass
 
-## Community
+## npm publish
+
+Add `NPM_TOKEN` to GitHub repo secrets, then create a release or run the **Release to npm** workflow.
+
+```bash
+npm login
+bash scripts/publish.sh
+```
+
+Install globally after publish: `npx toknt install`
+
 
 - [Discussions](https://github.com/shubhransh-gupta/toknt/discussions) — questions & ideas
 - [LAUNCH.md](./LAUNCH.md) — help spread the word

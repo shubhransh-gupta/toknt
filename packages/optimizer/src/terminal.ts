@@ -1,4 +1,8 @@
 import { createHash } from 'node:crypto';
+import { summarizeByRunner } from './parsers.js';
+
+export type { TestRunner } from './parsers.js';
+export { detectTestRunner, parseJestOutput, parseVitestOutput, parsePytestOutput } from './parsers.js';
 
 export interface TerminalSummary {
   totalTests: number;
@@ -16,30 +20,7 @@ export function stripAnsi(text: string): string {
 }
 
 export function summarizeTerminalOutput(content: string): TerminalSummary {
-  const clean = stripAnsi(content);
-  const lines = clean.split('\n');
-  const failures: string[] = [];
-
-  const passMatch = clean.match(/(\d+)\s+pass/i);
-  const failMatch = clean.match(/(\d+)\s+fail/i);
-  const testMatch = clean.match(/(\d+)\s+test/i);
-
-  for (const line of lines) {
-    if (/FAIL|✗|❌|×|failed|AssertionError|Error:/i.test(line)) {
-      const trimmed = line.trim();
-      if (trimmed.length > 0 && trimmed.length < 300) {
-        failures.push(trimmed);
-      }
-    }
-  }
-
-  return {
-    totalTests: testMatch ? parseInt(testMatch[1], 10) : lines.length,
-    passed: passMatch ? parseInt(passMatch[1], 10) : 0,
-    failed: failMatch ? parseInt(failMatch[1], 10) : failures.length,
-    failures: failures.slice(0, 20),
-    lineCount: lines.length,
-  };
+  return summarizeByRunner(content);
 }
 
 export function formatTerminalSummary(summary: TerminalSummary, recallUri: string): string {

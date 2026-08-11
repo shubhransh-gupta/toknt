@@ -19,5 +19,7 @@
     "@toknt/cache": "*",
     "@toknt/core": "*"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "publishConfig": { "access": "public" },
+  "files": ["dist"]
 }

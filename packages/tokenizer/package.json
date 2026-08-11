@@ -15,5 +15,7 @@
     "build": "tsc",
     "typecheck": "tsc --noEmit"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "publishConfig": { "access": "public" },
+  "files": ["dist"]
 }

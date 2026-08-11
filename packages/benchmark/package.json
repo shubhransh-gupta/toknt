@@ -19,5 +19,7 @@
     "@toknt/core": "*",
     "@toknt/tokenizer": "*"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "publishConfig": { "access": "public" },
+  "files": ["dist"]
 }

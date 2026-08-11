@@ -7,7 +7,7 @@ export async function uninstallCommand(): Promise<void> {
   printBanner();
   console.log('Removing Tokn\'t integrations...\n');
 
-  const agents = ['claude', 'cursor', 'codex'];
+  const agents = ['claude', 'cursor', 'codex', 'windsurf'];
   for (const agent of agents) {
     const hookDir = join(homedir(), `.${agent}`, 'toknt');
     try {

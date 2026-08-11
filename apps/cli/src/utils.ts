@@ -30,6 +30,12 @@ export async function detectAgents(): Promise<DetectedAgent[]> {
       installed: await exists(join(homedir(), '.codex')),
       configPath: join(homedir(), '.codex'),
     },
+    {
+      name: 'Windsurf',
+      id: 'windsurf',
+      installed: await exists(join(homedir(), '.windsurf')) || await exists(join(homedir(), '.codeium', 'windsurf')),
+      configPath: join(homedir(), '.windsurf'),
+    },
   ];
   return agents;
 }

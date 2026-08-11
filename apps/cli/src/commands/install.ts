@@ -43,14 +43,14 @@ export async function installAgentCommand(agent: string): Promise<void> {
 }
 
 async function installAgent(agentId: string): Promise<void> {
-  const valid = ['claude', 'cursor', 'codex', 'all'];
+  const valid = ['claude', 'cursor', 'codex', 'windsurf', 'all'];
   if (!valid.includes(agentId)) {
     console.error(`Unknown agent: ${agentId}`);
-    console.error('Supported: claude, cursor, codex, all');
+    console.error('Supported: claude, cursor, codex, windsurf, all');
     process.exit(1);
   }
 
-  const agents = agentId === 'all' ? ['claude', 'cursor', 'codex'] : [agentId];
+  const agents = agentId === 'all' ? ['claude', 'cursor', 'codex', 'windsurf'] : [agentId];
 
   for (const id of agents) {
     const hookDir = getHookDir(id);
@@ -79,6 +79,8 @@ function getHookDir(agent: string): string {
       return join(homedir(), '.cursor', 'toknt');
     case 'codex':
       return join(homedir(), '.codex', 'toknt');
+    case 'windsurf':
+      return join(homedir(), '.windsurf', 'toknt');
     default:
       return join(homedir(), '.toknt', agent);
   }
