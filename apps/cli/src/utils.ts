@@ -2,6 +2,7 @@ import { access } from 'node:fs/promises';
 import { homedir } from 'node:os';
 import { join } from 'node:path';
 import { LocalCache } from '@toknt/cache';
+import { TokntEngine } from '@toknt/core';
 
 export interface DetectedAgent {
   name: string;
@@ -61,4 +62,10 @@ export function printBanner(): void {
 
 export function getCache(): LocalCache {
   return new LocalCache();
+}
+
+export async function getEngine(): Promise<TokntEngine> {
+  const cache = getCache();
+  const config = await cache.getConfig();
+  return new TokntEngine({ cache, mode: config.mode });
 }

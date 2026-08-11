@@ -17,11 +17,8 @@ npx toknt doctor`,
   {
     n: 3,
     title: 'Set optimization mode',
-    code: `# Edit ~/.toknt/config.json
-{
-  "mode": "balanced",
-  "integrations": { "cursor": true }
-}`,
+    code: `# Edit ~/.toknt/config.json — or:
+npx toknt config set mode balanced`,
     note: 'safe ≈ 6.5% on mixed sessions · balanced ≈ 91.5% when logs/listings are huge',
   },
   {

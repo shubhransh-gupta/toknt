@@ -2,7 +2,7 @@
 
 <!-- Banner: PNG for GitHub README (SVG animations blocked by GitHub camo) -->
 <a href="https://shubhransh-gupta.github.io/toknt/">
-  <img src="https://raw.githubusercontent.com/shubhransh-gupta/toknt/main/assets/readme-banner.png" alt="Tokn't — Minecraft-themed token optimizer" width="720" />
+  <img src="assets/readme-banner.png" alt="Tokn't — Minecraft-themed token optimizer" width="720" />
 </a>
 
 # Tokens? Tokn't.
@@ -118,7 +118,7 @@
 |:--:|:--|
 | **1** | `git clone … && npm install && npm run build` |
 | **2** | `npx toknt install cursor` *(or claude / codex)* |
-| **3** | Edit `~/.toknt/config.json` → `"mode": "balanced"` |
+| **3** | `npx toknt config set mode balanced` |
 | **4** | Code normally — Tokn't compresses tool output automatically |
 | **5** | `npx toknt stats` — track your savings |
 | **6** | `npx toknt recall toknt://file/abc123` — restore full content |
