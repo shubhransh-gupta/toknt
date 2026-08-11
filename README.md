@@ -1,8 +1,8 @@
 <div align="center">
 
-<!-- Animated Minecraft banner — live blocks, clouds, XP orbs -->
+<!-- Banner: PNG for GitHub README (SVG animations blocked by GitHub camo) -->
 <a href="https://shubhransh-gupta.github.io/toknt/">
-  <img src="./assets/readme-banner.svg" alt="Tokn't — Minecraft-themed token optimizer" width="720" />
+  <img src="https://raw.githubusercontent.com/shubhransh-gupta/toknt/main/assets/readme-banner.png" alt="Tokn't — Minecraft-themed token optimizer" width="720" />
 </a>
 
 # Tokens? Tokn't.
