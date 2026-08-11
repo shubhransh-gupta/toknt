@@ -20,6 +20,8 @@ export interface TokntConfig {
   mode: 'safe' | 'balanced' | 'aggressive';
   cacheDir?: string;
   maxCacheSizeMB?: number;
+  watchEnabled?: boolean;
+  watchPaths?: string[];
   integrations: {
     claude?: boolean;
     cursor?: boolean;

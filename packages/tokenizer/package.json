@@ -15,6 +15,9 @@
     "build": "tsc",
     "typecheck": "tsc --noEmit"
   },
+  "dependencies": {
+    "js-tiktoken": "^1.0.21"
+  },
   "license": "MIT",
   "publishConfig": { "access": "public" },
   "files": ["dist"]

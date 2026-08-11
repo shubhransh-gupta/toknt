@@ -10,6 +10,7 @@
     { "path": "../../packages/benchmark" },
     { "path": "../../packages/cache" },
     { "path": "../../packages/core" },
-    { "path": "../../packages/tokenizer" }
+    { "path": "../../packages/tokenizer" },
+    { "path": "../../integrations/cursor" }
   ]
 }

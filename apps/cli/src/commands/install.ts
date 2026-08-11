@@ -1,6 +1,7 @@
 import { writeFile, mkdir, readFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import { homedir } from 'node:os';
+import { CursorAdapter } from '@toknt/integration-cursor';
 import { detectAgents, printBanner, getCache } from '../utils.js';
 
 export async function installCommand(): Promise<void> {
@@ -53,6 +54,21 @@ async function installAgent(agentId: string): Promise<void> {
   const agents = agentId === 'all' ? ['claude', 'cursor', 'codex', 'windsurf'] : [agentId];
 
   for (const id of agents) {
+    if (id === 'cursor') {
+      const adapter = new CursorAdapter();
+      await adapter.install();
+      const hookDir = getHookDir(id);
+      const { mode } = await getCache().getConfig();
+      const configPath = join(hookDir, 'toknt.json');
+      const existing = JSON.parse(await readFile(configPath, 'utf-8'));
+      await writeFile(
+        configPath,
+        JSON.stringify({ ...existing, mode, provider: 'toknt', version: '1.0.0' }, null, 2)
+      );
+      console.log(`  → Configured ${id} integration at ${hookDir} (hooks installed)`);
+      continue;
+    }
+
     const hookDir = getHookDir(id);
     await mkdir(hookDir, { recursive: true });
     const { mode } = await getCache().getConfig();

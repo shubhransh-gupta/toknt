@@ -3,7 +3,7 @@
 Phase 1 shipped the engine, honest benchmarks, docs, and Observatory.  
 Phase 2 makes Tokn't **usable every day** in real agent sessions.
 
-## Milestone A — "It installs" ✅ in progress
+## Milestone A — "It installs" ✅
 
 | Item | Status |
 |------|--------|
@@ -11,8 +11,8 @@ Phase 2 makes Tokn't **usable every day** in real agent sessions.
 | `toknt config get/show/path` | ✅ Shipped |
 | Sync mode to agent hook configs | ✅ Shipped |
 | LRU cache eviction (`maxCacheSizeMB`) | ✅ Shipped |
+| Live session audit harness | ✅ Shipped |
 | npm publish (`npx toknt`) | 🔲 Needs `NPM_TOKEN` |
-| Live session audit harness | 🔲 Started (`scripts/live-session-audit.mjs`) |
 
 ### New commands
 
@@ -24,19 +24,27 @@ toknt config get mode
 toknt config path
 ```
 
-## Milestone B — "It works in Cursor"
+## Milestone B — "It works in Cursor" ✅ in progress
 
 | Item | Status |
 |------|--------|
-| End-to-end Cursor hook test | 🔲 |
-| Live session audit (10–20 real sessions) | 🔲 |
-| File watcher cache invalidation | 🔲 |
-| Token estimator alignment (~27% error → <15%) | 🔲 |
+| End-to-end Cursor hook test | ✅ Shipped |
+| Live session audit (15 simulated sessions) | ✅ Shipped |
+| File watcher cache invalidation | ✅ Shipped (`toknt watch`) |
+| Token estimator alignment (~27% error → <15%) | ✅ Shipped (js-tiktoken) |
+| Cursor install copies hook scripts | ✅ Shipped |
 
 Run live audit:
 
 ```bash
 npm run audit:live
+npm run audit:live -- --sessions 20 --mode balanced
+```
+
+Watch for file changes:
+
+```bash
+toknt watch .
 ```
 
 ## Milestone C — "It spreads"

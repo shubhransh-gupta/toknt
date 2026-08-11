@@ -28,7 +28,9 @@ Help us build Tokn't. Pick any unchecked item and [open a PR](CONTRIBUTING.md).
 - [x] **Windsurf adapter** — expand agent support
 - [x] **Cache size limits + LRU eviction** — Phase 2A
 - [x] **`toknt config` CLI** — set mode without editing JSON
-- [ ] **Watch mode** — auto-invalidate on file system changes
+- [x] **Watch mode** — auto-invalidate on file system changes (`toknt watch`)
+- [x] **Token estimator accuracy** — js-tiktoken cl100k_base (<1% error)
+- [x] **Cursor hook e2e tests** — duplicate file, terminal, recall
 
 See [PHASE2.md](./PHASE2.md) for the full Phase 2 plan.
 

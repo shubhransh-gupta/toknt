@@ -1,66 +1,779 @@
 {
-  "timestamp": "2026-08-11T07:55:18.239Z",
+  "timestamp": "2026-08-11T08:01:49.918Z",
   "mode": "balanced",
-  "steps": [
+  "sessionCount": 15,
+  "sessions": [
     {
-      "step": 1,
-      "type": "user_request",
-      "optimized": false,
-      "strategy": null,
-      "recallUri": null
+      "id": "session-1",
+      "label": "bug-fix",
+      "original": 1736,
+      "optimized": 307,
+      "reductionPercent": 82.32,
+      "steps": [
+        {
+          "step": 1,
+          "type": "user_request",
+          "optimized": false,
+          "strategy": null
+        },
+        {
+          "step": 2,
+          "type": "file_read",
+          "optimized": false,
+          "strategy": null
+        },
+        {
+          "step": 3,
+          "type": "file_read",
+          "optimized": true,
+          "strategy": "duplicate_file"
+        },
+        {
+          "step": 4,
+          "type": "terminal_output",
+          "optimized": true,
+          "strategy": "terminal_output"
+        },
+        {
+          "step": 5,
+          "type": "directory_listing",
+          "optimized": true,
+          "strategy": "directory_listing"
+        },
+        {
+          "step": 6,
+          "type": "file_read",
+          "optimized": true,
+          "strategy": "duplicate_file"
+        },
+        {
+          "step": 7,
+          "type": "git_diff",
+          "optimized": false,
+          "strategy": null
+        }
+      ]
     },
     {
-      "step": 2,
-      "type": "file_read",
-      "optimized": false,
-      "strategy": null,
-      "recallUri": null
+      "id": "session-2",
+      "label": "refactor",
+      "original": 2536,
+      "optimized": 294,
+      "reductionPercent": 88.41,
+      "steps": [
+        {
+          "step": 1,
+          "type": "user_request",
+          "optimized": false,
+          "strategy": null
+        },
+        {
+          "step": 2,
+          "type": "file_read",
+          "optimized": false,
+          "strategy": null
+        },
+        {
+          "step": 3,
+          "type": "file_read",
+          "optimized": true,
+          "strategy": "duplicate_file"
+        },
+        {
+          "step": 4,
+          "type": "terminal_output",
+          "optimized": true,
+          "strategy": "terminal_output"
+        },
+        {
+          "step": 5,
+          "type": "directory_listing",
+          "optimized": true,
+          "strategy": "directory_listing"
+        },
+        {
+          "step": 6,
+          "type": "file_read",
+          "optimized": true,
+          "strategy": "duplicate_file"
+        },
+        {
+          "step": 7,
+          "type": "git_diff",
+          "optimized": false,
+          "strategy": null
+        }
+      ]
     },
     {
-      "step": 3,
-      "type": "file_read",
-      "optimized": true,
-      "strategy": "duplicate_file",
-      "recallUri": "toknt://file/992cac86a3817aa3"
+      "id": "session-3",
+      "label": "test-run",
+      "original": 3336,
+      "optimized": 294,
+      "reductionPercent": 91.19,
+      "steps": [
+        {
+          "step": 1,
+          "type": "user_request",
+          "optimized": false,
+          "strategy": null
+        },
+        {
+          "step": 2,
+          "type": "file_read",
+          "optimized": false,
+          "strategy": null
+        },
+        {
+          "step": 3,
+          "type": "file_read",
+          "optimized": true,
+          "strategy": "duplicate_file"
+        },
+        {
+          "step": 4,
+          "type": "terminal_output",
+          "optimized": true,
+          "strategy": "terminal_output"
+        },
+        {
+          "step": 5,
+          "type": "directory_listing",
+          "optimized": true,
+          "strategy": "directory_listing"
+        },
+        {
+          "step": 6,
+          "type": "file_read",
+          "optimized": true,
+          "strategy": "duplicate_file"
+        },
+        {
+          "step": 7,
+          "type": "git_diff",
+          "optimized": false,
+          "strategy": null
+        }
+      ]
     },
     {
-      "step": 4,
-      "type": "terminal_output",
-      "optimized": true,
-      "strategy": "terminal_output",
-      "recallUri": "toknt://output/79cf40eca416eaa9"
+      "id": "session-4",
+      "label": "explore",
+      "original": 4136,
+      "optimized": 306,
+      "reductionPercent": 92.6,
+      "steps": [
+        {
+          "step": 1,
+          "type": "user_request",
+          "optimized": false,
+          "strategy": null
+        },
+        {
+          "step": 2,
+          "type": "file_read",
+          "optimized": false,
+          "strategy": null
+        },
+        {
+          "step": 3,
+          "type": "file_read",
+          "optimized": true,
+          "strategy": "duplicate_file"
+        },
+        {
+          "step": 4,
+          "type": "terminal_output",
+          "optimized": true,
+          "strategy": "terminal_output"
+        },
+        {
+          "step": 5,
+          "type": "directory_listing",
+          "optimized": true,
+          "strategy": "directory_listing"
+        },
+        {
+          "step": 6,
+          "type": "file_read",
+          "optimized": true,
+          "strategy": "duplicate_file"
+        },
+        {
+          "step": 7,
+          "type": "git_diff",
+          "optimized": false,
+          "strategy": null
+        }
+      ]
     },
     {
-      "step": 5,
-      "type": "directory_listing",
-      "optimized": true,
-      "strategy": "directory_listing",
-      "recallUri": "toknt://directory/a3ab077859df49c2"
+      "id": "session-5",
+      "label": "review",
+      "original": 3736,
+      "optimized": 303,
+      "reductionPercent": 91.89,
+      "steps": [
+        {
+          "step": 1,
+          "type": "user_request",
+          "optimized": false,
+          "strategy": null
+        },
+        {
+          "step": 2,
+          "type": "file_read",
+          "optimized": false,
+          "strategy": null
+        },
+        {
+          "step": 3,
+          "type": "file_read",
+          "optimized": true,
+          "strategy": "duplicate_file"
+        },
+        {
+          "step": 4,
+          "type": "terminal_output",
+          "optimized": true,
+          "strategy": "terminal_output"
+        },
+        {
+          "step": 5,
+          "type": "directory_listing",
+          "optimized": true,
+          "strategy": "directory_listing"
+        },
+        {
+          "step": 6,
+          "type": "file_read",
+          "optimized": true,
+          "strategy": "duplicate_file"
+        },
+        {
+          "step": 7,
+          "type": "git_diff",
+          "optimized": false,
+          "strategy": null
+        }
+      ]
     },
     {
-      "step": 6,
-      "type": "file_read",
-      "optimized": true,
-      "strategy": "duplicate_file",
-      "recallUri": "toknt://file/992cac86a3817aa3"
+      "id": "session-6",
+      "label": "bug-fix",
+      "original": 2036,
+      "optimized": 294,
+      "reductionPercent": 85.56,
+      "steps": [
+        {
+          "step": 1,
+          "type": "user_request",
+          "optimized": false,
+          "strategy": null
+        },
+        {
+          "step": 2,
+          "type": "file_read",
+          "optimized": false,
+          "strategy": null
+        },
+        {
+          "step": 3,
+          "type": "file_read",
+          "optimized": true,
+          "strategy": "duplicate_file"
+        },
+        {
+          "step": 4,
+          "type": "terminal_output",
+          "optimized": true,
+          "strategy": "terminal_output"
+        },
+        {
+          "step": 5,
+          "type": "directory_listing",
+          "optimized": true,
+          "strategy": "directory_listing"
+        },
+        {
+          "step": 6,
+          "type": "file_read",
+          "optimized": true,
+          "strategy": "duplicate_file"
+        },
+        {
+          "step": 7,
+          "type": "git_diff",
+          "optimized": false,
+          "strategy": null
+        }
+      ]
     },
     {
-      "step": 7,
-      "type": "git_diff",
-      "optimized": false,
-      "strategy": null,
-      "recallUri": null
+      "id": "session-7",
+      "label": "refactor",
+      "original": 2836,
+      "optimized": 296,
+      "reductionPercent": 89.56,
+      "steps": [
+        {
+          "step": 1,
+          "type": "user_request",
+          "optimized": false,
+          "strategy": null
+        },
+        {
+          "step": 2,
+          "type": "file_read",
+          "optimized": false,
+          "strategy": null
+        },
+        {
+          "step": 3,
+          "type": "file_read",
+          "optimized": true,
+          "strategy": "duplicate_file"
+        },
+        {
+          "step": 4,
+          "type": "terminal_output",
+          "optimized": true,
+          "strategy": "terminal_output"
+        },
+        {
+          "step": 5,
+          "type": "directory_listing",
+          "optimized": true,
+          "strategy": "directory_listing"
+        },
+        {
+          "step": 6,
+          "type": "file_read",
+          "optimized": true,
+          "strategy": "duplicate_file"
+        },
+        {
+          "step": 7,
+          "type": "git_diff",
+          "optimized": false,
+          "strategy": null
+        }
+      ]
+    },
+    {
+      "id": "session-8",
+      "label": "test-run",
+      "original": 3636,
+      "optimized": 295,
+      "reductionPercent": 91.89,
+      "steps": [
+        {
+          "step": 1,
+          "type": "user_request",
+          "optimized": false,
+          "strategy": null
+        },
+        {
+          "step": 2,
+          "type": "file_read",
+          "optimized": false,
+          "strategy": null
+        },
+        {
+          "step": 3,
+          "type": "file_read",
+          "optimized": true,
+          "strategy": "duplicate_file"
+        },
+        {
+          "step": 4,
+          "type": "terminal_output",
+          "optimized": true,
+          "strategy": "terminal_output"
+        },
+        {
+          "step": 5,
+          "type": "directory_listing",
+          "optimized": true,
+          "strategy": "directory_listing"
+        },
+        {
+          "step": 6,
+          "type": "file_read",
+          "optimized": true,
+          "strategy": "duplicate_file"
+        },
+        {
+          "step": 7,
+          "type": "git_diff",
+          "optimized": false,
+          "strategy": null
+        }
+      ]
+    },
+    {
+      "id": "session-9",
+      "label": "explore",
+      "original": 3236,
+      "optimized": 312,
+      "reductionPercent": 90.36,
+      "steps": [
+        {
+          "step": 1,
+          "type": "user_request",
+          "optimized": false,
+          "strategy": null
+        },
+        {
+          "step": 2,
+          "type": "file_read",
+          "optimized": false,
+          "strategy": null
+        },
+        {
+          "step": 3,
+          "type": "file_read",
+          "optimized": true,
+          "strategy": "duplicate_file"
+        },
+        {
+          "step": 4,
+          "type": "terminal_output",
+          "optimized": true,
+          "strategy": "terminal_output"
+        },
+        {
+          "step": 5,
+          "type": "directory_listing",
+          "optimized": true,
+          "strategy": "directory_listing"
+        },
+        {
+          "step": 6,
+          "type": "file_read",
+          "optimized": true,
+          "strategy": "duplicate_file"
+        },
+        {
+          "step": 7,
+          "type": "git_diff",
+          "optimized": false,
+          "strategy": null
+        }
+      ]
+    },
+    {
+      "id": "session-10",
+      "label": "review",
+      "original": 4036,
+      "optimized": 292,
+      "reductionPercent": 92.77,
+      "steps": [
+        {
+          "step": 1,
+          "type": "user_request",
+          "optimized": false,
+          "strategy": null
+        },
+        {
+          "step": 2,
+          "type": "file_read",
+          "optimized": false,
+          "strategy": null
+        },
+        {
+          "step": 3,
+          "type": "file_read",
+          "optimized": true,
+          "strategy": "duplicate_file"
+        },
+        {
+          "step": 4,
+          "type": "terminal_output",
+          "optimized": true,
+          "strategy": "terminal_output"
+        },
+        {
+          "step": 5,
+          "type": "directory_listing",
+          "optimized": true,
+          "strategy": "directory_listing"
+        },
+        {
+          "step": 6,
+          "type": "file_read",
+          "optimized": true,
+          "strategy": "duplicate_file"
+        },
+        {
+          "step": 7,
+          "type": "git_diff",
+          "optimized": false,
+          "strategy": null
+        }
+      ]
+    },
+    {
+      "id": "session-11",
+      "label": "bug-fix",
+      "original": 2336,
+      "optimized": 292,
+      "reductionPercent": 87.5,
+      "steps": [
+        {
+          "step": 1,
+          "type": "user_request",
+          "optimized": false,
+          "strategy": null
+        },
+        {
+          "step": 2,
+          "type": "file_read",
+          "optimized": false,
+          "strategy": null
+        },
+        {
+          "step": 3,
+          "type": "file_read",
+          "optimized": true,
+          "strategy": "duplicate_file"
+        },
+        {
+          "step": 4,
+          "type": "terminal_output",
+          "optimized": true,
+          "strategy": "terminal_output"
+        },
+        {
+          "step": 5,
+          "type": "directory_listing",
+          "optimized": true,
+          "strategy": "directory_listing"
+        },
+        {
+          "step": 6,
+          "type": "file_read",
+          "optimized": true,
+          "strategy": "duplicate_file"
+        },
+        {
+          "step": 7,
+          "type": "git_diff",
+          "optimized": false,
+          "strategy": null
+        }
+      ]
+    },
+    {
+      "id": "session-12",
+      "label": "refactor",
+      "original": 3136,
+      "optimized": 299,
+      "reductionPercent": 90.47,
+      "steps": [
+        {
+          "step": 1,
+          "type": "user_request",
+          "optimized": false,
+          "strategy": null
+        },
+        {
+          "step": 2,
+          "type": "file_read",
+          "optimized": false,
+          "strategy": null
+        },
+        {
+          "step": 3,
+          "type": "file_read",
+          "optimized": true,
+          "strategy": "duplicate_file"
+        },
+        {
+          "step": 4,
+          "type": "terminal_output",
+          "optimized": true,
+          "strategy": "terminal_output"
+        },
+        {
+          "step": 5,
+          "type": "directory_listing",
+          "optimized": true,
+          "strategy": "directory_listing"
+        },
+        {
+          "step": 6,
+          "type": "file_read",
+          "optimized": true,
+          "strategy": "duplicate_file"
+        },
+        {
+          "step": 7,
+          "type": "git_diff",
+          "optimized": false,
+          "strategy": null
+        }
+      ]
+    },
+    {
+      "id": "session-13",
+      "label": "test-run",
+      "original": 2736,
+      "optimized": 293,
+      "reductionPercent": 89.29,
+      "steps": [
+        {
+          "step": 1,
+          "type": "user_request",
+          "optimized": false,
+          "strategy": null
+        },
+        {
+          "step": 2,
+          "type": "file_read",
+          "optimized": false,
+          "strategy": null
+        },
+        {
+          "step": 3,
+          "type": "file_read",
+          "optimized": true,
+          "strategy": "duplicate_file"
+        },
+        {
+          "step": 4,
+          "type": "terminal_output",
+          "optimized": true,
+          "strategy": "terminal_output"
+        },
+        {
+          "step": 5,
+          "type": "directory_listing",
+          "optimized": true,
+          "strategy": "directory_listing"
+        },
+        {
+          "step": 6,
+          "type": "file_read",
+          "optimized": true,
+          "strategy": "duplicate_file"
+        },
+        {
+          "step": 7,
+          "type": "git_diff",
+          "optimized": false,
+          "strategy": null
+        }
+      ]
+    },
+    {
+      "id": "session-14",
+      "label": "explore",
+      "original": 3536,
+      "optimized": 313,
+      "reductionPercent": 91.15,
+      "steps": [
+        {
+          "step": 1,
+          "type": "user_request",
+          "optimized": false,
+          "strategy": null
+        },
+        {
+          "step": 2,
+          "type": "file_read",
+          "optimized": false,
+          "strategy": null
+        },
+        {
+          "step": 3,
+          "type": "file_read",
+          "optimized": true,
+          "strategy": "duplicate_file"
+        },
+        {
+          "step": 4,
+          "type": "terminal_output",
+          "optimized": true,
+          "strategy": "terminal_output"
+        },
+        {
+          "step": 5,
+          "type": "directory_listing",
+          "optimized": true,
+          "strategy": "directory_listing"
+        },
+        {
+          "step": 6,
+          "type": "file_read",
+          "optimized": true,
+          "strategy": "duplicate_file"
+        },
+        {
+          "step": 7,
+          "type": "git_diff",
+          "optimized": false,
+          "strategy": null
+        }
+      ]
+    },
+    {
+      "id": "session-15",
+      "label": "review",
+      "original": 4336,
+      "optimized": 302,
+      "reductionPercent": 93.04,
+      "steps": [
+        {
+          "step": 1,
+          "type": "user_request",
+          "optimized": false,
+          "strategy": null
+        },
+        {
+          "step": 2,
+          "type": "file_read",
+          "optimized": false,
+          "strategy": null
+        },
+        {
+          "step": 3,
+          "type": "file_read",
+          "optimized": true,
+          "strategy": "duplicate_file"
+        },
+        {
+          "step": 4,
+          "type": "terminal_output",
+          "optimized": true,
+          "strategy": "terminal_output"
+        },
+        {
+          "step": 5,
+          "type": "directory_listing",
+          "optimized": true,
+          "strategy": "directory_listing"
+        },
+        {
+          "step": 6,
+          "type": "file_read",
+          "optimized": true,
+          "strategy": "duplicate_file"
+        },
+        {
+          "step": 7,
+          "type": "git_diff",
+          "optimized": false,
+          "strategy": null
+        }
+      ]
     }
   ],
-  "heuristic": {
-    "original": 2269,
-    "optimized": 251,
-    "reductionPercent": 88.94
+  "aggregate": {
+    "original": 47340,
+    "optimized": 4492,
+    "reductionPercent": 90.51,
+    "avgReductionPercent": 89.87
   },
-  "tiktoken": {
-    "original": 3283,
-    "optimized": 271,
-    "reductionPercent": 91.75
-  },
-  "note": "Simulated realistic session — replace with exported agent logs in Phase 2B"
+  "note": "Phase 2B batch audit — 15 simulated sessions; replace with exported agent logs for production validation"
 }
