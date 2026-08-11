@@ -133,6 +133,17 @@ export default function App() {
           TOKN&apos;T
         </p>
         <p>⛏️ Tokens? Tokn&apos;t. — Local survival mode. Open source. MIT License.</p>
+        <p style={{ marginTop: 12, fontSize: 15, color: 'var(--text-secondary)' }}>
+          Created with ❤️ by{' '}
+          <a
+            href="https://github.com/shubhransh-gupta"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{ color: 'var(--diamond)', textDecoration: 'none', fontWeight: 600 }}
+          >
+            Shubhransh Gupta
+          </a>
+        </p>
         <p style={{ marginTop: 8, fontSize: 14 }}>🟩🟩🟩 Crafted with blocks and bytes 🟩🟩🟩</p>
       </footer>
       </div>
