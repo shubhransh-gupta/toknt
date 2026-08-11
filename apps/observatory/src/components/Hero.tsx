@@ -1,12 +1,14 @@
 import { formatTokens } from '../data/demo';
+import { MEASURED_BY_MODE } from '../data/measured';
 
 interface HeroProps {
-  stats: ReturnType<typeof import('../data/demo').aggregateStats>;
   onRunBenchmark: () => void;
   onExplore: () => void;
 }
 
-export function Hero({ stats, onRunBenchmark, onExplore }: HeroProps) {
+export function Hero({ onRunBenchmark, onExplore }: HeroProps) {
+  const balanced = MEASURED_BY_MODE.balanced;
+
   return (
     <section style={{
       padding: '80px 24px 60px',
@@ -32,9 +34,9 @@ export function Hero({ stats, onRunBenchmark, onExplore }: HeroProps) {
         Measure. Compare. Optimize.
       </p>
 
-      <div style={{ display: 'flex', gap: 12, justifyContent: 'center', marginBottom: 60 }}>
-        <button className="btn btn-primary" onClick={onRunBenchmark}>Run Benchmark</button>
-        <button className="btn btn-secondary" onClick={onExplore}>Explore Results</button>
+      <div style={{ display: 'flex', gap: 12, justifyContent: 'center', marginBottom: 60, flexWrap: 'wrap' }}>
+        <button className="btn btn-primary" onClick={onRunBenchmark}>See measured results</button>
+        <button className="btn btn-secondary" onClick={onExplore}>Explore dashboard</button>
       </div>
 
       <div className="card animate-in" style={{
@@ -42,7 +44,7 @@ export function Hero({ stats, onRunBenchmark, onExplore }: HeroProps) {
         gridTemplateColumns: '1fr auto 1fr',
         gap: 32,
         alignItems: 'center',
-        maxWidth: 600,
+        maxWidth: 640,
         margin: '0 auto',
         padding: '32px 40px',
       }}>
@@ -51,16 +53,17 @@ export function Hero({ stats, onRunBenchmark, onExplore }: HeroProps) {
             Without Tokn&apos;t
           </p>
           <p className="mono stat-value" style={{ fontSize: 32, fontWeight: 600 }}>
-            {formatTokens(stats.totalOriginal || 184000)}
+            {formatTokens(balanced.tiktokenOriginal)}
           </p>
-          <p style={{ color: 'var(--text-muted)', fontSize: 12 }}>tokens</p>
+          <p style={{ color: 'var(--text-muted)', fontSize: 12 }}>tokens (tiktoken)</p>
         </div>
 
         <div style={{ textAlign: 'center' }}>
           <p style={{ fontSize: 28, color: 'var(--accent)' }}>↓</p>
           <p className="mono" style={{ color: 'var(--accent)', fontSize: 18, fontWeight: 600 }}>
-            {stats.avgReduction.toFixed(0) || 39}% LESS
+            {balanced.reductionPercent}% LESS
           </p>
+          <p style={{ fontSize: 11, color: 'var(--text-muted)', marginTop: 4 }}>balanced mode</p>
         </div>
 
         <div>
@@ -68,14 +71,17 @@ export function Hero({ stats, onRunBenchmark, onExplore }: HeroProps) {
             With Tokn&apos;t
           </p>
           <p className="mono stat-value" style={{ fontSize: 32, fontWeight: 600, color: 'var(--accent)' }}>
-            {formatTokens(stats.totalOptimized || 112000)}
+            {formatTokens(balanced.tiktokenOptimized)}
           </p>
-          <p style={{ color: 'var(--text-muted)', fontSize: 12 }}>tokens</p>
+          <p style={{ color: 'var(--text-muted)', fontSize: 12 }}>tokens (tiktoken)</p>
         </div>
       </div>
 
-      <p style={{ marginTop: 16 }}>
-        <span className="badge badge-demo">DEMO DATA</span>
+      <p style={{ marginTop: 16, display: 'flex', gap: 8, justifyContent: 'center', flexWrap: 'wrap' }}>
+        <span className="badge badge-success">MEASURED DATA</span>
+        <span style={{ fontSize: 12, color: 'var(--text-muted)', alignSelf: 'center' }}>
+          Default safe mode: ~{MEASURED_BY_MODE.safe.reductionPercent}% on same session
+        </span>
       </p>
     </section>
   );

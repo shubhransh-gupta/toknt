@@ -106,7 +106,7 @@ export async function runBenchmarkSimulation(
   }
 
   const cache = new LocalCache(joinTmpDir());
-  const engine = new TokntEngine({ cache, mode: mode === 'safe' ? 'balanced' : mode });
+  const engine = new TokntEngine({ cache, mode });
 
   let withTokens = 0;
   for (const item of withRun.items) {

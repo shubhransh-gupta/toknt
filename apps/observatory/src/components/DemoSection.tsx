@@ -91,7 +91,10 @@ export function DemoSection() {
       </div>
 
       <p style={{ marginTop: 16 }}>
-        <span className="badge badge-demo">DEMO DATA</span>
+        <span className="badge badge-success">MEASURED DATA</span>
+        <span style={{ fontSize: 12, color: 'var(--text-muted)', marginLeft: 8 }}>
+          Illustrative animation — run <code className="mono">npm run audit</code> for real numbers
+        </span>
       </p>
     </div>
   );

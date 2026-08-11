@@ -32,38 +32,32 @@
 <tr>
 <td width="50%">
 
-**WITHOUT TOKN'T**
+**WITHOUT TOKN'T** *(balanced mode, measured)*
 
 ```
-READ UserService.swift     4,200 tokens
-READ UserService.swift     4,200 tokens  ← again
-READ UserService.swift     4,200 tokens  ← again
-npm test output           48,000 tokens
-find . -type f            32,000 tokens
-─────────────────────────────────────
-Total                    ~184K tokens
+Mixed agent session
+38,216 tokens (tiktoken)
 ```
 
 </td>
 <td width="50%">
 
-**WITH TOKN'T**
+**WITH TOKN'T** *(balanced mode, measured)*
 
 ```
-READ UserService.swift     4,200 tokens
-[UNCHANGED FILE]              42 tokens  ✓
-[UNCHANGED FILE]              42 tokens  ✓
-TEST RESULT summary          380 tokens  ✓
-PROJECT STRUCTURE            210 tokens  ✓
-─────────────────────────────────────
-Total                    ~112K tokens
+Same session, compressed
+3,236 tokens (tiktoken)
 ```
 
-**↓ 39% fewer tokens** · *example benchmark [DEMO DATA]*
+**↓ 91.5% fewer tokens** · *[MEASURED — local audit](benchmarks/results/accuracy-audit.json)*
 
 </td>
 </tr>
 </table>
+
+> **Default `safe` mode** on the same session: **~6.5%** reduction (duplicates only).  
+> **Real repo** duplicate file reads: **~46%** reduction.  
+> See [Honest summary](#honest-summary-for-users) below.
 
 ---
 
@@ -133,6 +127,47 @@ Codex       ─┘       │
 When uncertain → **pass through original**.
 
 🔒 **Local-first** — your code never leaves your machine.
+
+---
+
+## Honest summary for users
+
+We measured Tokn't locally and validated token counts with **tiktoken (cl100k_base)** — the tokenizer used by GPT-4 class models. Full report: [`benchmarks/results/accuracy-audit.json`](benchmarks/results/accuracy-audit.json). Reproduce: `node scripts/accuracy-audit.mjs`.
+
+### Does it actually work?
+
+**Yes.** Compression is real. Every compressed item is recoverable via `toknt recall`. Critical content (user requests, git diffs, compiler errors) is **never** compressed.
+
+### How much do you actually save?
+
+| Mode | What it does | Measured reduction (tiktoken) |
+|------|----------------|----------------------------------|
+| **`safe`** (default) | Duplicate files & tool output only | **~6.5%** on a mixed session |
+| **`balanced`** | + terminal & directory compression | **~91.5%** on the same session |
+| Real repo duplicate reads | Reading the same files twice | **~46%** |
+
+Your savings depend on what your agent sends. Heavy `npm test` output or `find .` listings → big wins in balanced mode. Agents that mostly re-read files → modest wins even in safe mode.
+
+### Per-optimization (balanced mode, measured)
+
+| Optimization | Reduction | Recall |
+|--------------|-----------|--------|
+| Duplicate file reads | ~64% | ✓ |
+| Terminal output (1,200+ lines) | ~98% | ✓ |
+| Directory listing (3,200 files) | ~99% | ✓ |
+| Duplicate tool output | ~49% | ✓ |
+| Errors, diffs, user requests | 0% (never compressed) | — |
+
+### Are the token numbers exact?
+
+**No.** `toknt stats` uses a heuristic estimator — typically **20–28% lower** than tiktoken on absolute counts. Reduction **percentages** are accurate within ~2 percentage points of tiktoken. These are **not** provider billing numbers.
+
+### What we haven't validated yet
+
+- Live Cursor, Claude Code, or Codex sessions (hooks install config; end-to-end agent integration varies)
+- Published npm install (`npx toknt`) — workflow ready, requires `NPM_TOKEN`
+
+We label simulated benchmarks `[DEMO DATA]`. Locally measured results are in the audit JSON above.
 
 ---
 
@@ -212,7 +247,7 @@ Tokens? Tokn't.
 | Doc | Description |
 |-----|-------------|
 | [Architecture](ARCHITECTURE.md) | System design |
-| [Benchmarks](BENCHMARKS.md) | Methodology |
+| [Benchmarks](BENCHMARKS.md) | Methodology & measured results |
 | [Security](SECURITY.md) | Threat model |
 | [Privacy](PRIVACY.md) | Local-first policy |
 | [Getting Started](docs/getting-started.md) | Install guide |

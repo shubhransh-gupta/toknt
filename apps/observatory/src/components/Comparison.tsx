@@ -72,9 +72,13 @@ export function Comparison({ result, results, onSelect }: ComparisonProps) {
           </div>
         ))}
 
-        <div style={{ paddingTop: 16, display: 'flex', gap: 8, alignItems: 'center' }}>
+        <div style={{ paddingTop: 16, display: 'flex', gap: 8, alignItems: 'center', flexWrap: 'wrap' }}>
           <span className="badge badge-success">{result.reductionPercent.toFixed(1)}% reduction</span>
-          {result.isDemo && <span className="badge badge-demo">DEMO DATA</span>}
+          {result.isMeasured && <span className="badge badge-success">MEASURED DATA</span>}
+          {result.isDemo && !result.isMeasured && <span className="badge badge-demo">DEMO DATA</span>}
+          {result.tokenMethod && (
+            <span style={{ fontSize: 11, color: 'var(--text-muted)' }}>{result.tokenMethod}</span>
+          )}
         </div>
       </div>
     </div>

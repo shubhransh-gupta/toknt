@@ -9,6 +9,7 @@ import { QualityChart } from './components/QualityChart';
 import { CostEstimator } from './components/CostEstimator';
 import { ShareCard } from './components/ShareCard';
 import { PrivacyBanner } from './components/PrivacyBanner';
+import { HonestSummary } from './components/HonestSummary';
 import { DemoSection } from './components/DemoSection';
 import { StarBanner } from './components/StarBanner';
 
@@ -51,12 +52,13 @@ export default function App() {
     <div className="app">
       <StarBanner />
       <Hero
-        stats={stats}
-        onRunBenchmark={() => scrollTo('comparison')}
+        onRunBenchmark={() => scrollTo('honest-summary')}
         onExplore={() => scrollTo('dashboard')}
       />
 
       <PrivacyBanner />
+
+      <HonestSummary />
 
       <section id="demo" style={{ maxWidth: 1200, margin: '0 auto', padding: '0 24px' }}>
         <DemoSection />

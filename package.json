@@ -16,6 +16,7 @@
     "typecheck": "tsc --build",
     "dev": "npm run dev -w @toknt/observatory",
     "benchmark": "npm run build && node apps/cli/dist/index.js benchmark",
+    "audit": "npm run build && node scripts/accuracy-audit.mjs",
     "toknt": "node apps/cli/dist/index.js"
   },
   "devDependencies": {

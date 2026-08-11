@@ -20,6 +20,23 @@ WITHOUT TOKN'T  vs  WITH TOKN'T
 | `offline-caching` | Implement offline caching | Cache works offline |
 | `fix-production-crash` | Fix simulated crash | Crash resolved |
 
+## Measured results (local audit)
+
+Run the accuracy audit against tiktoken:
+
+```bash
+npm run audit
+# → benchmarks/results/accuracy-audit.json
+```
+
+| Scenario | Mode | Tiktoken reduction |
+|----------|------|-------------------|
+| Mixed agent session | safe (default) | **6.5%** |
+| Same session | balanced | **91.5%** |
+| Real repo duplicate reads | safe | **46.4%** |
+
+Simulated CLI benchmarks (`toknt benchmark`) use the same engine but heuristic token counting. Label: `[DEMO DATA]` unless exported from `npm run audit`.
+
 ## Running Benchmarks
 
 ```bash
