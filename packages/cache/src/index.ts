@@ -24,11 +24,13 @@ export interface TokntConfig {
     claude?: boolean;
     cursor?: boolean;
     codex?: boolean;
+    windsurf?: boolean;
   };
 }
 
 export const DEFAULT_CONFIG: TokntConfig = {
   mode: 'safe',
+  maxCacheSizeMB: 500,
   integrations: {},
 };
 
@@ -103,6 +105,7 @@ export class LocalCache {
       lastAccessedAt: now,
     };
     await writeFile(this.entryPath(id, type), JSON.stringify(entry, null, 2));
+    await this.enforceSizeLimit();
     return entry;
   }
 
@@ -181,6 +184,55 @@ export class LocalCache {
       }
     }
     return { entries, sizeBytes };
+  }
+
+  async listEntries(): Promise<CacheEntry[]> {
+    const entries: CacheEntry[] = [];
+    const mapping: Array<[string, CacheEntryType]> = [
+      ['cache', 'file'],
+      ['outputs', 'output'],
+      ['indexes', 'directory'],
+    ];
+
+    for (const [subdir, type] of mapping) {
+      const dir = join(this.baseDir, subdir);
+      try {
+        const files = await readdir(dir);
+        for (const file of files) {
+          if (!file.endsWith('.json')) continue;
+          try {
+            const raw = await readFile(join(dir, file), 'utf-8');
+            entries.push(JSON.parse(raw) as CacheEntry);
+          } catch {
+            // skip corrupt entry
+          }
+        }
+      } catch {
+        // dir missing
+      }
+    }
+
+    return entries;
+  }
+
+  async enforceSizeLimit(): Promise<number> {
+    const config = await this.getConfig();
+    const maxBytes = (config.maxCacheSizeMB ?? DEFAULT_CONFIG.maxCacheSizeMB ?? 500) * 1024 * 1024;
+    let stats = await this.getStats();
+    if (stats.sizeBytes <= maxBytes) return 0;
+
+    const entries = await this.listEntries();
+    entries.sort((a, b) => a.lastAccessedAt.localeCompare(b.lastAccessedAt));
+
+    let evicted = 0;
+    for (const entry of entries) {
+      stats = await this.getStats();
+      if (stats.sizeBytes <= maxBytes) break;
+      await this.delete(entry.id, entry.type);
+      evicted++;
+    }
+
+    return evicted;
   }
 
   makeUri(type: CacheEntryType, id: string): string {

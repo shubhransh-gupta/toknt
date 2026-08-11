@@ -18,6 +18,7 @@
     "benchmark": "npm run build && node apps/cli/dist/index.js benchmark",
     "audit": "npm run build && node scripts/accuracy-audit.mjs",
     "audit:2000": "npm run build && node scripts/accuracy-2000.mjs",
+    "audit:live": "npm run build && node scripts/live-session-audit.mjs",
     "toknt": "node apps/cli/dist/index.js"
   },
   "devDependencies": {
@@ -25,6 +26,7 @@
     "@typescript-eslint/eslint-plugin": "^8.18.0",
     "@typescript-eslint/parser": "^8.18.0",
     "eslint": "^9.16.0",
+    "js-tiktoken": "^1.0.19",
     "typescript": "^5.7.2",
     "vitest": "^2.1.8"
   },

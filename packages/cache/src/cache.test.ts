@@ -46,6 +46,14 @@ describe('LocalCache', () => {
     const loaded = await cache.getConfig();
     expect(loaded.mode).toBe('balanced');
   });
+
+  it('evicts oldest entries when over size limit', async () => {
+    await cache.saveConfig({ maxCacheSizeMB: 0.000001 });
+    await cache.store('file', 'a'.repeat(500));
+    await cache.store('file', 'b'.repeat(500));
+    const stats = await cache.getStats();
+    expect(stats.entries).toBeLessThan(3);
+  });
 });
 
 describe('hashContent', () => {

@@ -21,13 +21,16 @@ Help us build Tokn't. Pick any unchecked item and [open a PR](CONTRIBUTING.md).
 ## v1.1 — Community (help wanted)
 
 - [ ] **npm publish** — `npx toknt` one-liner install
-- [ ] **Jest / Vitest / pytest output parsers** — better terminal summarization
+- [x] **Jest / Vitest / pytest output parsers** — terminal summarization
 - [ ] **Real agent benchmarks** — run against live Cursor/Claude sessions
-- [ ] **GitHub Pages live demo** — deploy Observatory
+- [x] **GitHub Pages live demo** — deploy Observatory
 - [ ] **VS Code extension** — beyond Cursor plugin
-- [ ] **Windsurf / Cline adapter** — expand agent support
-- [ ] **Cache size limits + LRU eviction**
+- [x] **Windsurf adapter** — expand agent support
+- [x] **Cache size limits + LRU eviction** — Phase 2A
+- [x] **`toknt config` CLI** — set mode without editing JSON
 - [ ] **Watch mode** — auto-invalidate on file system changes
+
+See [PHASE2.md](./PHASE2.md) for the full Phase 2 plan.
 
 ## v1.2 — Power features
 

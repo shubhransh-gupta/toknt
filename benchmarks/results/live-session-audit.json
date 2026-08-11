@@ -1,0 +1,66 @@
+{
+  "timestamp": "2026-08-11T07:55:18.239Z",
+  "mode": "balanced",
+  "steps": [
+    {
+      "step": 1,
+      "type": "user_request",
+      "optimized": false,
+      "strategy": null,
+      "recallUri": null
+    },
+    {
+      "step": 2,
+      "type": "file_read",
+      "optimized": false,
+      "strategy": null,
+      "recallUri": null
+    },
+    {
+      "step": 3,
+      "type": "file_read",
+      "optimized": true,
+      "strategy": "duplicate_file",
+      "recallUri": "toknt://file/992cac86a3817aa3"
+    },
+    {
+      "step": 4,
+      "type": "terminal_output",
+      "optimized": true,
+      "strategy": "terminal_output",
+      "recallUri": "toknt://output/79cf40eca416eaa9"
+    },
+    {
+      "step": 5,
+      "type": "directory_listing",
+      "optimized": true,
+      "strategy": "directory_listing",
+      "recallUri": "toknt://directory/a3ab077859df49c2"
+    },
+    {
+      "step": 6,
+      "type": "file_read",
+      "optimized": true,
+      "strategy": "duplicate_file",
+      "recallUri": "toknt://file/992cac86a3817aa3"
+    },
+    {
+      "step": 7,
+      "type": "git_diff",
+      "optimized": false,
+      "strategy": null,
+      "recallUri": null
+    }
+  ],
+  "heuristic": {
+    "original": 2269,
+    "optimized": 251,
+    "reductionPercent": 88.94
+  },
+  "tiktoken": {
+    "original": 3283,
+    "optimized": 271,
+    "reductionPercent": 91.75
+  },
+  "note": "Simulated realistic session — replace with exported agent logs in Phase 2B"
+}

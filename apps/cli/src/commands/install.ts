@@ -55,11 +55,12 @@ async function installAgent(agentId: string): Promise<void> {
   for (const id of agents) {
     const hookDir = getHookDir(id);
     await mkdir(hookDir, { recursive: true });
+    const { mode } = await getCache().getConfig();
 
     const hookConfig = {
       version: '1.0.0',
       provider: 'toknt',
-      mode: 'safe',
+      mode,
       hooks: {
         beforeToolCall: true,
         afterToolCall: true,

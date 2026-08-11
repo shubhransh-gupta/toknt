@@ -65,7 +65,12 @@ See [cursor.md](./cursor.md) for details.
 
 ## Step 4 — Pick an optimization mode
 
-Edit **`~/.toknt/config.json`**:
+```bash
+npx toknt config set mode balanced   # recommended for large test logs
+npx toknt config show
+```
+
+Or edit **`~/.toknt/config.json`** manually:
 
 ```json
 {

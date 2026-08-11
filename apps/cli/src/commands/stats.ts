@@ -1,11 +1,9 @@
-import { printBanner, getCache } from '../utils.js';
-import { TokntEngine } from '@toknt/core';
+import { printBanner, getEngine } from '../utils.js';
 import { formatTokenCount } from '@toknt/tokenizer';
 
 export async function statsCommand(options?: { json?: boolean }): Promise<void> {
   const jsonFlag = process.argv.includes('--json');
-  const cache = getCache();
-  const engine = new TokntEngine({ cache });
+  const engine = await getEngine();
   const stats = engine.metrics.getAllTimeStats();
   const breakdown = engine.metrics.getSavingsBreakdown();
 

@@ -30,6 +30,7 @@ Quick version:
 
 1. `npx toknt install cursor` (or `claude`, `codex`)
 2. Set `"mode": "balanced"` in `~/.toknt/config.json` for max savings on large logs
+   — or run `npx toknt config set mode balanced`
 3. Code normally — check savings with `npx toknt stats`
 
 ## Usage

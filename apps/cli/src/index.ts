@@ -10,6 +10,7 @@ import { benchmarkCommand } from './commands/benchmark.js';
 import { cacheCommand, cacheClearCommand } from './commands/cache.js';
 import { doctorCommand } from './commands/doctor.js';
 import { recallCommand } from './commands/recall.js';
+import { registerConfigCommands } from './commands/config.js';
 
 const program = new Command();
 
@@ -49,5 +50,7 @@ program
   .command('recall <uri>')
   .description('Recall compressed content by URI (toknt://type/id)')
   .action(recallCommand);
+
+registerConfigCommands(program);
 
 program.parse();
