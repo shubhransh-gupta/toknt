@@ -1,0 +1,12 @@
+node_modules/
+dist/
+*.tsbuildinfo
+.turbo/
+.DS_Store
+coverage/
+*.log
+.env
+.env.*
+!.env.example
+apps/observatory/dist/
+.toknt-local/

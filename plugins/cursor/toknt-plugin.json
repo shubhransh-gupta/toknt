@@ -1,0 +1,26 @@
+{
+  "name": "Tokn't",
+  "version": "1.0.0",
+  "description": "Local-first token optimization for Cursor",
+  "author": "Tokn't",
+  "license": "MIT",
+  "hooks": {
+    "./hooks/after-tool-call.js": {
+      "events": ["afterToolCall"]
+    }
+  },
+  "skills": [
+    {
+      "name": "toknt-optimize",
+      "description": "Tokn't token optimization commands",
+      "path": "./skills/toknt-optimize/SKILL.md"
+    }
+  ],
+  "rules": [
+    {
+      "name": "toknt-recall",
+      "description": "Enable Tokn't recall for compressed content",
+      "path": "./rules/toknt-recall.md"
+    }
+  ]
+}

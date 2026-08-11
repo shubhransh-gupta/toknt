@@ -1,0 +1,13 @@
+{
+  "id": "fix-authentication",
+  "name": "Fix Authentication Bug",
+  "description": "Find and fix an authentication bug in the codebase",
+  "repository": "benchmarks/fixtures/auth-service",
+  "expectedBehavior": "Auth tests pass, login flow works correctly",
+  "startingCommit": "abc123",
+  "tests": ["npm test -- --grep auth"],
+  "validation": {
+    "type": "test_pass",
+    "command": "npm test"
+  }
+}

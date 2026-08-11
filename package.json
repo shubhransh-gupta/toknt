@@ -1,0 +1,33 @@
+{
+  "name": "toknt-monorepo",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Tokn't — local-first token optimization layer for AI coding agents",
+  "workspaces": [
+    "packages/*",
+    "apps/*",
+    "integrations/*"
+  ],
+  "scripts": {
+    "build": "npm run build -w @toknt/cache && npm run build -w @toknt/tokenizer && npm run build -w @toknt/core && npm run build -w @toknt/optimizer && npm run build -w @toknt/adapters && npm run build -w @toknt/benchmark && npm run build -w toknt && npm run build -w @toknt/integration-claude && npm run build -w @toknt/integration-cursor && npm run build -w @toknt/integration-codex && npm run build -w @toknt/observatory",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "lint": "eslint . --ext .ts,.tsx",
+    "typecheck": "tsc --build",
+    "dev": "npm run dev -w @toknt/observatory",
+    "benchmark": "npm run build && node apps/cli/dist/index.js benchmark",
+    "toknt": "node apps/cli/dist/index.js"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "@typescript-eslint/eslint-plugin": "^8.18.0",
+    "@typescript-eslint/parser": "^8.18.0",
+    "eslint": "^9.16.0",
+    "typescript": "^5.7.2",
+    "vitest": "^2.1.8"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "license": "MIT"
+}

@@ -1,0 +1,18 @@
+{
+  "name": "@toknt/integration-codex",
+  "version": "1.0.0",
+  "description": "Codex integration for Tokn't",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@toknt/adapters": "*",
+    "@toknt/cache": "*",
+    "@toknt/core": "*"
+  },
+  "license": "MIT"
+}

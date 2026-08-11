@@ -1,0 +1,13 @@
+{
+  "id": "add-api-endpoint",
+  "name": "Add API Endpoint",
+  "description": "Add a new API endpoint with tests",
+  "repository": "benchmarks/fixtures/api-service",
+  "expectedBehavior": "New endpoint responds correctly, tests pass",
+  "startingCommit": "def456",
+  "tests": ["npm test"],
+  "validation": {
+    "type": "test_pass",
+    "command": "npm test"
+  }
+}

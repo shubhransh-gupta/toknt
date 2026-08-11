@@ -1,0 +1,41 @@
+{
+  "name": "toknt",
+  "version": "1.0.0",
+  "description": "Tokn't — local-first token optimization for AI coding agents",
+  "type": "module",
+  "bin": {
+    "toknt": "./dist/index.js"
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "typecheck": "tsc --noEmit",
+    "dev": "tsc --watch"
+  },
+  "dependencies": {
+    "@toknt/adapters": "*",
+    "@toknt/benchmark": "*",
+    "@toknt/cache": "*",
+    "@toknt/core": "*",
+    "@toknt/tokenizer": "*",
+    "commander": "^12.1.0",
+    "chalk": "^5.3.0"
+  },
+  "license": "MIT",
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "files": [
+    "dist"
+  ],
+  "keywords": [
+    "ai",
+    "tokens",
+    "cursor",
+    "claude",
+    "codex",
+    "optimization",
+    "coding-agent"
+  ]
+}

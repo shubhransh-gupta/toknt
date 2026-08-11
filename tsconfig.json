@@ -1,0 +1,16 @@
+{
+  "files": [],
+  "references": [
+    { "path": "packages/cache" },
+    { "path": "packages/tokenizer" },
+    { "path": "packages/core" },
+    { "path": "packages/optimizer" },
+    { "path": "packages/benchmark" },
+    { "path": "packages/adapters" },
+    { "path": "apps/cli" },
+    { "path": "apps/observatory" },
+    { "path": "integrations/claude" },
+    { "path": "integrations/cursor" },
+    { "path": "integrations/codex" }
+  ]
+}
