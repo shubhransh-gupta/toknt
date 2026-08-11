@@ -38,61 +38,38 @@ export function DemoSection() {
 
   return (
     <div className="card animate-in" style={{ padding: 40, textAlign: 'center' }}>
-      <h2 style={{ fontSize: 14, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 32 }}>
-        Interactive Demo
-      </h2>
+      <h2 className="section-title">Smelting demo — watch ore shrink</h2>
 
       <div style={{ maxWidth: 500, margin: '0 auto' }}>
-        <p style={{ fontSize: 12, color: 'var(--text-muted)', marginBottom: 8, textAlign: 'left' }}>RAW AGENT CONTEXT</p>
-        <div style={{
-          height: 24,
-          background: 'var(--bg-secondary)',
-          borderRadius: 4,
-          overflow: 'hidden',
-          marginBottom: 24,
-          transition: 'all 1s ease-out',
-        }}>
+        <p style={{ fontSize: 16, color: 'var(--lava)', marginBottom: 8, textAlign: 'left' }}>🪨 RAW AGENT CONTEXT</p>
+        <div className="mc-progress" style={{ height: 24, marginBottom: 24 }}>
           <div style={{
             height: '100%',
             width: `${rawWidth}%`,
-            background: '#ff4466',
-            opacity: 0.7,
-            borderRadius: 4,
-            transition: 'width 1.2s ease-out',
+            background: 'repeating-linear-gradient(90deg, var(--redstone) 0, var(--redstone) 8px, var(--lava) 8px, var(--lava) 16px)',
+            transition: 'width 1.2s steps(10)',
           }} />
         </div>
 
         {phase >= 1 && (
           <>
-            <p style={{ fontSize: 12, color: 'var(--accent)', marginBottom: 8, textAlign: 'left' }}>TOKN&apos;T</p>
-            <div style={{
-              height: 24,
-              background: 'var(--bg-secondary)',
-              borderRadius: 4,
-              overflow: 'hidden',
-              marginBottom: 24,
-            }}>
-              <div style={{
-                height: '100%',
-                width: `${optWidth}%`,
-                background: 'var(--accent)',
-                borderRadius: 4,
-                transition: 'width 1.2s ease-out',
-              }} />
+            <p style={{ fontSize: 16, color: 'var(--emerald)', marginBottom: 8, textAlign: 'left' }}>⚡ TOKN&apos;T FURNACE</p>
+            <div className="mc-progress" style={{ height: 24, marginBottom: 24 }}>
+              <div className="mc-progress-fill" style={{ width: `${optWidth}%`, transition: 'width 1.2s steps(10)' }} />
             </div>
           </>
         )}
 
         {phase >= 2 && (
-          <p className="mono animate-in" style={{ fontSize: 20, color: 'var(--accent)', fontWeight: 600 }}>
-            Saved: {saved.toLocaleString()} tokens
+          <p className="mono animate-in" style={{ fontSize: 24, color: 'var(--gold)', fontWeight: 600, textShadow: '2px 2px 0 #000' }}>
+            +{saved.toLocaleString()} XP tokens saved!
           </p>
         )}
       </div>
 
       <p style={{ marginTop: 16 }}>
-        <span className="badge badge-success">MEASURED</span>
-        <span style={{ fontSize: 12, color: 'var(--text-muted)', marginLeft: 8 }}>
+        <span className="badge badge-success">✓ MEASURED</span>
+        <span style={{ fontSize: 16, color: 'var(--text-muted)', marginLeft: 8 }}>
           Run <code className="mono">npm run audit:2000</code> to reproduce
         </span>
       </p>

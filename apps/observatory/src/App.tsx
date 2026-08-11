@@ -110,24 +110,24 @@ export default function App() {
       <section style={{ maxWidth: 1200, margin: '0 auto', padding: '40px 24px 80px', textAlign: 'center' }}>
         <input ref={fileInputRef} type="file" accept=".json" onChange={handleImport} />
         <button className="btn btn-secondary" onClick={() => fileInputRef.current?.click()}>
-          Upload Benchmark JSON
+          📦 Import loot (JSON)
         </button>
         <p style={{ color: 'var(--text-muted)', fontSize: 13, marginTop: 12 }}>
           Import results from <code className="mono">toknt benchmark --export result.json</code>
         </p>
       </section>
 
-      <footer style={{
-        borderTop: '1px solid var(--border)',
+      <footer className="mc-footer" style={{
         padding: '32px 24px',
         textAlign: 'center',
         color: 'var(--text-muted)',
-        fontSize: 13,
+        fontSize: 16,
       }}>
-        <p style={{ fontFamily: 'var(--font-mono)', fontSize: 16, color: 'var(--text-primary)', marginBottom: 8 }}>
-          TOKN<span style={{ color: 'var(--accent)' }}>'</span>T
+        <p className="pixel-title" style={{ fontSize: 10, color: 'var(--gold)', marginBottom: 12 }}>
+          TOKN&apos;T
         </p>
-        <p>Tokens? Tokn&apos;t. — Local-first. Open source. MIT License.</p>
+        <p>⛏️ Tokens? Tokn&apos;t. — Local survival mode. Open source. MIT License.</p>
+        <p style={{ marginTop: 8, fontSize: 14 }}>🟩🟩🟩 Crafted with blocks and bytes 🟩🟩🟩</p>
       </footer>
     </div>
   );

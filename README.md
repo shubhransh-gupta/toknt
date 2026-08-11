@@ -1,38 +1,36 @@
 <div align="center">
 
 ```
- ████████╗ ██████╗ ██╗  ██╗███╗   ██╗' ████████╗
- ╚══██╔══╝██╔═══██╗██║ ██╔╝████╗  ██║    ██╔══╝
-    ██║   ██║   ██║█████╔╝ ██╔██╗ ██║    ██║
-    ██║   ██║   ██║██╔═██╗ ██║╚██╗██║    ██║
-    ██║   ╚██████╔╝██║  ██╗██║ ╚████║    ██║
-    ╚═╝    ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═══╝    ╚═╝
+🟩🟩🟩🟩🟩🟩🟩🟩🟩🟩🟩🟩🟩🟩🟩🟩🟩🟩🟩🟩
+🟩  ⛏️  T O K N ' T  ⛏️  💎  🟩
+🟩🟩🟩🟩🟩🟩🟩🟩🟩🟩🟩🟩🟩🟩🟩🟩🟩🟩🟩🟩
+🟫🟫🟫🟫🟫🟫🟫🟫🟫🟫🟫🟫🟫🟫🟫🟫🟫🟫🟫🟫
 ```
 
 # Tokens? Tokn't.
 
-**Cut the token waste. Keep the intelligence.**
+**Smelt the token waste. Keep the intelligence.**
 
-[![GitHub stars](https://img.shields.io/github/stars/shubhransh-gupta/toknt?style=for-the-badge&logo=github&color=00ff88&labelColor=0a0a0f)](https://github.com/shubhransh-gupta/toknt/stargazers)
-[![License: MIT](https://img.shields.io/badge/License-MIT-00ff88?style=for-the-badge&labelColor=0a0a0f)](LICENSE)
-[![CI](https://img.shields.io/github/actions/workflow/status/shubhransh-gupta/toknt/ci.yml?style=for-the-badge&logo=githubactions&label=CI&labelColor=0a0a0f)](https://github.com/shubhransh-gupta/toknt/actions)
-[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-00ff88?style=for-the-badge&labelColor=0a0a0f)](CONTRIBUTING.md)
+[![GitHub stars](https://img.shields.io/github/stars/shubhransh-gupta/toknt?style=for-the-badge&logo=github&color=17DD62&labelColor=2a2a2a)](https://github.com/shubhransh-gupta/toknt/stargazers)
+[![License: MIT](https://img.shields.io/badge/License-MIT-FFD700?style=for-the-badge&labelColor=2a2a2a)](LICENSE)
+[![CI](https://img.shields.io/github/actions/workflow/status/shubhransh-gupta/toknt/ci.yml?style=for-the-badge&logo=githubactions&label=CI&labelColor=2a2a2a&color=17DD62)](https://github.com/shubhransh-gupta/toknt/actions)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-4EE4EF?style=for-the-badge&labelColor=2a2a2a)](CONTRIBUTING.md)
 
 **Local-first token optimization for Claude Code · Cursor · Codex**
 
-[⭐ Star on GitHub](https://github.com/shubhransh-gupta/toknt) · [🔭 Live Demo](https://shubhransh-gupta.github.io/toknt/) · [📖 Docs](docs/getting-started.md) · [🤝 Contribute](CONTRIBUTING.md)
+[⭐ Star on GitHub](https://github.com/shubhransh-gupta/toknt) · [🔭 Live Observatory](https://shubhransh-gupta.github.io/toknt/) · [📖 Docs](docs/getting-started.md) · [🤝 Contribute](CONTRIBUTING.md)
 
 </div>
 
 ---
 
-> **Your AI coding agent doesn't need to see everything twice.**
+> **Your AI agent keeps mining the same block. Stop paying for duplicate ore.**
 
 <table>
 <tr>
 <td width="50%">
 
-**WITHOUT TOKN'T** *(balanced mode, measured)*
+**🪨 RAW ORE** *(balanced mode, measured)*
 
 ```
 Mixed agent session
@@ -42,10 +40,10 @@ Mixed agent session
 </td>
 <td width="50%">
 
-**WITH TOKN'T** *(balanced mode, measured)*
+**💎 REFINED INGOT** *(balanced mode, measured)*
 
 ```
-Same session, compressed
+Same session, smelted
 3,236 tokens (tiktoken)
 ```
 
@@ -57,33 +55,33 @@ Same session, compressed
 
 > **Default `safe` mode** on the same session: **~6.5%** reduction (duplicates only).  
 > **Real repo** duplicate file reads: **~46%** reduction.  
-> See [Honest summary](#honest-summary-for-users) below.
+> See [Achievement log](#achievement-log-honest-stats) below.
 
 ---
 
-## Why devs are starring this
+## ⛏️ Why crafters are starring this
 
-| Problem | Tokn't fix |
-|---------|------------|
+| Mob problem | Tokn't enchantment |
+|-------------|-------------------|
 | Agent rereads the same file 5× | Hash-based dedup + recall |
 | `npm test` dumps 12K lines into context | Summarize failures, store full output locally |
 | `find .` sends 40K filenames to the model | Tree summary + searchable local index |
 | Identical grep results repeated | Content-hash caching |
-| Token counters that *tell* you waste | **Actually reduces** what hits the model |
+| Token counters that *tell* you waste | **Actually smelts** what hits the model |
 
-**Not another dashboard. Not another token counter. A performance layer.**
+**Not another scoreboard. Not another token counter. A performance layer.**
 
-Like Cloudflare makes sites faster — **Tokn't makes AI agents leaner.**
+Like Efficiency III on your pickaxe — **Tokn't makes AI agents leaner.**
 
 ---
 
-## 60-second install
+## 🛠️ Crafting table — 60-second install
 
 ```bash
 git clone https://github.com/shubhransh-gupta/toknt.git
 cd toknt && npm install && npm run build
 npx toknt install    # detects Cursor, Claude Code, Codex
-npx toknt status     # verify
+npx toknt status     # verify your world is ready
 ```
 
 Or one-liner (after npm publish):
@@ -94,24 +92,24 @@ npx toknt install
 
 ---
 
-## See it work
+## 🔥 Smelting demo — see it work
 
 ```bash
 # Run a before/after benchmark
 npx toknt benchmark --task fix-authentication
 
-# Watch your savings
+# Check your XP (token savings)
 npx toknt stats
 
-# Open the Observatory (visual dashboard)
+# Open the Observatory (blocky visual dashboard)
 npm run dev -w @toknt/observatory
 ```
 
-**[→ Live Observatory Demo](https://shubhransh-gupta.github.io/toknt/)** — upload your own `benchmark --export` JSON
+**[→ Live Observatory](https://shubhransh-gupta.github.io/toknt/)** — Minecraft-themed dashboard · upload your own `benchmark --export` JSON
 
 ---
 
-## How it works
+## 🗺️ How the redstone works
 
 ```
 Claude Code ─┐
@@ -126,25 +124,25 @@ Codex       ─┘       │
 **Safety first:** Never compresses user requests, git diffs, compiler errors, or secrets.  
 When uncertain → **pass through original**.
 
-🔒 **Local-first** — your code never leaves your machine.
+🛡️ **Local survival mode** — your code never leaves your machine.
 
 ---
 
-## Honest summary for users
+## 📜 Achievement log (honest stats)
 
-We measured Tokn't across **2,000 automated test cases** and validated token counts with **tiktoken (cl100k_base)**. Reports: [`accuracy-2000.json`](benchmarks/results/accuracy-2000.json) · [`accuracy-audit.json`](benchmarks/results/accuracy-audit.json). Reproduce: `npm run audit:2000`.
+We measured Tokn't across **2,000 automated quests** and validated token counts with **tiktoken (cl100k_base)**. Reports: [`accuracy-2000.json`](benchmarks/results/accuracy-2000.json) · [`accuracy-audit.json`](benchmarks/results/accuracy-audit.json). Reproduce: `npm run audit:2000`.
 
-### Engine accuracy (2,000 cases)
+### Engine accuracy (2,000 quests)
 
 | Metric | Result |
 |--------|--------|
-| **Overall pass rate** | **2000/2000 (100%)** |
-| **Recall integrity** | **1055/1055 (100%)** |
-| **Critical/secret passthrough** | **400/400 (100%)** |
+| **Overall pass rate** | **2000/2000 (100%)** ✓ |
+| **Recall integrity** | **1055/1055 (100%)** ✓ |
+| **Critical/secret passthrough** | **400/400 (100%)** ✓ |
 | **Token reduction % vs tiktoken** | **~4pp avg delta** |
 | **Absolute token counts** | **~27.5% avg underestimate** (not for billing) |
 
-### Outcomes by category (2,000 cases)
+### Quest outcomes by category
 
 | Category | Cases | Result | What was tested |
 |----------|------:|--------|-----------------|
@@ -157,17 +155,17 @@ We measured Tokn't across **2,000 automated test cases** and validated token cou
 | File change invalidation | 200 | 200/200 ✓ | Same file twice OK; changed content not treated as duplicate |
 | Token estimator | 150 | 150/150 ✓ | Heuristic counts within 50% of tiktoken on sample texts |
 
-### How much do you actually save?
+### How much ore do you actually smelt?
 
-| Mode | What it does | Measured reduction (tiktoken) |
-|------|----------------|----------------------------------|
+| Mode | Enchantment | Measured reduction (tiktoken) |
+|------|-------------|----------------------------------|
 | **`safe`** (default) | Duplicate files & tool output only | **~6.5%** on a mixed session |
 | **`balanced`** | + terminal & directory compression | **~91.5%** on the same session |
 | Real repo duplicate reads | Reading the same files twice | **~46%** |
 
-Your savings depend on what your agent sends. Heavy `npm test` output or `find .` listings → big wins in balanced mode. Agents that mostly re-read files → modest wins even in safe mode.
+Your savings depend on what your agent mines. Heavy `npm test` output or `find .` listings → big XP in balanced mode. Agents that mostly re-read files → modest gains even in safe mode.
 
-### Per-optimization (balanced mode, measured)
+### Per-enchantment (balanced mode, measured)
 
 | Optimization | Reduction | Recall |
 |--------------|-----------|--------|
@@ -181,14 +179,14 @@ Your savings depend on what your agent sends. Heavy `npm test` output or `find .
 
 **No.** `toknt stats` uses a heuristic estimator — on average **~27.5% lower** than tiktoken on absolute counts (only **~31%** of samples within 20%). Reduction **percentages** track tiktoken within **~4 percentage points**. These are **not** provider billing numbers.
 
-### What we haven't validated yet
+### What we haven't explored yet
 
 - Live Cursor, Claude Code, or Codex sessions (hooks install config; end-to-end agent integration varies)
 - Published npm install (`npx toknt`) — workflow ready, requires `NPM_TOKEN`
 
 ---
 
-## CLI
+## 📦 Command chest (CLI)
 
 ```bash
 toknt install              # Install integrations
@@ -200,7 +198,7 @@ toknt explain              # Full overview
 ```
 
 <details>
-<summary><strong>All commands</strong></summary>
+<summary><strong>⛏️ All commands</strong></summary>
 
 | Command | Description |
 |---------|-------------|
@@ -216,14 +214,14 @@ toknt explain              # Full overview
 
 ---
 
-## Contribute — we need you
+## 🤝 Multiplayer — we need builders
 
-Tokn't is **early and open source**. This is the best time to shape it.
+Tokn't is **early and open source**. Best time to shape the world.
 
 **[Good first issues →](https://github.com/shubhransh-gupta/toknt/labels/good%20first%20issue)**
 
-| Area | Starter task |
-|------|--------------|
+| Biome | Starter quest |
+|-------|---------------|
 | `packages/core` | Add new safety classification rules |
 | `packages/optimizer` | Better test output parsers (Jest, pytest, Go) |
 | `integrations/` | Improve Cursor / Claude / Codex hooks |
@@ -240,29 +238,29 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) · [ROADMAP.md](ROADMAP.md) · [LAUNCH.md
 
 ---
 
-## Share it
+## 📢 Share the loot
 
-If Tokn't saved you tokens, help others find it:
+If Tokn't saved you tokens, help other players find it:
 
-[![Star on GitHub](https://img.shields.io/static/v1?label=Star&message=Tokn't&color=0a0a0f&logo=github&style=for-the-badge)](https://github.com/shubhransh-gupta/toknt)
+[![Star on GitHub](https://img.shields.io/static/v1?label=Star&message=Tokn't&color=17DD62&logo=github&style=for-the-badge&labelColor=2a2a2a)](https://github.com/shubhransh-gupta/toknt)
 
 **Copy-paste for Twitter/X:**
 ```
 Your AI agent reads the same file 5 times and you're paying for every byte.
 
-Tokn't fixes that — local-first, open source, works with Cursor/Claude/Codex.
+Tokn't smelts that — local-first, open source, works with Cursor/Claude/Codex.
 
-Tokens? Tokn't.
+Tokens? Tokn't. ⛏️
 
 ⭐ github.com/shubhransh-gupta/toknt
 ```
 
 ---
 
-## Docs
+## 📚 Map & scrolls (docs)
 
-| Doc | Description |
-|-----|-------------|
+| Scroll | Description |
+|--------|-------------|
 | [Architecture](ARCHITECTURE.md) | System design |
 | [Benchmarks](BENCHMARKS.md) | Methodology & measured results |
 | [Security](SECURITY.md) | Threat model |
@@ -278,8 +276,8 @@ MIT — [LICENSE](LICENSE)
 
 <div align="center">
 
-**Same agent. Same task. Less context. Fewer tokens.**
+**Same agent. Same quest. Less context. More XP.**
 
-*Tokens? Tokn't.*
+*Tokens? Tokn't.* ⛏️💎🟩
 
 </div>

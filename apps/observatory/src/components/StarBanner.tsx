@@ -17,21 +17,16 @@ export function StarBanner() {
           setStars(data.stargazers_count);
         }
       })
-      .catch(() => {
-        // Graceful fallback — rate limit or offline
-      });
+      .catch(() => {});
 
     return () => controller.abort();
   }, []);
 
   return (
-    <div style={{
+    <div className="mc-banner" style={{
       position: 'sticky',
       top: 0,
       zIndex: 100,
-      background: 'rgba(10, 10, 15, 0.92)',
-      backdropFilter: 'blur(12px)',
-      borderBottom: '1px solid var(--border)',
       padding: '10px 24px',
       display: 'flex',
       alignItems: 'center',
@@ -39,11 +34,11 @@ export function StarBanner() {
       gap: 16,
       flexWrap: 'wrap',
     }}>
-      <span style={{ fontSize: 13, color: 'var(--text-secondary)' }}>
-        Tokn&apos;t is open source — star it if redundant agent context annoys you too
+      <span style={{ fontSize: 18, color: 'var(--text-secondary)' }}>
+        ⭐ Mine a star if redundant agent context grinds your gears
         {stars != null && (
-          <span className="mono" style={{ marginLeft: 8, color: 'var(--accent)' }}>
-            ★ {stars.toLocaleString()}
+          <span className="mono" style={{ marginLeft: 8, color: 'var(--gold)' }}>
+            ★ {stars.toLocaleString()} XP
           </span>
         )}
       </span>
@@ -52,7 +47,7 @@ export function StarBanner() {
         target="_blank"
         rel="noopener noreferrer"
         className="btn btn-primary"
-        style={{ padding: '6px 16px', fontSize: 13, textDecoration: 'none' }}
+        style={{ padding: '8px 16px', fontSize: 14 }}
       >
         ★ Star on GitHub
       </a>
@@ -61,9 +56,9 @@ export function StarBanner() {
         target="_blank"
         rel="noopener noreferrer"
         className="btn btn-secondary"
-        style={{ padding: '6px 16px', fontSize: 13, textDecoration: 'none' }}
+        style={{ padding: '8px 16px', fontSize: 14 }}
       >
-        Fork & Contribute
+        🔨 Fork & Build
       </a>
     </div>
   );

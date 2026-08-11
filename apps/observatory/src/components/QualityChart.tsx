@@ -5,6 +5,14 @@ interface Props {
   results: BenchmarkResult[];
 }
 
+const TOOLTIP_STYLE = {
+  background: '#3c3c3c',
+  border: '3px solid #373737',
+  borderRadius: 0,
+  fontSize: 14,
+  fontFamily: 'VT323, monospace',
+};
+
 export function QualityChart({ results }: Props) {
   const data = results.map((r) => ({
     tokens: r.optimizedTokens,
@@ -14,11 +22,9 @@ export function QualityChart({ results }: Props) {
 
   return (
     <div className="card">
-      <h3 style={{ fontSize: 14, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 8 }}>
-        Quality vs Tokens
-      </h3>
-      <p style={{ color: 'var(--text-secondary)', fontSize: 13, marginBottom: 20 }}>
-        The goal isn&apos;t minimum tokens. The goal is minimum tokens while keeping the task correct.
+      <h3 className="section-title" style={{ marginBottom: 8 }}>Quality vs tokens — XP scatter</h3>
+      <p style={{ color: 'var(--text-secondary)', fontSize: 18, marginBottom: 20 }}>
+        Min tokens while keeping the quest complete — like efficiency III on your pickaxe.
       </p>
       <ResponsiveContainer width="100%" height={300}>
         <ScatterChart>
@@ -26,27 +32,25 @@ export function QualityChart({ results }: Props) {
             type="number"
             dataKey="tokens"
             name="Tokens"
-            tick={{ fill: '#8888a0', fontSize: 11 }}
+            tick={{ fill: '#c8c8c8', fontSize: 12, fontFamily: 'VT323' }}
             axisLine={false}
             tickLine={false}
             tickFormatter={(v) => formatTokens(v)}
-            label={{ value: 'Tokens', position: 'bottom', fill: '#55556a', fontSize: 11 }}
+            label={{ value: 'Tokens', position: 'bottom', fill: '#9a9a9a', fontSize: 12 }}
           />
           <YAxis
             type="number"
             dataKey="success"
             name="Success %"
             domain={[0, 105]}
-            tick={{ fill: '#8888a0', fontSize: 11 }}
+            tick={{ fill: '#c8c8c8', fontSize: 12, fontFamily: 'VT323' }}
             axisLine={false}
             tickLine={false}
-            label={{ value: 'Task Success %', angle: -90, position: 'insideLeft', fill: '#55556a', fontSize: 11 }}
+            label={{ value: 'Quest Success %', angle: -90, position: 'insideLeft', fill: '#9a9a9a', fontSize: 12 }}
           />
-          <Tooltip
-            contentStyle={{ background: '#16161f', border: '1px solid #2a2a3a', borderRadius: 8, fontSize: 12 }}
-          />
-          <ReferenceLine y={95} stroke="#2a2a3a" strokeDasharray="4 4" />
-          <Scatter data={data} fill="#00ff88" />
+          <Tooltip contentStyle={TOOLTIP_STYLE} />
+          <ReferenceLine y={95} stroke="#555" strokeDasharray="4 4" />
+          <Scatter data={data} fill="#4ee4ef" />
         </ScatterChart>
       </ResponsiveContainer>
     </div>

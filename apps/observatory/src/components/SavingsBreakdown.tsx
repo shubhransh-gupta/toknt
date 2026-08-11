@@ -10,11 +10,11 @@ const DEFAULT_BREAKDOWN: Record<string, number> = {
 };
 
 const LABELS: Record<string, string> = {
-  duplicate_file: 'Repeated files',
-  terminal_output: 'Terminal output',
-  directory_listing: 'Directory listings',
-  duplicate_tool_output: 'Duplicate output',
-  stale_context: 'Stale context',
+  duplicate_file: '📜 Repeated files',
+  terminal_output: '🔥 Terminal output',
+  directory_listing: '🗺️ Directory listings',
+  duplicate_tool_output: '🔁 Duplicate output',
+  stale_context: '🕸️ Stale context',
 };
 
 const EXAMPLES: Record<string, string> = {
@@ -35,9 +35,7 @@ export function SavingsBreakdown({ result }: Props) {
 
   return (
     <div className="card">
-      <h3 style={{ fontSize: 14, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 20 }}>
-        Where Tokens Were Saved
-      </h3>
+      <h3 className="section-title" style={{ marginBottom: 20 }}>Loot breakdown</h3>
 
       {Object.entries(breakdown).map(([key, pct]) => (
         <div
@@ -45,23 +43,29 @@ export function SavingsBreakdown({ result }: Props) {
           style={{ marginBottom: 12, cursor: 'pointer' }}
           onClick={() => setActive(active === key ? null : key)}
         >
-          <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 4, fontSize: 13 }}>
-            <span style={{ color: active === key ? 'var(--accent)' : 'var(--text-secondary)' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 4, fontSize: 16 }}>
+            <span style={{ color: active === key ? 'var(--emerald)' : 'var(--text-secondary)' }}>
               {LABELS[key] ?? key}
             </span>
             <span className="mono">{pct}%</span>
           </div>
-          <div style={{ height: 6, background: 'var(--bg-secondary)', borderRadius: 3, overflow: 'hidden' }}>
-            <div style={{
-              height: '100%',
+          <div className="mc-progress" style={{ height: 10 }}>
+            <div className="mc-progress-fill" style={{
               width: `${pct}%`,
-              background: active === key ? 'var(--accent)' : '#3a3a5a',
-              borderRadius: 3,
-              transition: 'all 0.3s',
+              background: active === key
+                ? 'repeating-linear-gradient(90deg, var(--gold) 0, var(--gold) 8px, #c9a800 8px, #c9a800 16px)'
+                : undefined,
             }} />
           </div>
           {active === key && (
-            <p style={{ fontSize: 12, color: 'var(--text-muted)', marginTop: 6, padding: '8px 12px', background: 'var(--bg-secondary)', borderRadius: 6 }}>
+            <p style={{
+              fontSize: 14,
+              color: 'var(--text-muted)',
+              marginTop: 6,
+              padding: '8px 12px',
+              background: 'rgba(0,0,0,0.35)',
+              border: '2px solid var(--inventory-border)',
+            }}>
               {EXAMPLES[key]}
             </p>
           )}
