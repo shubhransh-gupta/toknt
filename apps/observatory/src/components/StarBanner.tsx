@@ -34,7 +34,7 @@ export function StarBanner() {
       gap: 16,
       flexWrap: 'wrap',
     }}>
-      <span style={{ fontSize: 18, color: 'var(--text-secondary)' }}>
+      <span style={{ fontSize: 15, color: 'var(--text-secondary)', fontWeight: 500 }}>
         ⭐ Mine a star if redundant agent context grinds your gears
         {stars != null && (
           <span className="mono" style={{ marginLeft: 8, color: 'var(--gold)' }}>

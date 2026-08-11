@@ -24,18 +24,22 @@ export function Hero({ onRunBenchmark, onExplore }: HeroProps) {
         <div className="mc-slot">⚡</div>
       </div>
 
-      <p className="pixel-title" style={{ color: 'var(--gold)', fontSize: 11, marginBottom: 20 }}>
+      <p className="pixel-title" style={{ color: 'var(--gold)', fontSize: 16, marginBottom: 20 }}>
         TOKN&apos;T OBSERVATORY
       </p>
 
-      <h1 className="pixel-title" style={{
-        fontSize: 'clamp(14px, 3.5vw, 22px)',
-        marginBottom: 20,
+      <h1 style={{
+        fontFamily: 'var(--font-body)',
+        fontSize: 'clamp(1.75rem, 4vw, 2.75rem)',
+        fontWeight: 700,
+        lineHeight: 1.25,
+        marginBottom: 16,
+        textShadow: '2px 2px 0 rgba(0,0,0,0.5)',
       }}>
         Your agent doesn&apos;t need<br />to mine the same block twice.
       </h1>
 
-      <p style={{ color: 'var(--text-secondary)', fontSize: 22, marginBottom: 40, maxWidth: 560, margin: '0 auto 40px' }}>
+      <p style={{ color: 'var(--text-secondary)', fontSize: 18, marginBottom: 40, maxWidth: 560, margin: '0 auto 40px', fontWeight: 500 }}>
         Measure. Compare. Craft leaner context.
       </p>
 
@@ -54,7 +58,7 @@ export function Hero({ onRunBenchmark, onExplore }: HeroProps) {
         padding: '32px 40px',
       }}>
         <div>
-          <p className="section-title" style={{ marginBottom: 8, fontSize: 8 }}>
+          <p className="section-title" style={{ marginBottom: 8, fontSize: 13 }}>
             Raw ore
           </p>
           <p className="mono stat-value" style={{ fontSize: 36, fontWeight: 600 }}>
@@ -72,7 +76,7 @@ export function Hero({ onRunBenchmark, onExplore }: HeroProps) {
         </div>
 
         <div>
-          <p className="section-title" style={{ marginBottom: 8, fontSize: 8 }}>
+          <p className="section-title" style={{ marginBottom: 8, fontSize: 13 }}>
             Refined ingot
           </p>
           <p className="mono stat-value" style={{ fontSize: 36, fontWeight: 600 }}>

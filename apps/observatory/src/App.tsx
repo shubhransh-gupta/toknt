@@ -12,6 +12,7 @@ import { PrivacyBanner } from './components/PrivacyBanner';
 import { HonestSummary } from './components/HonestSummary';
 import { DemoSection } from './components/DemoSection';
 import { StarBanner } from './components/StarBanner';
+import { MinecraftBackground } from './components/MinecraftBackground';
 
 export default function App() {
   const [results, setResults] = useState<BenchmarkResult[]>(BENCHMARK_RESULTS);
@@ -50,6 +51,8 @@ export default function App() {
 
   return (
     <div className="app">
+      <MinecraftBackground />
+      <div className="app-content">
       <StarBanner />
       <Hero
         onRunBenchmark={() => scrollTo('honest-summary')}
@@ -123,12 +126,13 @@ export default function App() {
         color: 'var(--text-muted)',
         fontSize: 16,
       }}>
-        <p className="pixel-title" style={{ fontSize: 10, color: 'var(--gold)', marginBottom: 12 }}>
+        <p className="pixel-title" style={{ fontSize: 16, color: 'var(--gold)', marginBottom: 12 }}>
           TOKN&apos;T
         </p>
         <p>⛏️ Tokens? Tokn&apos;t. — Local survival mode. Open source. MIT License.</p>
         <p style={{ marginTop: 8, fontSize: 14 }}>🟩🟩🟩 Crafted with blocks and bytes 🟩🟩🟩</p>
       </footer>
+      </div>
     </div>
   );
 }

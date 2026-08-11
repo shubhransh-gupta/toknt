@@ -13,7 +13,7 @@ export function PrivacyBanner() {
       }}>
         <span style={{ fontSize: 32 }}>🛡️</span>
         <div>
-          <p className="pixel-title" style={{ fontSize: 9, marginBottom: 6, color: 'var(--emerald)' }}>
+          <p className="pixel-title" style={{ fontSize: 13, marginBottom: 6, color: 'var(--emerald)' }}>
             LOCAL SURVIVAL MODE
           </p>
           <p style={{ color: 'var(--text-secondary)', fontSize: 18 }}>

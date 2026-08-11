@@ -12,7 +12,7 @@ export function HonestSummary() {
     <section id="honest-summary" style={{ maxWidth: 1200, margin: '0 auto', padding: '0 24px 40px' }}>
       <div className="card card-emerald">
         <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 20, flexWrap: 'wrap' }}>
-          <h2 className="pixel-title" style={{ fontSize: 10, margin: 0, color: 'var(--gold)' }}>Achievement log</h2>
+          <h2 className="pixel-title" style={{ fontSize: 16, margin: 0, color: 'var(--gold)' }}>Achievement log</h2>
           <span className="badge badge-success">✓ MEASURED</span>
           <span style={{ fontSize: 16, color: 'var(--text-muted)' }}>
             {ACCURACY_2000.totalCases.toLocaleString()} quests · tiktoken cl100k_base

@@ -6,11 +6,11 @@ interface Props {
 }
 
 const TOOLTIP_STYLE = {
-  background: '#3c3c3c',
+  background: 'rgba(44, 44, 48, 0.98)',
   border: '3px solid #373737',
   borderRadius: 0,
-  fontSize: 14,
-  fontFamily: 'VT323, monospace',
+  fontSize: 13,
+  fontFamily: 'Inter, sans-serif',
 };
 
 export function TokenChart({ results }: Props) {
@@ -25,14 +25,14 @@ export function TokenChart({ results }: Props) {
       <h3 className="section-title" style={{ marginBottom: 20 }}>Token ore chart</h3>
       <ResponsiveContainer width="100%" height={280}>
         <BarChart data={data} barGap={4}>
-          <XAxis dataKey="name" tick={{ fill: '#c8c8c8', fontSize: 12, fontFamily: 'VT323' }} axisLine={false} tickLine={false} />
-          <YAxis tick={{ fill: '#c8c8c8', fontSize: 12, fontFamily: 'VT323' }} axisLine={false} tickLine={false} tickFormatter={(v) => formatTokens(v)} />
+          <XAxis dataKey="name" tick={{ fill: '#e0e0e8', fontSize: 11, fontFamily: 'Inter' }} axisLine={false} tickLine={false} />
+          <YAxis tick={{ fill: '#e0e0e8', fontSize: 11, fontFamily: 'Inter' }} axisLine={false} tickLine={false} tickFormatter={(v) => formatTokens(v)} />
           <Tooltip
             contentStyle={TOOLTIP_STYLE}
             labelStyle={{ color: '#ffd700' }}
             formatter={(value: number) => [formatTokens(value), '']}
           />
-          <Legend wrapperStyle={{ fontSize: 14, color: '#c8c8c8', fontFamily: 'VT323' }} />
+          <Legend wrapperStyle={{ fontSize: 13, color: '#e0e0e8', fontFamily: 'Inter' }} />
           <Bar dataKey="without" fill="#7f7f7f" name="Raw ore" radius={0} />
           <Bar dataKey="withToknt" fill="#17dd62" name="Refined" radius={0} />
         </BarChart>

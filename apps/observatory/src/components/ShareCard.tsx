@@ -35,7 +35,7 @@ Same task. Less context. More XP.`;
         marginBottom: 20,
         border: '3px solid var(--inventory-border)',
       }}>
-        <p className="pixel-title" style={{ fontSize: 10, marginBottom: 16, color: 'var(--gold)' }}>
+        <p className="pixel-title" style={{ fontSize: 14, marginBottom: 16, color: 'var(--gold)' }}>
           TOKN&apos;T
         </p>
         <p style={{ color: 'var(--text-secondary)', fontSize: 16, marginBottom: 4 }}>{result.agent}</p>

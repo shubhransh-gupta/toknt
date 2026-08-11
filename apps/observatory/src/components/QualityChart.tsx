@@ -6,11 +6,11 @@ interface Props {
 }
 
 const TOOLTIP_STYLE = {
-  background: '#3c3c3c',
+  background: 'rgba(44, 44, 48, 0.98)',
   border: '3px solid #373737',
   borderRadius: 0,
-  fontSize: 14,
-  fontFamily: 'VT323, monospace',
+  fontSize: 13,
+  fontFamily: 'Inter, sans-serif',
 };
 
 export function QualityChart({ results }: Props) {
@@ -32,7 +32,7 @@ export function QualityChart({ results }: Props) {
             type="number"
             dataKey="tokens"
             name="Tokens"
-            tick={{ fill: '#c8c8c8', fontSize: 12, fontFamily: 'VT323' }}
+            tick={{ fill: '#e0e0e8', fontSize: 11, fontFamily: 'Inter' }}
             axisLine={false}
             tickLine={false}
             tickFormatter={(v) => formatTokens(v)}
@@ -43,7 +43,7 @@ export function QualityChart({ results }: Props) {
             dataKey="success"
             name="Success %"
             domain={[0, 105]}
-            tick={{ fill: '#c8c8c8', fontSize: 12, fontFamily: 'VT323' }}
+            tick={{ fill: '#e0e0e8', fontSize: 11, fontFamily: 'Inter' }}
             axisLine={false}
             tickLine={false}
             label={{ value: 'Quest Success %', angle: -90, position: 'insideLeft', fill: '#9a9a9a', fontSize: 12 }}
