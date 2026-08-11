@@ -13,15 +13,13 @@ export interface BenchmarkResult {
   executionTimeOptimizedMs: number;
   mode: string;
   timestamp: string;
-  isDemo?: boolean;
-  isMeasured?: boolean;
   efficiencyScore: number;
   savingsBreakdown?: Record<string, number>;
   tokenMethod?: string;
 }
 
-/** Locally measured with tiktoken cl100k_base — see scripts/accuracy-audit.mjs */
-export const DEMO_RESULTS: BenchmarkResult[] = [
+/** Locally measured with tiktoken cl100k_base */
+export const BENCHMARK_RESULTS: BenchmarkResult[] = [
   {
     agent: 'cursor',
     task: 'fix-authentication',
@@ -37,8 +35,6 @@ export const DEMO_RESULTS: BenchmarkResult[] = [
     executionTimeOptimizedMs: 0,
     mode: 'balanced',
     timestamp: '2026-08-11T07:18:24Z',
-    isMeasured: true,
-    isDemo: false,
     efficiencyScore: 90,
     tokenMethod: 'tiktoken cl100k_base',
     savingsBreakdown: {
@@ -63,8 +59,6 @@ export const DEMO_RESULTS: BenchmarkResult[] = [
     executionTimeOptimizedMs: 0,
     mode: 'safe',
     timestamp: '2026-08-11T07:18:24Z',
-    isMeasured: true,
-    isDemo: false,
     efficiencyScore: 72,
     tokenMethod: 'tiktoken cl100k_base',
     savingsBreakdown: {
@@ -87,8 +81,6 @@ export const DEMO_RESULTS: BenchmarkResult[] = [
     executionTimeOptimizedMs: 0,
     mode: 'safe',
     timestamp: '2026-08-11T07:18:24Z',
-    isMeasured: true,
-    isDemo: false,
     efficiencyScore: 78,
     tokenMethod: 'tiktoken cl100k_base',
   },
@@ -101,15 +93,12 @@ export function formatTokens(n: number): string {
 }
 
 export function aggregateStats(results: BenchmarkResult[]) {
-  const measured = results.filter((r) => r.isMeasured);
-  const pool = measured.length > 0 ? measured : results;
-
-  const totalOriginal = pool.reduce((s, r) => s + r.originalTokens, 0);
-  const totalOptimized = pool.reduce((s, r) => s + r.optimizedTokens, 0);
+  const totalOriginal = results.reduce((s, r) => s + r.originalTokens, 0);
+  const totalOptimized = results.reduce((s, r) => s + r.optimizedTokens, 0);
   const totalSaved = totalOriginal - totalOptimized;
   const avgReduction = totalOriginal > 0 ? ((totalSaved / totalOriginal) * 100) : 0;
-  const successRate = pool.length > 0
-    ? (pool.filter((r) => r.taskSuccess).length / pool.length) * 100
+  const successRate = results.length > 0
+    ? (results.filter((r) => r.taskSuccess).length / results.length) * 100
     : 0;
 
   return {
@@ -118,6 +107,6 @@ export function aggregateStats(results: BenchmarkResult[]) {
     totalSaved,
     avgReduction,
     successRate,
-    runCount: pool.length,
+    runCount: results.length,
   };
 }

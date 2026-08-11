@@ -132,11 +132,17 @@ When uncertain → **pass through original**.
 
 ## Honest summary for users
 
-We measured Tokn't locally and validated token counts with **tiktoken (cl100k_base)** — the tokenizer used by GPT-4 class models. Full report: [`benchmarks/results/accuracy-audit.json`](benchmarks/results/accuracy-audit.json). Reproduce: `node scripts/accuracy-audit.mjs`.
+We measured Tokn't across **2,000 automated test cases** and validated token counts with **tiktoken (cl100k_base)**. Reports: [`accuracy-2000.json`](benchmarks/results/accuracy-2000.json) · [`accuracy-audit.json`](benchmarks/results/accuracy-audit.json). Reproduce: `npm run audit:2000`.
 
-### Does it actually work?
+### Engine accuracy (2,000 cases)
 
-**Yes.** Compression is real. Every compressed item is recoverable via `toknt recall`. Critical content (user requests, git diffs, compiler errors) is **never** compressed.
+| Metric | Result |
+|--------|--------|
+| **Overall pass rate** | **2000/2000 (100%)** |
+| **Recall integrity** | **1055/1055 (100%)** |
+| **Critical/secret passthrough** | **400/400 (100%)** |
+| **Token reduction % vs tiktoken** | **~4pp avg delta** |
+| **Absolute token counts** | **~27.5% avg underestimate** (not for billing) |
 
 ### How much do you actually save?
 
@@ -160,14 +166,12 @@ Your savings depend on what your agent sends. Heavy `npm test` output or `find .
 
 ### Are the token numbers exact?
 
-**No.** `toknt stats` uses a heuristic estimator — typically **20–28% lower** than tiktoken on absolute counts. Reduction **percentages** are accurate within ~2 percentage points of tiktoken. These are **not** provider billing numbers.
+**No.** `toknt stats` uses a heuristic estimator — on average **~27.5% lower** than tiktoken on absolute counts (only **~31%** of samples within 20%). Reduction **percentages** track tiktoken within **~4 percentage points**. These are **not** provider billing numbers.
 
 ### What we haven't validated yet
 
 - Live Cursor, Claude Code, or Codex sessions (hooks install config; end-to-end agent integration varies)
 - Published npm install (`npx toknt`) — workflow ready, requires `NPM_TOKEN`
-
-We label simulated benchmarks `[DEMO DATA]`. Locally measured results are in the audit JSON above.
 
 ---
 

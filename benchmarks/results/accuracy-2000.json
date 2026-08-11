@@ -1,0 +1,53 @@
+{
+  "timestamp": "2026-08-11T07:27:13.150Z",
+  "totalCases": 2000,
+  "passed": 2000,
+  "failed": 0,
+  "accuracyPercent": 100,
+  "recallAccuracyPercent": 100,
+  "avgReductionDeltaPp": 3.99,
+  "avgEstimatorErrorPct": 27.5,
+  "byCategory": {
+    "duplicate_file": {
+      "pass": 350,
+      "total": 350,
+      "accuracyPercent": 100
+    },
+    "terminal_output": {
+      "pass": 350,
+      "total": 350,
+      "accuracyPercent": 100
+    },
+    "directory_listing": {
+      "pass": 350,
+      "total": 350,
+      "accuracyPercent": 100
+    },
+    "duplicate_tool_output": {
+      "pass": 200,
+      "total": 200,
+      "accuracyPercent": 100
+    },
+    "critical_passthrough": {
+      "pass": 250,
+      "total": 250,
+      "accuracyPercent": 100
+    },
+    "secret_passthrough": {
+      "pass": 150,
+      "total": 150,
+      "accuracyPercent": 100
+    },
+    "file_invalidation": {
+      "pass": 200,
+      "total": 200,
+      "accuracyPercent": 100
+    },
+    "token_estimator": {
+      "pass": 150,
+      "total": 150,
+      "accuracyPercent": 100
+    }
+  },
+  "failures": []
+}

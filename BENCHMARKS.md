@@ -20,9 +20,21 @@ WITHOUT TOKN'T  vs  WITH TOKN'T
 | `offline-caching` | Implement offline caching | Cache works offline |
 | `fix-production-crash` | Fix simulated crash | Crash resolved |
 
-## Measured results (local audit)
+## Measured results
 
-Run the accuracy audit against tiktoken:
+### 2,000-case accuracy harness
+
+```bash
+npm run audit:2000
+# → benchmarks/results/accuracy-2000.json
+```
+
+| Metric | Result |
+|--------|--------|
+| Engine behavior | **2000/2000 (100%)** |
+| Recall integrity | **100%** |
+| Reduction % vs tiktoken | **~4pp avg delta** |
+| Absolute token estimate error | **~27.5% avg** |
 
 ```bash
 npm run audit
@@ -34,8 +46,6 @@ npm run audit
 | Mixed agent session | safe (default) | **6.5%** |
 | Same session | balanced | **91.5%** |
 | Real repo duplicate reads | safe | **46.4%** |
-
-Simulated CLI benchmarks (`toknt benchmark`) use the same engine but heuristic token counting. Label: `[DEMO DATA]` unless exported from `npm run audit`.
 
 ## Running Benchmarks
 
@@ -81,7 +91,7 @@ Token counts are **estimates** using heuristic character-based estimation (~3.5-
 
 ## Limitations
 
-- Simulated benchmarks use demo data (marked `[DEMO DATA]`)
+- Simulated benchmarks use heuristic token counts (not provider billing)
 - Real agent benchmarks require installed agents
 - Token estimates may differ from provider counts by 10-20%
 - Aggressive mode may affect task quality

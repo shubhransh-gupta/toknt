@@ -204,7 +204,7 @@ class UserService {
 
   console.log('\n## README CLAIM CHECK');
   console.log('-'.repeat(72));
-  console.log('  README claims ~39% reduction (184K → 112K) [DEMO DATA]');
+  console.log('  README previously claimed ~39% reduction — superseded by measured audit above');
   if (fullSession) {
     console.log(`  Actual measured (tiktoken):   ${fullSession.tiktokenOriginal.toLocaleString()} → ${fullSession.tiktokenOptimized.toLocaleString()} (${fullSession.tiktokenReductionPct}%)`);
     console.log(`  Actual measured (heuristic):  ${fullSession.heuristicOriginal.toLocaleString()} → ${fullSession.heuristicOptimized.toLocaleString()} (${fullSession.heuristicReductionPct}%)`);

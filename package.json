@@ -17,6 +17,7 @@
     "dev": "npm run dev -w @toknt/observatory",
     "benchmark": "npm run build && node apps/cli/dist/index.js benchmark",
     "audit": "npm run build && node scripts/accuracy-audit.mjs",
+    "audit:2000": "npm run build && node scripts/accuracy-2000.mjs",
     "toknt": "node apps/cli/dist/index.js"
   },
   "devDependencies": {

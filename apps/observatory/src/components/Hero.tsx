@@ -78,9 +78,9 @@ export function Hero({ onRunBenchmark, onExplore }: HeroProps) {
       </div>
 
       <p style={{ marginTop: 16, display: 'flex', gap: 8, justifyContent: 'center', flexWrap: 'wrap' }}>
-        <span className="badge badge-success">MEASURED DATA</span>
+        <span className="badge badge-success">MEASURED</span>
         <span style={{ fontSize: 12, color: 'var(--text-muted)', alignSelf: 'center' }}>
-          Default safe mode: ~{MEASURED_BY_MODE.safe.reductionPercent}% on same session
+          tiktoken cl100k_base · default safe mode ~{MEASURED_BY_MODE.safe.reductionPercent}% on same session
         </span>
       </p>
     </section>

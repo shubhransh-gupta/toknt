@@ -25,7 +25,6 @@ export function createComparison(
   task: BenchmarkTask,
   without: BenchmarkComparison['without'],
   withToknt: BenchmarkComparison['withToknt'],
-  isDemo = false
 ): BenchmarkComparison {
   const reduction = reductionPercent(without.tokens, withToknt.tokens);
   const toolCallReduction =
@@ -54,7 +53,6 @@ export function createComparison(
     reductionPercent: reduction,
     taskCorrectnessPreserved,
     efficiencyScore,
-    isDemo,
   };
 }
 
@@ -78,7 +76,6 @@ export function comparisonToResult(
     executionTimeOptimizedMs: comparison.withToknt.executionTimeMs,
     mode,
     timestamp: new Date().toISOString(),
-    isDemo: comparison.isDemo,
     efficiencyScore: comparison.efficiencyScore,
   };
 }
@@ -128,10 +125,6 @@ export function formatBenchmarkOutput(comparison: BenchmarkComparison): string {
 
   if (!comparison.taskCorrectnessPreserved) {
     lines.push('', 'Optimization rejected.');
-  }
-
-  if (comparison.isDemo) {
-    lines.push('', '[DEMO DATA]');
   }
 
   lines.push('', `Efficiency Score: ${comparison.efficiencyScore}/100`);

@@ -1,5 +1,5 @@
 import { useState, useCallback, useRef } from 'react';
-import { DEMO_RESULTS, aggregateStats, type BenchmarkResult } from './data/demo';
+import { BENCHMARK_RESULTS, aggregateStats, type BenchmarkResult } from './data/demo';
 import { Hero } from './components/Hero';
 import { Dashboard } from './components/Dashboard';
 import { Comparison } from './components/Comparison';
@@ -14,8 +14,8 @@ import { DemoSection } from './components/DemoSection';
 import { StarBanner } from './components/StarBanner';
 
 export default function App() {
-  const [results, setResults] = useState<BenchmarkResult[]>(DEMO_RESULTS);
-  const [selectedResult, setSelectedResult] = useState<BenchmarkResult>(DEMO_RESULTS[0]);
+  const [results, setResults] = useState<BenchmarkResult[]>(BENCHMARK_RESULTS);
+  const [selectedResult, setSelectedResult] = useState<BenchmarkResult>(BENCHMARK_RESULTS[0]);
   const [agentFilter, setAgentFilter] = useState<string>('all');
   const fileInputRef = useRef<HTMLInputElement>(null);
 

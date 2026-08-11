@@ -108,12 +108,6 @@ body::before {
   letter-spacing: 0.05em;
 }
 
-.badge-demo {
-  background: rgba(255, 170, 0, 0.15);
-  color: var(--warning);
-  border: 1px solid rgba(255, 170, 0, 0.3);
-}
-
 .badge-success {
   background: rgba(0, 255, 136, 0.1);
   color: var(--accent);

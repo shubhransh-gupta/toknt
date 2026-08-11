@@ -1,3 +1,25 @@
+export const ACCURACY_2000 = {
+  totalCases: 2000,
+  passed: 2000,
+  accuracyPercent: 100,
+  recallAccuracyPercent: 100,
+  avgReductionDeltaPp: 3.99,
+  avgEstimatorErrorPct: 27.5,
+  estimatorWithin20Pct: 30.7,
+  runCommand: 'node scripts/accuracy-2000.mjs',
+  reportPath: 'benchmarks/results/accuracy-2000.json',
+  byCategory: {
+    duplicate_file: 100,
+    terminal_output: 100,
+    directory_listing: 100,
+    duplicate_tool_output: 100,
+    critical_passthrough: 100,
+    secret_passthrough: 100,
+    file_invalidation: 100,
+    token_estimator: 100,
+  },
+};
+
 export const MEASURED_AUDIT = {
   source: 'Local accuracy audit (Aug 2026)',
   method: 'tiktoken cl100k_base vs Tokn\'t engine',
@@ -35,8 +57,8 @@ export const MEASURED_BY_STRATEGY = [
 ];
 
 export const MEASURED_ESTIMATOR = {
-  reductionPercentAccuracy: 'Within ~2 percentage points of tiktoken',
-  absoluteCountNote: 'Heuristic counts typically 20–28% lower than tiktoken — fine for relative savings, not billing',
+  reductionPercentAccuracy: 'Within ~4 percentage points of tiktoken (2000-case avg)',
+  absoluteCountNote: 'Heuristic counts avg ~27.5% lower than tiktoken — fine for relative savings, not billing',
   codeError: 25,
   terminalError: 28,
   directoryError: 20,

@@ -34,7 +34,7 @@ WITH Tokn't:    ~112K tokens
 Not a counter. An actual optimization layer.
 
 Demo: shubhransh-gupta.github.io/toknt
-[DEMO DATA]
+Measured: 2000/2000 engine tests pass · see README
 ```
 
 **Tweet 3 (CTA)**

@@ -20,7 +20,6 @@ export interface BenchmarkResult {
   executionTimeOptimizedMs: number;
   mode: string;
   timestamp: string;
-  isDemo?: boolean;
   efficiencyScore: number;
   savingsBreakdown?: Record<string, number>;
 }
@@ -42,7 +41,6 @@ export interface BenchmarkComparison {
   reductionPercent: number;
   taskCorrectnessPreserved: boolean;
   efficiencyScore: number;
-  isDemo?: boolean;
 }
 
 export const BENCHMARK_TASKS: BenchmarkTask[] = [

@@ -127,8 +127,7 @@ export async function runBenchmarkSimulation(
       toolCalls: withRun.toolCalls,
       taskSuccess: withRun.taskSuccess,
       executionTimeMs: 42000,
-    },
-    true
+    }
   );
 }
 

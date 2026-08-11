@@ -42,7 +42,7 @@ To fully remove all Tokn't data, delete `~/.toknt/`.
 ## Observatory Portal
 
 The Tokn't Observatory runs entirely in your browser:
-- Demo data is bundled locally
+- Sample benchmark data is bundled locally (tiktoken-measured)
 - Benchmark JSON import is processed client-side
 - No server-side processing
 - Deployable to GitHub Pages with no backend

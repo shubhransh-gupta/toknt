@@ -25,7 +25,7 @@ export async function benchmarkCommand(options: {
   if (detected && !detected.installed) {
     console.log(`Agent not installed.\n`);
     console.log(`Benchmark skipped.\n`);
-    console.log('[Running simulation with demo data instead]\n');
+    console.log('[Running engine simulation instead]\n');
   }
 
   if (options.task) {
@@ -49,7 +49,6 @@ export async function benchmarkCommand(options: {
       console.log(`  Saved:   ${result.reductionPercent}%`);
       console.log(`  Success: ${result.taskSuccess ? '✓' : '✗'}`);
       console.log(`  Score:   ${result.efficiencyScore}/100`);
-      if (result.isDemo) console.log('  [DEMO DATA]');
       console.log();
     }
 

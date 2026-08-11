@@ -31,11 +31,9 @@ describe('createComparison', () => {
     const comparison = createComparison(
       BENCHMARK_TASKS[0],
       { tokens: 100000, toolCalls: 40, taskSuccess: true, executionTimeMs: 30000 },
-      { tokens: 60000, toolCalls: 35, taskSuccess: true, executionTimeMs: 28000 },
-      true
+      { tokens: 60000, toolCalls: 35, taskSuccess: true, executionTimeMs: 28000 }
     );
     expect(comparison.reductionPercent).toBe(40);
     expect(comparison.taskCorrectnessPreserved).toBe(true);
-    expect(comparison.isDemo).toBe(true);
   });
 });

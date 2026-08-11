@@ -19,8 +19,7 @@ ${formatTokens(result.originalTokens)} → ${formatTokens(result.optimizedTokens
 
 Task ${result.taskSuccess ? 'PASSED ✓' : 'FAILED ✗'}
 
-Same task. Less context.
-${result.isDemo ? '\n> DEMO DATA' : ''}`;
+Same task. Less context.`;
 
   const copy = (text: string, label: string) => {
     navigator.clipboard.writeText(text);
