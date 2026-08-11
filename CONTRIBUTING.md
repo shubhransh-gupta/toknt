@@ -30,8 +30,11 @@ Full list: [ROADMAP.md](./ROADMAP.md) · [open issues](https://github.com/shubhr
 
 1. Fork → branch → change → test
 2. `npm test && npm run build` must pass
-3. Open PR (template auto-fills)
-4. We review quickly — this project is early, your PR matters
+3. Open PR into `main` (template auto-fills) — **direct pushes to `main` are blocked**
+4. CI must pass: `build-and-test (20)` and `build-and-test (22)`
+5. We review quickly — this project is early, your PR matters
+
+Branch protection details: [.github/BRANCH_PROTECTION.md](.github/BRANCH_PROTECTION.md)
 
 ## Project structure
 

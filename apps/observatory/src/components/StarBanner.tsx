@@ -43,10 +43,17 @@ export function StarBanner() {
         )}
       </span>
       <a
+        href="#setup"
+        className="btn btn-primary"
+        style={{ padding: '8px 16px', fontSize: 14 }}
+      >
+        💎 Reduce token cost
+      </a>
+      <a
         href={GITHUB_REPO}
         target="_blank"
         rel="noopener noreferrer"
-        className="btn btn-primary"
+        className="btn btn-secondary"
         style={{ padding: '8px 16px', fontSize: 14 }}
       >
         ★ Star on GitHub

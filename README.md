@@ -18,7 +18,7 @@
 
 **Local-first token optimization for Claude Code · Cursor · Codex**
 
-[⭐ Star on GitHub](https://github.com/shubhransh-gupta/toknt) · [🔭 Live Observatory](https://shubhransh-gupta.github.io/toknt/) · [📖 Docs](docs/getting-started.md) · [🤝 Contribute](CONTRIBUTING.md)
+[⭐ Star on GitHub](https://github.com/shubhransh-gupta/toknt) · [💎 Reduce token cost](docs/reduce-token-cost.md) · [🔭 Live Observatory](https://shubhransh-gupta.github.io/toknt/#setup) · [📖 Docs](docs/getting-started.md) · [🤝 Contribute](CONTRIBUTING.md)
 
 </div>
 
@@ -57,6 +57,8 @@ Same session, smelted
 > **Real repo** duplicate file reads: **~46%** reduction.  
 > See [Achievement log](#achievement-log-honest-stats) below.
 
+> **New here?** Follow the **[6-step setup guide](#-how-to-configure--reduce-token-cost)** to install, configure mode, and cut token cost · [Full guide](docs/reduce-token-cost.md) · [Live walkthrough on Observatory](https://shubhransh-gupta.github.io/toknt/#setup)
+
 ---
 
 ## ⛏️ Why crafters are starring this
@@ -89,6 +91,44 @@ Or one-liner (after npm publish):
 ```bash
 npx toknt install
 ```
+
+---
+
+## 💎 How to configure & reduce token cost
+
+**Full guide → [docs/reduce-token-cost.md](docs/reduce-token-cost.md)**
+
+### Quick setup (6 steps)
+
+| Step | Command / action |
+|------|------------------|
+| **1. Install** | `git clone … && npm install && npm run build` |
+| **2. Connect agent** | `npx toknt install cursor` (or `claude`, `codex`) |
+| **3. Set mode** | Edit `~/.toknt/config.json` → `"mode": "balanced"` for max savings on large logs |
+| **4. Use agent** | Code normally — Tokn't compresses tool output automatically |
+| **5. Track savings** | `npx toknt stats` |
+| **6. Recall full content** | `npx toknt recall toknt://file/abc123` |
+
+### Which mode saves the most?
+
+| Mode | Best for | Measured reduction* |
+|------|----------|---------------------|
+| **`safe`** (default) | Duplicate file reads, identical tool output | **~6.5%** mixed session · **~46%** duplicate reads |
+| **`balanced`** | + huge `npm test` output, `find .`, directory listings | **~91.5%** on log-heavy sessions |
+| **`aggressive`** | Experiments only — may hurt task quality | Higher, not fully measured |
+
+\*tiktoken-measured locally. Use `toknt stats` for your own trends — not for exact billing.
+
+**Example config** (`~/.toknt/config.json`):
+
+```json
+{
+  "mode": "balanced",
+  "integrations": { "cursor": true }
+}
+```
+
+Restart your agent after changing mode.
 
 ---
 
@@ -261,6 +301,7 @@ Tokens? Tokn't. ⛏️
 
 | Scroll | Description |
 |--------|-------------|
+| **[Reduce token cost](docs/reduce-token-cost.md)** | **Setup, modes, daily usage** |
 | [Architecture](ARCHITECTURE.md) | System design |
 | [Benchmarks](BENCHMARKS.md) | Methodology & measured results |
 | [Security](SECURITY.md) | Threat model |

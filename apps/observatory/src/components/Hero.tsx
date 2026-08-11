@@ -45,7 +45,7 @@ export function Hero({ onRunBenchmark, onExplore }: HeroProps) {
 
       <div style={{ display: 'flex', gap: 12, justifyContent: 'center', marginBottom: 60, flexWrap: 'wrap' }}>
         <button className="btn btn-primary" onClick={onRunBenchmark}>⛏ View stats</button>
-        <button className="btn btn-secondary" onClick={onExplore}>📦 Open chest</button>
+        <button className="btn btn-secondary" onClick={onExplore}>📖 Setup guide</button>
       </div>
 
       <div className="card card-emerald animate-in" style={{

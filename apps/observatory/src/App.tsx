@@ -13,6 +13,7 @@ import { HonestSummary } from './components/HonestSummary';
 import { DemoSection } from './components/DemoSection';
 import { StarBanner } from './components/StarBanner';
 import { MinecraftBackground } from './components/MinecraftBackground';
+import { SetupGuide } from './components/SetupGuide';
 
 export default function App() {
   const [results, setResults] = useState<BenchmarkResult[]>(BENCHMARK_RESULTS);
@@ -56,8 +57,10 @@ export default function App() {
       <StarBanner />
       <Hero
         onRunBenchmark={() => scrollTo('honest-summary')}
-        onExplore={() => scrollTo('dashboard')}
+        onExplore={() => scrollTo('setup')}
       />
+
+      <SetupGuide />
 
       <PrivacyBanner />
 
