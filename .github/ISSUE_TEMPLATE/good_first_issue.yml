@@ -1,0 +1,33 @@
+name: Good First Issue Proposal
+description: Propose a small, well-scoped task for new contributors
+title: "[good first issue] "
+labels: ["good first issue"]
+body:
+  - type: markdown
+    value: |
+      Thanks for helping grow Tokn't! Good first issues should be completable in ~1-2 hours.
+
+  - type: textarea
+    id: description
+    attributes:
+      label: What should be done?
+      description: Clear, specific scope
+    validations:
+      required: true
+
+  - type: textarea
+    id: files
+    attributes:
+      label: Relevant files
+      description: Where should the contributor look?
+      placeholder: "packages/optimizer/src/terminal.ts"
+    validations:
+      required: true
+
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Acceptance criteria
+      description: How do we know it's done?
+    validations:
+      required: true

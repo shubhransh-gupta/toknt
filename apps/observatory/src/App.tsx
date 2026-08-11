@@ -10,6 +10,7 @@ import { CostEstimator } from './components/CostEstimator';
 import { ShareCard } from './components/ShareCard';
 import { PrivacyBanner } from './components/PrivacyBanner';
 import { DemoSection } from './components/DemoSection';
+import { StarBanner } from './components/StarBanner';
 
 export default function App() {
   const [results, setResults] = useState<BenchmarkResult[]>(DEMO_RESULTS);
@@ -48,6 +49,7 @@ export default function App() {
 
   return (
     <div className="app">
+      <StarBanner />
       <Hero
         stats={stats}
         onRunBenchmark={() => scrollTo('comparison')}

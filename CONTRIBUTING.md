@@ -1,30 +1,41 @@
 # Contributing to Tokn't
 
-Thanks for your interest in contributing!
+Thanks for helping make AI coding agents less wasteful. **Small PRs welcome. No need to ask permission on [good first issues](https://github.com/shubhransh-gupta/toknt/labels/good%20first%20issue).**
 
-## Getting Started
+## Quick start
 
 ```bash
-git clone https://github.com/toknt/toknt.git
+git clone https://github.com/shubhransh-gupta/toknt.git
 cd toknt
 npm install
 npm test
 npm run build
 ```
 
-## Development Workflow
+## Pick something to work on
 
-1. Fork the repository
-2. Create a feature branch: `git checkout -b feat/my-feature`
-3. Make your changes
-4. Run tests: `npm test`
-5. Run typecheck: `npm run typecheck`
-6. Commit with a clear message
-7. Open a pull request
+| Difficulty | Task | Package |
+|------------|------|---------|
+| 🟢 Easy | Add Jest test output parser | `packages/optimizer` |
+| 🟢 Easy | Add pytest output parser | `packages/optimizer` |
+| 🟢 Easy | Improve README / docs | `docs/` |
+| 🟡 Medium | File watcher cache invalidation | `packages/core` |
+| 🟡 Medium | Observatory dark mode polish | `apps/observatory` |
+| 🟡 Medium | Windsurf / Cline adapter | `integrations/` |
+| 🔴 Hard | Real Cursor hook integration test | `integrations/cursor` |
 
-## Project Structure
+Full list: [ROADMAP.md](./ROADMAP.md) · [open issues](https://github.com/shubhransh-gupta/toknt/issues)
 
-- `packages/core` — Optimization engine (start here)
+## Development workflow
+
+1. Fork → branch → change → test
+2. `npm test && npm run build` must pass
+3. Open PR (template auto-fills)
+4. We review quickly — this project is early, your PR matters
+
+## Project structure
+
+- `packages/core` — Optimization engine **← start here**
 - `packages/cache` — Local cache
 - `packages/optimizer` — Compression strategies
 - `packages/tokenizer` — Token estimation
@@ -34,12 +45,12 @@ npm run build
 - `apps/observatory` — Visualization portal
 - `integrations/` — Agent-specific adapters
 
-## Code Style
+## Code style
 
 - TypeScript strict mode
 - ES modules
 - Minimal dependencies
-- Tests for all core functionality
+- Tests for all core behavior
 - No placeholder/TODO implementations
 
 ## Testing
@@ -49,21 +60,15 @@ npm test              # All tests
 npm test -- --watch   # Watch mode
 ```
 
-Write tests for:
-- Duplicate detection
-- Cache invalidation
-- Terminal compression
-- Directory compression
-- Safety validation
-- Secret detection
+## PR guidelines
 
-## Pull Request Guidelines
+- One concern per PR
+- Include tests for behavior changes
+- Update docs when user-facing behavior changes
+- CI must pass
 
-- Keep PRs focused and small
-- Include tests for new functionality
-- Update documentation if needed
-- Ensure CI passes
+## Community
 
-## Code of Conduct
-
-See [CODE_OF_CONDUCT.md](./CODE_OF_CONDUCT.md).
+- [Discussions](https://github.com/shubhransh-gupta/toknt/discussions) — questions & ideas
+- [LAUNCH.md](./LAUNCH.md) — help spread the word
+- [Code of Conduct](./CODE_OF_CONDUCT.md)

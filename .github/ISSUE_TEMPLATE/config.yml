@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: 💬 Questions & Ideas
+    url: https://github.com/shubhransh-gupta/toknt/discussions
+    about: Ask questions or propose ideas before opening an issue
+  - name: ⭐ Star the repo
+    url: https://github.com/shubhransh-gupta/toknt
+    about: Help others discover Tokn't
