@@ -8,18 +8,18 @@ interface Props {
 export function ShareCard({ result }: Props) {
   const [copied, setCopied] = useState('');
 
-  const markdown = `# Tokn't Benchmark ⛏️
+  const markdown = `# Tokn't Benchmark
 
 **Agent:** ${result.agent}
-**Quest:** ${result.taskName}
+**Task:** ${result.taskName}
 
 ${formatTokens(result.originalTokens)} → ${formatTokens(result.optimizedTokens)}
 
-**${result.reductionPercent.toFixed(1)}% FEWER TOKENS**
+**${result.reductionPercent.toFixed(1)}% fewer tokens**
 
-Quest ${result.taskSuccess ? 'COMPLETE ✓' : 'FAILED ✗'}
+Task ${result.taskSuccess ? 'succeeded' : 'failed'}
 
-Same task. Less context. More XP.`;
+Same task. Less context.`;
 
   const copy = (text: string, label: string) => {
     navigator.clipboard.writeText(text);
@@ -28,40 +28,43 @@ Same task. Less context. More XP.`;
   };
 
   return (
-    <div className="card" style={{ textAlign: 'center' }}>
+    <div className="card">
+      <h3 className="section-title">Share results</h3>
+
       <div style={{
-        background: 'rgba(0,0,0,0.35)',
-        padding: 32,
+        background: 'var(--bg-elevated)',
+        padding: 28,
         marginBottom: 20,
-        border: '3px solid var(--inventory-border)',
+        border: '1px solid var(--border-subtle)',
+        borderRadius: 'var(--radius-sm)',
+        textAlign: 'center',
       }}>
-        <p className="pixel-title" style={{ fontSize: 14, marginBottom: 16, color: 'var(--gold)' }}>
-          TOKN&apos;T
+        <p style={{ fontSize: 13, fontWeight: 600, marginBottom: 16, color: 'var(--text-muted)', letterSpacing: '0.04em', textTransform: 'uppercase' }}>
+          Tokn&apos;t
         </p>
-        <p style={{ color: 'var(--text-secondary)', fontSize: 16, marginBottom: 4 }}>{result.agent}</p>
-        <p style={{ fontSize: 18, marginBottom: 20 }}>{result.taskName}</p>
+        <p style={{ color: 'var(--text-muted)', fontSize: 14, marginBottom: 4 }}>{result.agent}</p>
+        <p style={{ fontSize: 16, marginBottom: 20, fontWeight: 500 }}>{result.taskName}</p>
 
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 16, marginBottom: 12 }}>
-          <span className="mono" style={{ fontSize: 28 }}>{formatTokens(result.originalTokens)}</span>
-          <span style={{ fontSize: 24 }}>⬇️</span>
-          <span className="mono" style={{ fontSize: 28, color: 'var(--emerald)' }}>{formatTokens(result.optimizedTokens)}</span>
+          <span className="mono" style={{ fontSize: 24 }}>{formatTokens(result.originalTokens)}</span>
+          <span style={{ color: 'var(--text-muted)' }}>→</span>
+          <span className="mono" style={{ fontSize: 24, color: 'var(--accent)' }}>{formatTokens(result.optimizedTokens)}</span>
         </div>
 
-        <p className="mono" style={{ color: 'var(--gold)', fontSize: 20, marginBottom: 8 }}>
-          {result.reductionPercent.toFixed(1)}% FEWER TOKENS
+        <p className="mono" style={{ color: 'var(--accent)', fontSize: 18, marginBottom: 8, fontWeight: 600 }}>
+          {result.reductionPercent.toFixed(1)}% fewer tokens
         </p>
-        <p style={{ fontSize: 16 }}>
-          QUEST {result.taskSuccess ? 'COMPLETE ✓' : 'FAILED ✗'}
+        <p style={{ fontSize: 14, color: 'var(--text-muted)' }}>
+          Task {result.taskSuccess ? 'succeeded' : 'failed'}
         </p>
-        <p style={{ color: 'var(--text-muted)', fontSize: 14, marginTop: 8 }}>Same task. Less context.</p>
       </div>
 
       <div style={{ display: 'flex', gap: 8, justifyContent: 'center', flexWrap: 'wrap' }}>
-        <button className="btn btn-secondary" style={{ fontSize: 14, padding: '8px 14px' }} onClick={() => copy(markdown, 'md')}>
-          {copied === 'md' ? 'Copied!' : '📋 Copy Markdown'}
+        <button className="btn btn-secondary" style={{ fontSize: 13, padding: '8px 14px' }} onClick={() => copy(markdown, 'md')}>
+          {copied === 'md' ? 'Copied' : 'Copy Markdown'}
         </button>
-        <button className="btn btn-secondary" style={{ fontSize: 14, padding: '8px 14px' }} onClick={() => copy(JSON.stringify(result, null, 2), 'json')}>
-          {copied === 'json' ? 'Copied!' : '📦 Copy JSON'}
+        <button className="btn btn-secondary" style={{ fontSize: 13, padding: '8px 14px' }} onClick={() => copy(JSON.stringify(result, null, 2), 'json')}>
+          {copied === 'json' ? 'Copied' : 'Copy JSON'}
         </button>
       </div>
     </div>

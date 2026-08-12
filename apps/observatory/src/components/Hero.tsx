@@ -11,85 +11,86 @@ export function Hero({ onRunBenchmark, onExplore }: HeroProps) {
 
   return (
     <section style={{
-      padding: '80px 24px 60px',
+      padding: '72px 24px 56px',
       textAlign: 'center',
-      maxWidth: 900,
+      maxWidth: 800,
       margin: '0 auto',
     }}>
-      <div className="mc-hotbar" style={{ margin: '0 auto 24px' }}>
-        <div className="mc-slot">⛏️</div>
-        <div className="mc-slot">💎</div>
-        <div className="mc-slot">🟩</div>
-        <div className="mc-slot">📦</div>
-        <div className="mc-slot">⚡</div>
-      </div>
-
-      <p className="pixel-title" style={{ color: 'var(--gold)', fontSize: 16, marginBottom: 20 }}>
-        TOKN&apos;T OBSERVATORY
+      <p style={{
+        fontSize: 13,
+        fontWeight: 500,
+        color: 'var(--accent)',
+        letterSpacing: '0.04em',
+        textTransform: 'uppercase',
+        marginBottom: 16,
+      }}>
+        Token optimization for AI agents
       </p>
 
       <h1 style={{
-        fontFamily: 'var(--font-body)',
-        fontSize: 'clamp(1.75rem, 4vw, 2.75rem)',
+        fontSize: 'clamp(2rem, 5vw, 3rem)',
         fontWeight: 700,
-        lineHeight: 1.25,
+        lineHeight: 1.15,
+        letterSpacing: '-0.03em',
         marginBottom: 16,
-        textShadow: '2px 2px 0 rgba(0,0,0,0.5)',
+        color: 'var(--text-primary)',
       }}>
-        Your agent doesn&apos;t need<br />to mine the same block twice.
+        Cut the token waste.<br />Keep the intelligence.
       </h1>
 
-      <p style={{ color: 'var(--text-secondary)', fontSize: 18, marginBottom: 40, maxWidth: 560, margin: '0 auto 40px', fontWeight: 500 }}>
-        Measure. Compare. Craft leaner context.
+      <p style={{
+        color: 'var(--text-secondary)',
+        fontSize: 18,
+        marginBottom: 40,
+        maxWidth: 520,
+        margin: '0 auto 40px',
+        lineHeight: 1.6,
+      }}>
+        Measure, compare, and reduce redundant context before it reaches your model.
       </p>
 
-      <div style={{ display: 'flex', gap: 12, justifyContent: 'center', marginBottom: 60, flexWrap: 'wrap' }}>
-        <button className="btn btn-primary" onClick={onRunBenchmark}>⛏ View stats</button>
-        <button className="btn btn-secondary" onClick={onExplore}>📖 Setup guide</button>
+      <div style={{ display: 'flex', gap: 12, justifyContent: 'center', marginBottom: 56, flexWrap: 'wrap' }}>
+        <button className="btn btn-primary" onClick={onRunBenchmark}>View measured results</button>
+        <button className="btn btn-secondary" onClick={onExplore}>Setup guide</button>
       </div>
 
-      <div className="card card-emerald animate-in" style={{
+      <div className="card card-accent animate-in" style={{
         display: 'grid',
         gridTemplateColumns: '1fr auto 1fr',
         gap: 32,
         alignItems: 'center',
-        maxWidth: 640,
+        maxWidth: 600,
         margin: '0 auto',
-        padding: '32px 40px',
+        padding: '28px 32px',
       }}>
         <div>
-          <p className="section-title" style={{ marginBottom: 8, fontSize: 13 }}>
-            Raw ore
-          </p>
-          <p className="mono stat-value" style={{ fontSize: 36, fontWeight: 600 }}>
+          <p className="section-title" style={{ marginBottom: 8, fontSize: 11 }}>Before</p>
+          <p className="mono stat-value" style={{ fontSize: 32 }}>
             {formatTokens(balanced.tiktokenOriginal)}
           </p>
-          <p style={{ color: 'var(--text-muted)', fontSize: 16 }}>tokens (tiktoken)</p>
+          <p style={{ color: 'var(--text-muted)', fontSize: 14, marginTop: 4 }}>tokens (tiktoken)</p>
         </div>
 
         <div style={{ textAlign: 'center' }}>
-          <p style={{ fontSize: 28 }}>⬇️</p>
-          <p className="mono" style={{ color: 'var(--emerald)', fontSize: 22, fontWeight: 600, textShadow: '2px 2px 0 #000' }}>
-            {balanced.reductionPercent}% SMELTED
+          <p className="mono" style={{ color: 'var(--accent)', fontSize: 20, fontWeight: 600 }}>
+            −{balanced.reductionPercent}%
           </p>
-          <p style={{ fontSize: 14, color: 'var(--gold)', marginTop: 4 }}>balanced mode</p>
+          <p style={{ fontSize: 12, color: 'var(--text-muted)', marginTop: 4 }}>balanced mode</p>
         </div>
 
         <div>
-          <p className="section-title" style={{ marginBottom: 8, fontSize: 13 }}>
-            Refined ingot
-          </p>
-          <p className="mono stat-value" style={{ fontSize: 36, fontWeight: 600 }}>
+          <p className="section-title" style={{ marginBottom: 8, fontSize: 11 }}>After</p>
+          <p className="mono stat-value" style={{ fontSize: 32 }}>
             {formatTokens(balanced.tiktokenOptimized)}
           </p>
-          <p style={{ color: 'var(--text-muted)', fontSize: 16 }}>tokens (tiktoken)</p>
+          <p style={{ color: 'var(--text-muted)', fontSize: 14, marginTop: 4 }}>tokens (tiktoken)</p>
         </div>
       </div>
 
-      <p style={{ marginTop: 16, display: 'flex', gap: 8, justifyContent: 'center', flexWrap: 'wrap' }}>
-        <span className="badge badge-success">✓ MEASURED</span>
-        <span style={{ fontSize: 16, color: 'var(--text-muted)', alignSelf: 'center' }}>
-          tiktoken cl100k_base · safe mode ~{MEASURED_BY_MODE.safe.reductionPercent}% on same session
+      <p style={{ marginTop: 20, display: 'flex', gap: 8, justifyContent: 'center', flexWrap: 'wrap', alignItems: 'center' }}>
+        <span className="badge badge-success">Measured</span>
+        <span style={{ fontSize: 14, color: 'var(--text-muted)' }}>
+          tiktoken cl100k_base · safe mode ~{MEASURED_BY_MODE.safe.reductionPercent}% on mixed sessions
         </span>
       </p>
     </section>

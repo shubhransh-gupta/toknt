@@ -9,47 +9,48 @@ import {
 
 export function HonestSummary() {
   return (
-    <section id="honest-summary" style={{ maxWidth: 1200, margin: '0 auto', padding: '0 24px 40px' }}>
-      <div className="card card-emerald">
-        <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 20, flexWrap: 'wrap' }}>
-          <h2 className="pixel-title" style={{ fontSize: 16, margin: 0, color: 'var(--gold)' }}>Achievement log</h2>
-          <span className="badge badge-success">✓ MEASURED</span>
-          <span style={{ fontSize: 16, color: 'var(--text-muted)' }}>
-            {ACCURACY_2000.totalCases.toLocaleString()} quests · tiktoken cl100k_base
+    <section id="honest-summary" className="section" style={{ paddingBottom: 40 }}>
+      <div className="card card-accent">
+        <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 24, flexWrap: 'wrap' }}>
+          <h2 className="section-heading" style={{ margin: 0 }}>Measured accuracy</h2>
+          <span className="badge badge-success">Verified</span>
+          <span style={{ fontSize: 14, color: 'var(--text-muted)' }}>
+            {ACCURACY_2000.totalCases.toLocaleString()} test cases · tiktoken cl100k_base
           </span>
         </div>
 
         <div style={{
           display: 'grid',
           gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))',
-          gap: 12,
-          marginBottom: 24,
-          padding: 16,
-          background: 'rgba(0,0,0,0.35)',
-          border: '3px solid var(--inventory-border)',
+          gap: 16,
+          marginBottom: 32,
+          padding: 20,
+          background: 'var(--bg-elevated)',
+          borderRadius: 'var(--radius-sm)',
+          border: '1px solid var(--border-subtle)',
         }}>
           <div>
-            <p style={{ fontSize: 14, color: 'var(--text-muted)', marginBottom: 4 }}>Engine accuracy</p>
-            <p className="mono stat-value" style={{ fontSize: 28 }}>{ACCURACY_2000.accuracyPercent}%</p>
-            <p style={{ fontSize: 14, color: 'var(--text-muted)' }}>{ACCURACY_2000.passed}/{ACCURACY_2000.totalCases}</p>
+            <p style={{ fontSize: 13, color: 'var(--text-muted)', marginBottom: 6 }}>Engine accuracy</p>
+            <p className="mono stat-value" style={{ fontSize: 26 }}>{ACCURACY_2000.accuracyPercent}%</p>
+            <p style={{ fontSize: 13, color: 'var(--text-muted)', marginTop: 4 }}>{ACCURACY_2000.passed}/{ACCURACY_2000.totalCases}</p>
           </div>
           <div>
-            <p style={{ fontSize: 14, color: 'var(--text-muted)', marginBottom: 4 }}>Recall integrity</p>
-            <p className="mono stat-value" style={{ fontSize: 28 }}>{ACCURACY_2000.recallAccuracyPercent}%</p>
+            <p style={{ fontSize: 13, color: 'var(--text-muted)', marginBottom: 6 }}>Recall integrity</p>
+            <p className="mono stat-value" style={{ fontSize: 26 }}>{ACCURACY_2000.recallAccuracyPercent}%</p>
           </div>
           <div>
-            <p style={{ fontSize: 14, color: 'var(--text-muted)', marginBottom: 4 }}>Est. Δ vs tiktoken</p>
-            <p className="mono" style={{ fontSize: 28, color: 'var(--diamond)' }}>{ACCURACY_2000.avgReductionDeltaPp}pp</p>
+            <p style={{ fontSize: 13, color: 'var(--text-muted)', marginBottom: 6 }}>Reduction Δ vs tiktoken</p>
+            <p className="mono" style={{ fontSize: 26, color: 'var(--blue)' }}>{ACCURACY_2000.avgReductionDeltaPp}pp</p>
           </div>
           <div>
-            <p style={{ fontSize: 14, color: 'var(--text-muted)', marginBottom: 4 }}>Est. count error</p>
-            <p className="mono" style={{ fontSize: 28, color: 'var(--gold)' }}>~{ACCURACY_2000.avgEstimatorErrorPct}%</p>
+            <p style={{ fontSize: 13, color: 'var(--text-muted)', marginBottom: 6 }}>Estimator error</p>
+            <p className="mono" style={{ fontSize: 26, color: 'var(--warning)' }}>~{ACCURACY_2000.avgEstimatorErrorPct}%</p>
           </div>
         </div>
 
-        <h3 className="section-title" style={{ marginBottom: 12 }}>2,000 quest outcomes</h3>
-        <div style={{ overflowX: 'auto', marginBottom: 24 }}>
-          <table className="mc-table">
+        <h3 className="section-title">2,000 test case outcomes</h3>
+        <div style={{ overflowX: 'auto', marginBottom: 28 }}>
+          <table className="data-table">
             <thead>
               <tr>
                 <th>Category</th>
@@ -63,71 +64,77 @@ export function HonestSummary() {
                 <tr key={row.id}>
                   <td style={{ color: 'var(--text-secondary)' }}>{row.label}</td>
                   <td className="mono">{row.count}</td>
-                  <td className="mono" style={{ color: 'var(--emerald)' }}>
-                    {row.pass}/{row.count} ✓
+                  <td className="mono" style={{ color: 'var(--accent)' }}>
+                    {row.pass}/{row.count}
                   </td>
-                  <td style={{ color: 'var(--text-muted)' }}>{row.outcome}</td>
+                  <td style={{ color: 'var(--text-muted)', fontSize: 13 }}>{row.outcome}</td>
                 </tr>
               ))}
             </tbody>
           </table>
         </div>
 
-        <p style={{ color: 'var(--text-secondary)', fontSize: 18, marginBottom: 24, lineHeight: 1.6 }}>
-          Tokn&apos;t smelts bloated context into compact ingots — every piece recoverable via recall.
-          Savings depend on mode and what your agent mines. CLI counts are estimates, not billing.
+        <p style={{ color: 'var(--text-secondary)', fontSize: 15, marginBottom: 28, lineHeight: 1.65, maxWidth: 680 }}>
+          Tokn&apos;t compresses bloated context into compact summaries — every piece recoverable via recall URI.
+          Savings depend on mode and session type. CLI counts are estimates, not billing data.
         </p>
 
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 16, marginBottom: 24 }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: 12, marginBottom: 28 }}>
           {[MEASURED_BY_MODE.safe, MEASURED_BY_MODE.balanced].map((m) => (
-            <div key={m.label} className="card" style={{ padding: 20, margin: 0, boxShadow: 'none' }}>
-              <p className="mono" style={{ fontSize: 14, color: 'var(--gold)', textTransform: 'uppercase', marginBottom: 8 }}>
+            <div key={m.label} style={{
+              padding: 20,
+              border: '1px solid var(--border-subtle)',
+              borderRadius: 'var(--radius-sm)',
+              background: 'var(--bg-elevated)',
+            }}>
+              <p className="mono" style={{ fontSize: 12, color: 'var(--text-muted)', textTransform: 'uppercase', marginBottom: 8, letterSpacing: '0.04em' }}>
                 {m.label}
               </p>
-              <p style={{ fontSize: 16, color: 'var(--text-muted)', marginBottom: 12 }}>{m.description}</p>
-              <p className="mono stat-value" style={{ fontSize: 24 }}>
+              <p style={{ fontSize: 14, color: 'var(--text-muted)', marginBottom: 12 }}>{m.description}</p>
+              <p className="mono stat-value" style={{ fontSize: 20 }}>
                 {m.tiktokenOriginal.toLocaleString()} → {m.tiktokenOptimized.toLocaleString()}
               </p>
-              <p style={{ color: 'var(--emerald)', fontSize: 18, marginTop: 4 }}>
-                {m.reductionPercent}% smelted
+              <p style={{ color: 'var(--accent)', fontSize: 15, marginTop: 6, fontWeight: 500 }}>
+                {m.reductionPercent}% reduction
               </p>
             </div>
           ))}
         </div>
 
-        <h3 className="section-title" style={{ marginBottom: 12 }}>Enchantments (balanced mode)</h3>
-        <div style={{ display: 'grid', gap: 8, marginBottom: 24 }}>
+        <h3 className="section-title">Strategies (balanced mode)</h3>
+        <div style={{ display: 'grid', gap: 6, marginBottom: 28 }}>
           {MEASURED_BY_STRATEGY.map((row) => (
             <div key={row.strategy} style={{
               display: 'flex',
               justifyContent: 'space-between',
               alignItems: 'center',
-              fontSize: 16,
-              padding: '10px 12px',
-              border: '2px solid var(--inventory-border)',
-              background: 'rgba(0,0,0,0.25)',
+              fontSize: 14,
+              padding: '10px 14px',
+              border: '1px solid var(--border-subtle)',
+              borderRadius: 'var(--radius-sm)',
+              background: 'var(--bg-elevated)',
             }}>
               <span style={{ color: 'var(--text-secondary)' }}>{row.strategy}</span>
-              <span className="mono" style={{ color: row.reductionPercent === 0 ? 'var(--text-primary)' : 'var(--emerald)' }}>
-                {row.reductionPercent}% {row.recall && row.reductionPercent > 0 ? '· recall ✓' : row.reductionPercent === 0 ? '· protected ✓' : ''}
+              <span className="mono" style={{ color: row.reductionPercent === 0 ? 'var(--text-muted)' : 'var(--accent)' }}>
+                {row.reductionPercent}% {row.recall && row.reductionPercent > 0 ? '· recall ✓' : row.reductionPercent === 0 ? '· protected' : ''}
               </span>
             </div>
           ))}
         </div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: 16, fontSize: 16 }}>
-          <div className="card" style={{ padding: 16, boxShadow: 'none' }}>
-            <p style={{ color: 'var(--gold)', marginBottom: 6 }}>🗺️ Real repo duplicate reads</p>
-            <p className="mono">{MEASURED_REAL_REPO.tiktokenOriginal.toLocaleString()} → {MEASURED_REAL_REPO.tiktokenOptimized.toLocaleString()} ({MEASURED_REAL_REPO.reductionPercent}%)</p>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: 12 }}>
+          <div style={{ padding: 16, border: '1px solid var(--border-subtle)', borderRadius: 'var(--radius-sm)', background: 'var(--bg-elevated)' }}>
+            <p style={{ color: 'var(--text-muted)', fontSize: 13, marginBottom: 6 }}>Real repo duplicate reads</p>
+            <p className="mono" style={{ fontSize: 14 }}>{MEASURED_REAL_REPO.tiktokenOriginal.toLocaleString()} → {MEASURED_REAL_REPO.tiktokenOptimized.toLocaleString()} ({MEASURED_REAL_REPO.reductionPercent}%)</p>
           </div>
-          <div className="card" style={{ padding: 16, boxShadow: 'none' }}>
-            <p style={{ color: 'var(--gold)', marginBottom: 6 }}>📏 Token estimator</p>
-            <p>{MEASURED_ESTIMATOR.reductionPercentAccuracy}. {MEASURED_ESTIMATOR.absoluteCountNote}</p>
+          <div style={{ padding: 16, border: '1px solid var(--border-subtle)', borderRadius: 'var(--radius-sm)', background: 'var(--bg-elevated)' }}>
+            <p style={{ color: 'var(--text-muted)', fontSize: 13, marginBottom: 6 }}>Token estimator</p>
+            <p style={{ fontSize: 14, color: 'var(--text-secondary)' }}>{MEASURED_ESTIMATOR.reductionPercentAccuracy}. {MEASURED_ESTIMATOR.absoluteCountNote}</p>
           </div>
         </div>
 
-        <p style={{ fontSize: 16, color: 'var(--text-muted)', marginTop: 20 }}>
-          Reproduce: <code className="mono">{ACCURACY_2000.runCommand}</code> · Not yet validated in live agent worlds.
+        <p style={{ fontSize: 13, color: 'var(--text-muted)', marginTop: 24 }}>
+          Reproduce: <code>{ACCURACY_2000.runCommand}</code>
         </p>
       </div>
     </section>

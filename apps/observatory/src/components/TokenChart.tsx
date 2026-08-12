@@ -6,11 +6,12 @@ interface Props {
 }
 
 const TOOLTIP_STYLE = {
-  background: 'rgba(44, 44, 48, 0.98)',
-  border: '3px solid #373737',
-  borderRadius: 0,
+  background: '#18181b',
+  border: '1px solid #27272a',
+  borderRadius: 8,
   fontSize: 13,
   fontFamily: 'Inter, sans-serif',
+  color: '#fafafa',
 };
 
 export function TokenChart({ results }: Props) {
@@ -22,19 +23,19 @@ export function TokenChart({ results }: Props) {
 
   return (
     <div className="card">
-      <h3 className="section-title" style={{ marginBottom: 20 }}>Token ore chart</h3>
+      <h3 className="section-title">Token usage by task</h3>
       <ResponsiveContainer width="100%" height={280}>
         <BarChart data={data} barGap={4}>
-          <XAxis dataKey="name" tick={{ fill: '#e0e0e8', fontSize: 11, fontFamily: 'Inter' }} axisLine={false} tickLine={false} />
-          <YAxis tick={{ fill: '#e0e0e8', fontSize: 11, fontFamily: 'Inter' }} axisLine={false} tickLine={false} tickFormatter={(v) => formatTokens(v)} />
+          <XAxis dataKey="name" tick={{ fill: '#71717a', fontSize: 11, fontFamily: 'Inter' }} axisLine={false} tickLine={false} />
+          <YAxis tick={{ fill: '#71717a', fontSize: 11, fontFamily: 'Inter' }} axisLine={false} tickLine={false} tickFormatter={(v) => formatTokens(v)} />
           <Tooltip
             contentStyle={TOOLTIP_STYLE}
-            labelStyle={{ color: '#ffd700' }}
+            labelStyle={{ color: '#a1a1aa' }}
             formatter={(value: number) => [formatTokens(value), '']}
           />
-          <Legend wrapperStyle={{ fontSize: 13, color: '#e0e0e8', fontFamily: 'Inter' }} />
-          <Bar dataKey="without" fill="#7f7f7f" name="Raw ore" radius={0} />
-          <Bar dataKey="withToknt" fill="#17dd62" name="Refined" radius={0} />
+          <Legend wrapperStyle={{ fontSize: 13, color: '#a1a1aa', fontFamily: 'Inter' }} />
+          <Bar dataKey="without" fill="#52525b" name="Without" radius={[4, 4, 0, 0]} />
+          <Bar dataKey="withToknt" fill="#22c55e" name="With Tokn't" radius={[4, 4, 0, 0]} />
         </BarChart>
       </ResponsiveContainer>
     </div>

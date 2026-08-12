@@ -37,40 +37,52 @@ export function DemoSection() {
   const optWidth = phase >= 1 ? 14 : 100;
 
   return (
-    <div className="card animate-in" style={{ padding: 40, textAlign: 'center' }}>
-      <h2 className="section-title">Smelting demo — watch ore shrink</h2>
+    <div className="card animate-in">
+      <h2 className="section-heading">Live compression demo</h2>
+      <p style={{ color: 'var(--text-muted)', fontSize: 14, marginBottom: 28 }}>
+        Watch context shrink as Tokn&apos;t optimizes redundant tool output
+      </p>
 
-      <div style={{ maxWidth: 500, margin: '0 auto' }}>
-        <p style={{ fontSize: 16, color: 'var(--lava)', marginBottom: 8, textAlign: 'left' }}>🪨 RAW AGENT CONTEXT</p>
-        <div className="mc-progress" style={{ height: 24, marginBottom: 24 }}>
-          <div style={{
-            height: '100%',
-            width: `${rawWidth}%`,
-            background: 'repeating-linear-gradient(90deg, var(--redstone) 0, var(--redstone) 8px, var(--lava) 8px, var(--lava) 16px)',
-            transition: 'width 1.2s steps(10)',
-          }} />
+      <div style={{ maxWidth: 480, margin: '0 auto' }}>
+        <div style={{ marginBottom: 24 }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 8 }}>
+            <p style={{ fontSize: 13, color: 'var(--text-muted)' }}>Original context</p>
+            <p className="mono" style={{ fontSize: 13, color: 'var(--text-muted)' }}>{rawWidth}%</p>
+          </div>
+          <div className="progress-bar" style={{ height: 8 }}>
+            <div style={{
+              height: '100%',
+              width: `${rawWidth}%`,
+              background: '#52525b',
+              borderRadius: 999,
+              transition: 'width 1s ease-out',
+            }} />
+          </div>
         </div>
 
         {phase >= 1 && (
-          <>
-            <p style={{ fontSize: 16, color: 'var(--emerald)', marginBottom: 8, textAlign: 'left' }}>⚡ TOKN&apos;T FURNACE</p>
-            <div className="mc-progress" style={{ height: 24, marginBottom: 24 }}>
-              <div className="mc-progress-fill" style={{ width: `${optWidth}%`, transition: 'width 1.2s steps(10)' }} />
+          <div style={{ marginBottom: 24 }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 8 }}>
+              <p style={{ fontSize: 13, color: 'var(--accent)' }}>Optimized context</p>
+              <p className="mono" style={{ fontSize: 13, color: 'var(--accent)' }}>{optWidth}%</p>
             </div>
-          </>
+            <div className="progress-bar" style={{ height: 8 }}>
+              <div className="progress-fill" style={{ width: `${optWidth}%`, transition: 'width 1s ease-out' }} />
+            </div>
+          </div>
         )}
 
         {phase >= 2 && (
-          <p className="mono animate-in" style={{ fontSize: 24, color: 'var(--gold)', fontWeight: 600, textShadow: '2px 2px 0 #000' }}>
-            +{saved.toLocaleString()} XP tokens saved!
+          <p className="mono animate-in" style={{ fontSize: 20, color: 'var(--accent)', fontWeight: 600, textAlign: 'center' }}>
+            +{saved.toLocaleString()} tokens saved
           </p>
         )}
       </div>
 
-      <p style={{ marginTop: 16 }}>
-        <span className="badge badge-success">✓ MEASURED</span>
-        <span style={{ fontSize: 16, color: 'var(--text-muted)', marginLeft: 8 }}>
-          Run <code className="mono">npm run audit:2000</code> to reproduce
+      <p style={{ marginTop: 24, textAlign: 'center' }}>
+        <span className="badge badge-success">Measured</span>
+        <span style={{ fontSize: 13, color: 'var(--text-muted)', marginLeft: 8 }}>
+          Run <code>npm run audit:2000</code> to reproduce
         </span>
       </p>
     </div>

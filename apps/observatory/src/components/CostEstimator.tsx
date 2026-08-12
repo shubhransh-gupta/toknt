@@ -18,40 +18,40 @@ export function CostEstimator({ result }: Props) {
 
   return (
     <div className="card">
-      <h3 className="section-title" style={{ marginBottom: 20 }}>💰 Emerald cost calculator</h3>
+      <h3 className="section-title">Cost estimator</h3>
 
       <div style={{ display: 'grid', gap: 12, marginBottom: 24 }}>
-        <label style={{ fontSize: 16, color: 'var(--text-secondary)' }}>
+        <label style={{ fontSize: 14, color: 'var(--text-secondary)' }}>
           Input price / 1M tokens
-          <input type="number" step="0.1" value={inputPrice} onChange={(e) => setInputPrice(+e.target.value)} style={{ marginTop: 4 }} />
+          <input type="number" step="0.1" value={inputPrice} onChange={(e) => setInputPrice(+e.target.value)} style={{ marginTop: 6 }} />
         </label>
-        <label style={{ fontSize: 16, color: 'var(--text-secondary)' }}>
+        <label style={{ fontSize: 14, color: 'var(--text-secondary)' }}>
           Cached input price / 1M
-          <input type="number" step="0.1" value={cachedPrice} onChange={(e) => setCachedPrice(+e.target.value)} style={{ marginTop: 4 }} />
+          <input type="number" step="0.1" value={cachedPrice} onChange={(e) => setCachedPrice(+e.target.value)} style={{ marginTop: 6 }} />
         </label>
-        <label style={{ fontSize: 16, color: 'var(--text-secondary)' }}>
+        <label style={{ fontSize: 14, color: 'var(--text-secondary)' }}>
           Output price / 1M
-          <input type="number" step="0.1" value={outputPrice} onChange={(e) => setOutputPrice(+e.target.value)} style={{ marginTop: 4 }} />
+          <input type="number" step="0.1" value={outputPrice} onChange={(e) => setOutputPrice(+e.target.value)} style={{ marginTop: 6 }} />
         </label>
       </div>
 
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 16, textAlign: 'center' }}>
         <div>
-          <p style={{ fontSize: 14, color: 'var(--text-muted)', marginBottom: 4 }}>RAW ORE</p>
-          <p className="mono" style={{ fontSize: 24 }}>${costs.without.toFixed(2)}</p>
+          <p style={{ fontSize: 12, color: 'var(--text-muted)', marginBottom: 6, textTransform: 'uppercase', letterSpacing: '0.04em' }}>Without</p>
+          <p className="mono" style={{ fontSize: 22 }}>${costs.without.toFixed(2)}</p>
         </div>
         <div>
-          <p style={{ fontSize: 14, color: 'var(--text-muted)', marginBottom: 4 }}>REFINED</p>
-          <p className="mono" style={{ fontSize: 24, color: 'var(--emerald)' }}>${costs.with.toFixed(2)}</p>
+          <p style={{ fontSize: 12, color: 'var(--text-muted)', marginBottom: 6, textTransform: 'uppercase', letterSpacing: '0.04em' }}>With Tokn&apos;t</p>
+          <p className="mono" style={{ fontSize: 22, color: 'var(--accent)' }}>${costs.with.toFixed(2)}</p>
         </div>
         <div>
-          <p style={{ fontSize: 14, color: 'var(--text-muted)', marginBottom: 4 }}>SAVED</p>
-          <p className="mono" style={{ fontSize: 24, color: 'var(--gold)' }}>${costs.saved.toFixed(2)}</p>
+          <p style={{ fontSize: 12, color: 'var(--text-muted)', marginBottom: 6, textTransform: 'uppercase', letterSpacing: '0.04em' }}>Saved</p>
+          <p className="mono" style={{ fontSize: 22, color: 'var(--blue)' }}>${costs.saved.toFixed(2)}</p>
         </div>
       </div>
 
-      <p style={{ fontSize: 14, color: 'var(--text-muted)', marginTop: 16, textAlign: 'center' }}>
-        Estimated — not actual villager trades
+      <p style={{ fontSize: 13, color: 'var(--text-muted)', marginTop: 20, textAlign: 'center' }}>
+        Estimated — not actual billing
       </p>
     </div>
   );

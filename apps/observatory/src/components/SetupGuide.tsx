@@ -17,109 +17,99 @@ npx toknt doctor`,
   {
     n: 3,
     title: 'Set optimization mode',
-    code: `# Edit ~/.toknt/config.json — or:
-npx toknt config set mode balanced`,
-    note: 'safe ≈ 6.5% on mixed sessions · balanced ≈ 91.5% when logs/listings are huge',
+    code: `npx toknt config set mode balanced`,
+    note: 'safe ≈ 6.5% on mixed sessions · balanced ≈ 91% when logs and listings are large',
   },
   {
     n: 4,
     title: 'Code normally',
     code: `# Open Cursor / Claude Code / Codex
 # Tokn't compresses tool output automatically`,
-    note: 'Duplicates, test logs, and directory listings are smelted before hitting the model.',
+    note: 'Duplicates, test logs, and directory listings are compressed before hitting the model.',
   },
   {
     n: 5,
     title: 'Track savings',
     code: `npx toknt stats
 npx toknt benchmark --mode balanced --export run.json`,
-    note: 'Upload run.json here via Import loot below.',
+    note: 'Import run.json below to visualize results here.',
   },
   {
     n: 6,
     title: 'Recall when needed',
     code: `npx toknt recall toknt://file/abc123`,
-    note: 'Full content stays in ~/.toknt/ — never lost, just not sent to the model every time.',
+    note: 'Full content stays in ~/.toknt/ — never lost, just not sent every time.',
   },
 ];
 
 const MODES = [
-  { name: 'safe', savings: '~6.5%', best: 'Default — duplicate files & tool output only' },
-  { name: 'balanced', savings: '~91.5%', best: 'Heavy npm test / find . / large logs' },
+  { name: 'safe', savings: '~6.5%', best: 'Default — duplicate files and tool output only' },
+  { name: 'balanced', savings: '~91%', best: 'Heavy test output, directory listings, large logs' },
   { name: 'aggressive', savings: 'Higher', best: 'Experiments — may affect task quality' },
 ];
 
 export function SetupGuide() {
   return (
-    <section id="setup" style={{ maxWidth: 1200, margin: '0 auto', padding: '0 24px 48px' }}>
-      <div className="card card-emerald">
-        <h2 className="pixel-title" style={{ fontSize: 16, color: 'var(--gold)', marginBottom: 8 }}>
-          How to configure & reduce token cost
-        </h2>
-        <p style={{ color: 'var(--text-secondary)', fontSize: 16, marginBottom: 28, maxWidth: 720 }}>
+    <section id="setup" className="section" style={{ paddingBottom: 48 }}>
+      <div className="card card-accent">
+        <h2 className="section-heading">Setup guide</h2>
+        <p style={{ color: 'var(--text-secondary)', fontSize: 15, marginBottom: 28, maxWidth: 640 }}>
           Six steps. Local-only. No API keys. Tokn&apos;t compresses redundant context before your agent sends it to the model.
         </p>
 
-        <div style={{ display: 'grid', gap: 16, marginBottom: 32 }}>
+        <div style={{ display: 'grid', gap: 12, marginBottom: 32 }}>
           {STEPS.map((step) => (
             <div
               key={step.n}
-              className="card"
-              style={{ padding: 20, boxShadow: 'none', display: 'grid', gridTemplateColumns: 'auto 1fr', gap: 16, alignItems: 'start' }}
+              style={{
+                padding: 20,
+                border: '1px solid var(--border-subtle)',
+                borderRadius: 'var(--radius-sm)',
+                display: 'grid',
+                gridTemplateColumns: 'auto 1fr',
+                gap: 16,
+                alignItems: 'start',
+                background: 'var(--bg-elevated)',
+              }}
             >
-              <div
-                className="mc-slot"
-                style={{ width: 40, height: 40, fontSize: 16, fontWeight: 700, fontFamily: 'var(--font-display)' }}
-              >
-                {step.n}
-              </div>
+              <div className="step-number">{step.n}</div>
               <div>
-                <h3 style={{ fontSize: 17, fontWeight: 600, marginBottom: 10 }}>{step.title}</h3>
-                <pre style={{
-                  background: 'rgba(0,0,0,0.45)',
-                  border: '2px solid var(--inventory-border)',
-                  padding: '12px 14px',
-                  overflow: 'auto',
-                  fontSize: 13,
-                  lineHeight: 1.5,
-                  marginBottom: 8,
-                  fontFamily: 'var(--font-mono)',
-                }}>
-                  {step.code}
-                </pre>
-                <p style={{ fontSize: 14, color: 'var(--text-muted)' }}>{step.note}</p>
+                <h3 style={{ fontSize: 15, fontWeight: 600, marginBottom: 10 }}>{step.title}</h3>
+                <pre style={{ marginBottom: 8 }}>{step.code}</pre>
+                <p style={{ fontSize: 13, color: 'var(--text-muted)' }}>{step.note}</p>
               </div>
             </div>
           ))}
         </div>
 
-        <h3 className="section-title" style={{ marginBottom: 12 }}>Pick your enchantment (mode)</h3>
-        <table className="mc-table" style={{ marginBottom: 20 }}>
-          <thead>
-            <tr>
-              <th>Mode</th>
-              <th>Typical savings</th>
-              <th>Best for</th>
-            </tr>
-          </thead>
-          <tbody>
-            {MODES.map((m) => (
-              <tr key={m.name}>
-                <td className="mono" style={{ color: 'var(--emerald)' }}>{m.name}</td>
-                <td className="mono">{m.savings}</td>
-                <td>{m.best}</td>
+        <h3 className="section-title">Optimization modes</h3>
+        <div style={{ overflowX: 'auto', marginBottom: 20 }}>
+          <table className="data-table">
+            <thead>
+              <tr>
+                <th>Mode</th>
+                <th>Typical savings</th>
+                <th>Best for</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {MODES.map((m) => (
+                <tr key={m.name}>
+                  <td className="mono" style={{ color: 'var(--accent)' }}>{m.name}</td>
+                  <td className="mono">{m.savings}</td>
+                  <td style={{ color: 'var(--text-secondary)' }}>{m.best}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
 
-        <p style={{ fontSize: 14, color: 'var(--text-muted)' }}>
+        <p style={{ fontSize: 13, color: 'var(--text-muted)' }}>
           Full guide:{' '}
           <a
             href="https://github.com/shubhransh-gupta/toknt/blob/main/docs/reduce-token-cost.md"
             target="_blank"
             rel="noopener noreferrer"
-            style={{ color: 'var(--diamond)' }}
           >
             docs/reduce-token-cost.md
           </a>
