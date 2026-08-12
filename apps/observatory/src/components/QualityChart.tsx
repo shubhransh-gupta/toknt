@@ -6,11 +6,12 @@ interface Props {
 }
 
 const TOOLTIP_STYLE = {
-  background: 'rgba(44, 44, 48, 0.98)',
-  border: '3px solid #373737',
-  borderRadius: 0,
+  background: '#18181b',
+  border: '1px solid #27272a',
+  borderRadius: 8,
   fontSize: 13,
   fontFamily: 'Inter, sans-serif',
+  color: '#fafafa',
 };
 
 export function QualityChart({ results }: Props) {
@@ -22,9 +23,9 @@ export function QualityChart({ results }: Props) {
 
   return (
     <div className="card">
-      <h3 className="section-title" style={{ marginBottom: 8 }}>Quality vs tokens — XP scatter</h3>
-      <p style={{ color: 'var(--text-secondary)', fontSize: 18, marginBottom: 20 }}>
-        Min tokens while keeping the quest complete — like efficiency III on your pickaxe.
+      <h3 className="section-heading">Quality vs tokens</h3>
+      <p style={{ color: 'var(--text-muted)', fontSize: 14, marginBottom: 24 }}>
+        Token count vs task success rate across benchmark runs
       </p>
       <ResponsiveContainer width="100%" height={300}>
         <ScatterChart>
@@ -32,25 +33,25 @@ export function QualityChart({ results }: Props) {
             type="number"
             dataKey="tokens"
             name="Tokens"
-            tick={{ fill: '#e0e0e8', fontSize: 11, fontFamily: 'Inter' }}
+            tick={{ fill: '#71717a', fontSize: 11, fontFamily: 'Inter' }}
             axisLine={false}
             tickLine={false}
             tickFormatter={(v) => formatTokens(v)}
-            label={{ value: 'Tokens', position: 'bottom', fill: '#9a9a9a', fontSize: 12 }}
+            label={{ value: 'Tokens', position: 'bottom', fill: '#71717a', fontSize: 12 }}
           />
           <YAxis
             type="number"
             dataKey="success"
             name="Success %"
             domain={[0, 105]}
-            tick={{ fill: '#e0e0e8', fontSize: 11, fontFamily: 'Inter' }}
+            tick={{ fill: '#71717a', fontSize: 11, fontFamily: 'Inter' }}
             axisLine={false}
             tickLine={false}
-            label={{ value: 'Quest Success %', angle: -90, position: 'insideLeft', fill: '#9a9a9a', fontSize: 12 }}
+            label={{ value: 'Success %', angle: -90, position: 'insideLeft', fill: '#71717a', fontSize: 12 }}
           />
           <Tooltip contentStyle={TOOLTIP_STYLE} />
-          <ReferenceLine y={95} stroke="#555" strokeDasharray="4 4" />
-          <Scatter data={data} fill="#4ee4ef" />
+          <ReferenceLine y={95} stroke="#3f3f46" strokeDasharray="4 4" />
+          <Scatter data={data} fill="#3b82f6" />
         </ScatterChart>
       </ResponsiveContainer>
     </div>

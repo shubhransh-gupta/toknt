@@ -12,7 +12,6 @@ import { PrivacyBanner } from './components/PrivacyBanner';
 import { HonestSummary } from './components/HonestSummary';
 import { DemoSection } from './components/DemoSection';
 import { StarBanner } from './components/StarBanner';
-import { MinecraftBackground } from './components/MinecraftBackground';
 import { SetupGuide } from './components/SetupGuide';
 
 export default function App() {
@@ -52,8 +51,6 @@ export default function App() {
 
   return (
     <div className="app">
-      <MinecraftBackground />
-      <div className="app-content">
       <StarBanner />
       <Hero
         onRunBenchmark={() => scrollTo('honest-summary')}
@@ -61,20 +58,18 @@ export default function App() {
       />
 
       <SetupGuide />
-
       <PrivacyBanner />
-
       <HonestSummary />
 
-      <section id="demo" style={{ maxWidth: 1200, margin: '0 auto', padding: '0 24px' }}>
+      <section id="demo" className="section section-spaced">
         <DemoSection />
       </section>
 
-      <section id="dashboard" style={{ maxWidth: 1200, margin: '0 auto', padding: '40px 24px' }}>
+      <section id="dashboard" className="section section-spaced">
         <Dashboard stats={stats} />
       </section>
 
-      <section id="comparison" style={{ maxWidth: 1200, margin: '0 auto', padding: '40px 24px' }}>
+      <section id="comparison" className="section section-spaced">
         <Comparison
           result={selectedResult}
           results={filtered}
@@ -82,71 +77,61 @@ export default function App() {
         />
       </section>
 
-      <section style={{ maxWidth: 1200, margin: '0 auto', padding: '40px 24px' }}>
-        <div style={{ display: 'flex', gap: 12, marginBottom: 24, flexWrap: 'wrap' }}>
+      <section className="section section-spaced">
+        <div style={{ display: 'flex', gap: 8, marginBottom: 24, flexWrap: 'wrap' }}>
           {['all', 'cursor', 'claude', 'codex'].map((agent) => (
             <button
               key={agent}
               className={`btn ${agentFilter === agent ? 'btn-primary' : 'btn-secondary'}`}
               onClick={() => setAgentFilter(agent)}
-              style={{ padding: '6px 16px', fontSize: 13 }}
+              style={{ padding: '6px 14px', fontSize: 13 }}
             >
-              {agent === 'all' ? 'All Agents' : agent.charAt(0).toUpperCase() + agent.slice(1)}
+              {agent === 'all' ? 'All agents' : agent.charAt(0).toUpperCase() + agent.slice(1)}
             </button>
           ))}
         </div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 24 }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: 20 }}>
           <SavingsBreakdown result={selectedResult} />
           <TokenChart results={filtered} />
         </div>
       </section>
 
-      <section style={{ maxWidth: 1200, margin: '0 auto', padding: '40px 24px' }}>
+      <section className="section section-spaced">
         <QualityChart results={filtered} />
       </section>
 
-      <section style={{ maxWidth: 1200, margin: '0 auto', padding: '40px 24px' }}>
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 24 }}>
+      <section className="section section-spaced">
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: 20 }}>
           <CostEstimator result={selectedResult} />
           <ShareCard result={selectedResult} />
         </div>
       </section>
 
-      <section style={{ maxWidth: 1200, margin: '0 auto', padding: '40px 24px 80px', textAlign: 'center' }}>
+      <section className="section" style={{ paddingBottom: 80, textAlign: 'center' }}>
         <input ref={fileInputRef} type="file" accept=".json" onChange={handleImport} />
         <button className="btn btn-secondary" onClick={() => fileInputRef.current?.click()}>
-          📦 Import loot (JSON)
+          Import benchmark JSON
         </button>
-        <p style={{ color: 'var(--text-muted)', fontSize: 13, marginTop: 12 }}>
-          Import results from <code className="mono">toknt benchmark --export result.json</code>
+        <p style={{ color: 'var(--text-muted)', fontSize: 14, marginTop: 12 }}>
+          Export with <code>toknt benchmark --export result.json</code>
         </p>
       </section>
 
-      <footer className="mc-footer" style={{
-        padding: '32px 24px',
-        textAlign: 'center',
-        color: 'var(--text-muted)',
-        fontSize: 16,
-      }}>
-        <p className="pixel-title" style={{ fontSize: 16, color: 'var(--gold)', marginBottom: 12 }}>
-          TOKN&apos;T
+      <footer className="site-footer" style={{ padding: '40px 24px', textAlign: 'center' }}>
+        <p style={{ fontSize: 15, fontWeight: 600, color: 'var(--text-primary)', marginBottom: 8 }}>
+          Tokn&apos;t
         </p>
-        <p>⛏️ Tokens? Tokn&apos;t. — Local survival mode. Open source. MIT License.</p>
-        <p style={{ marginTop: 12, fontSize: 15, color: 'var(--text-secondary)' }}>
+        <p style={{ color: 'var(--text-muted)', fontSize: 14 }}>
+          Local-first token optimization for AI coding agents · MIT License
+        </p>
+        <p style={{ marginTop: 16, fontSize: 14, color: 'var(--text-secondary)' }}>
           Created with ❤️ by{' '}
-          <a
-            href="https://github.com/shubhransh-gupta"
-            target="_blank"
-            rel="noopener noreferrer"
-            style={{ color: 'var(--diamond)', textDecoration: 'none', fontWeight: 600 }}
-          >
+          <a href="https://github.com/shubhransh-gupta" target="_blank" rel="noopener noreferrer">
             Shubhransh Gupta
           </a>
         </p>
-        <p style={{ marginTop: 8, fontSize: 14 }}>🟩🟩🟩 Crafted with blocks and bytes 🟩🟩🟩</p>
       </footer>
-      </div>
     </div>
   );
 }
