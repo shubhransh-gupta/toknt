@@ -1,338 +1,263 @@
 <div align="center">
 
-<!-- Banner: PNG for GitHub README (SVG animations blocked by GitHub camo) -->
-<a href="https://shubhransh-gupta.github.io/toknt/">
-  <img src="assets/readme-banner.png" alt="Tokn't — Minecraft-themed token optimizer" width="720" />
-</a>
+<p><strong>TOKEN OPTIMIZATION FOR AI AGENTS</strong></p>
 
-# Tokens? Tokn't.
+# Cut the token waste.<br/>Keep the intelligence.
 
-**Smelt the token waste. Keep the intelligence.**
+**Local-first token optimization for Claude Code · Cursor · Codex · Windsurf · VS Code**
 
-<br />
+<br/>
 
-[![GitHub stars](https://img.shields.io/github/stars/shubhransh-gupta/toknt?style=for-the-badge&logo=github&color=17DD62&labelColor=2a2a2a)](https://github.com/shubhransh-gupta/toknt/stargazers)
-[![License: MIT](https://img.shields.io/badge/License-MIT-FFD700?style=for-the-badge&labelColor=2a2a2a)](LICENSE)
-[![CI](https://img.shields.io/github/actions/workflow/status/shubhransh-gupta/toknt/ci.yml?style=for-the-badge&logo=githubactions&label=CI&labelColor=2a2a2a&color=17DD62)](https://github.com/shubhransh-gupta/toknt/actions)
-[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-4EE4EF?style=for-the-badge&labelColor=2a2a2a)](CONTRIBUTING.md)
+[![GitHub stars](https://img.shields.io/github/stars/shubhransh-gupta/toknt?style=flat-square&logo=github&color=22c55e)](https://github.com/shubhransh-gupta/toknt/stargazers)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue?style=flat-square)](LICENSE)
+[![CI](https://img.shields.io/github/actions/workflow/status/shubhransh-gupta/toknt/ci.yml?style=flat-square&logo=githubactions&label=CI)](https://github.com/shubhransh-gupta/toknt/actions)
+[![Observatory](https://img.shields.io/badge/Observatory-live-22c55e?style=flat-square)](https://shubhransh-gupta.github.io/toknt/)
 
-<br />
+<br/>
 
-**Local-first token optimization for Claude Code · Cursor · Codex · Windsurf**
-
-<br />
-
-[![⭐ Star on GitHub](https://img.shields.io/badge/⭐_Star-Tokn't-17DD62?style=for-the-badge&labelColor=2a2a2a)](https://github.com/shubhransh-gupta/toknt/stargazers)
-[![💎 Reduce token cost](https://img.shields.io/badge/💎_Reduce-token_cost-FFD700?style=for-the-badge&labelColor=2a2a2a)](docs/reduce-token-cost.md)
-[![🔭 Live Observatory](https://img.shields.io/badge/🔭_Live-Observatory-4EE4EF?style=for-the-badge&labelColor=2a2a2a)](https://shubhransh-gupta.github.io/toknt/#setup)
-[![📖 Docs](https://img.shields.io/badge/📖_Docs-getting_started-8b8b8b?style=for-the-badge&labelColor=2a2a2a)](docs/getting-started.md)
+[Observatory](https://shubhransh-gupta.github.io/toknt/) · [Setup guide](docs/reduce-token-cost.md) · [Getting started](docs/getting-started.md) · [Contributing](CONTRIBUTING.md)
 
 </div>
 
-<br />
+<br/>
+
+> Measure, compare, and reduce redundant context before it reaches your model.  
+> Your code never leaves your machine — no uploads, no cloud.
+
+<br/>
 
 <div align="center">
 
-> **Your AI agent keeps mining the same block. Stop paying for duplicate ore.**
+| Before | | After |
+|:------:|:-:|------:|
+| **38.2K** tokens | **−91.5%** | **3.2K** tokens |
+| *balanced mode · tiktoken cl100k_base* | | *measured* |
 
-<br />
-
-[![Star progress](https://img.shields.io/github/stars/shubhransh-gupta/toknt?label=stars%20toward%20discovery&color=17DD62&style=flat-square)](https://github.com/shubhransh-gupta/toknt/stargazers)
-[![Discussions](https://img.shields.io/badge/Questions%3F-Ask%20in%20Discussions-4EE4EF?style=flat-square)](https://github.com/shubhransh-gupta/toknt/discussions)
-
-**Using Cursor, Claude Code, or Codex daily?** If Tokn't cuts your token bill, **[⭐ star the repo](https://github.com/shubhransh-gupta/toknt/stargazers)** so other builders find it.
+*Default `safe` mode: **~6.5%** on mixed sessions · Duplicate file reads: **~46%** · [Full stats ↓](#measured-accuracy)*
 
 </div>
 
-<br />
-
-<div align="center">
-
-<table>
-  <tr>
-    <td align="center" width="340">
-
-### 🪨 Raw ore
-*balanced mode · measured*
-
-**38,216** tokens  
-*(tiktoken)*
-
-    </td>
-    <td align="center" width="80">
-
-### ⬇️
-**91.5%**  
-*smelted*
-
-    </td>
-    <td align="center" width="340">
-
-### 💎 Refined ingot
-*balanced mode · measured*
-
-**3,236** tokens  
-*(tiktoken)*
-
-    </td>
-  </tr>
-</table>
-
-*Default `safe` mode: **~6.5%** · Real repo duplicate reads: **~46%** · [Full stats ↓](#-achievement-log-honest-stats)*
-
-<br />
-
-[![🎮 Open animated Observatory](https://img.shields.io/badge/🎮_Open-animated_Observatory-17DD62?style=for-the-badge&labelColor=2a2a2a)](https://shubhransh-gupta.github.io/toknt/)
-[![📋 6-step setup guide](https://img.shields.io/badge/📋_6--step-setup_guide-FFD700?style=for-the-badge&labelColor=2a2a2a)](docs/reduce-token-cost.md)
-
-</div>
+<br/>
 
 ---
 
-<div align="center">
+## Why Tokn't
 
-## ⛏️ Why crafters are starring this
+| Problem | What Tokn't does |
+|:--------|:-----------------|
+| Agent rereads the same file repeatedly | Hash-based dedup + local recall URI |
+| `npm test` dumps thousands of lines into context | Summarize failures; store full output in `~/.toknt/` |
+| Directory listings send tens of thousands of paths | Tree summary + searchable local index |
+| Identical grep/search results repeated | Content-hash caching |
+| Dashboards that only *report* waste | **Actually compresses** what hits the model |
 
-</div>
+Not another token counter — a performance layer between your agent and the model.
 
-<div align="center">
-
-| Mob problem | Tokn't enchantment |
-|:--|:--|
-| Agent rereads the same file 5× | Hash-based dedup + recall |
-| `npm test` dumps 12K lines into context | Summarize failures, store full output locally |
-| `find .` sends 40K filenames to the model | Tree summary + searchable local index |
-| Identical grep results repeated | Content-hash caching |
-| Token counters that *tell* you waste | **Actually smelts** what hits the model |
-
-*Not another scoreboard — a performance layer. Efficiency III for your agent.*
-
-</div>
+<br/>
 
 ---
 
-<div align="center">
+## Setup guide
 
-## 💎 How to configure & reduce token cost
+Six steps. Local-only. No API keys.
 
-**[→ Full guide: docs/reduce-token-cost.md](docs/reduce-token-cost.md)** · **[→ Live walkthrough](https://shubhransh-gupta.github.io/toknt/#setup)**
-
-</div>
-
-<div align="center">
-
-| Step | What to do |
-|:--:|:--|
-| **1** | `git clone … && npm install && npm run build` |
-| **2** | `npx toknt install cursor` *(or claude / codex)* |
-| **3** | `npx toknt config set mode balanced` |
-| **4** | Code normally — Tokn't compresses tool output automatically |
-| **5** | `npx toknt stats` — track your savings |
-| **6** | `npx toknt recall toknt://file/abc123` — restore full content |
-
-</div>
-
-<div align="center">
-
-| Mode | Best for | Measured savings* |
-|:--|:--|:--|
-| **`safe`** | Duplicate files & tool output | **~6.5%** mixed · **~46%** duplicate reads |
-| **`balanced`** | Big test logs & directory listings | **~91.5%** on log-heavy sessions |
-| **`aggressive`** | Experiments only | Higher · may affect quality |
-
-```json
-{ "mode": "balanced", "integrations": { "cursor": true } }
-```
-
-*Restart your agent after changing mode.*
-
-</div>
-
----
-
-<div align="center">
-
-## 🛠️ Crafting table — 60-second install
-
-</div>
+### 1. Install Tokn't
 
 ```bash
 git clone https://github.com/shubhransh-gupta/toknt.git
 cd toknt && npm install && npm run build
-npx toknt install          # detects Cursor, Claude Code, Codex
-npx toknt status           # verify
 ```
 
-<div align="center">
-
-*Or `npx toknt install` after npm publish*
-
-</div>
-
----
-
-<div align="center">
-
-## 🔥 Smelting demo
-
-</div>
+### 2. Connect your agent
 
 ```bash
-npx toknt benchmark --task fix-authentication
-npx toknt stats
-npm run dev -w @toknt/observatory   # local animated dashboard
+npx toknt install cursor   # or claude, codex, windsurf
+npx toknt status
+npx toknt doctor
 ```
 
-<div align="center">
+### 3. Set optimization mode
 
-[![Live Observatory](https://img.shields.io/badge/🔭_Live-Observatory-shubhransh--gupta.github.io%2Ftoknt-4EE4EF?style=for-the-badge&labelColor=2a2a2a)](https://shubhransh-gupta.github.io/toknt/)
+```bash
+npx toknt config set mode balanced
+```
 
-</div>
+### 4. Code normally
+
+Open Cursor, Claude Code, or Codex — Tokn't compresses tool output automatically via hooks.
+
+### 5. Track savings
+
+```bash
+npx toknt stats
+npx toknt benchmark --mode balanced --export run.json
+```
+
+Import `run.json` in the [Observatory](https://shubhransh-gupta.github.io/toknt/) to visualize results.
+
+### 6. Recall when needed
+
+```bash
+npx toknt recall toknt://file/abc123
+```
+
+Full content stays in `~/.toknt/` — never lost, just not sent to the model every time.
+
+<br/>
+
+### Optimization modes
+
+| Mode | Typical savings | Best for |
+|:-----|:----------------|:---------|
+| **`safe`** | ~6.5% | Default — duplicate files & tool output only |
+| **`balanced`** | ~91% | Heavy test output, directory listings, large logs |
+| **`aggressive`** | Higher | Experiments — may affect task quality |
+
+Restart your agent after changing mode. [Full guide →](docs/reduce-token-cost.md)
+
+<br/>
 
 ---
 
-<div align="center">
+## Quick install
 
-## 🗺️ How the redstone works
+```bash
+git clone https://github.com/shubhransh-gupta/toknt.git
+cd toknt && npm install && npm run build
+npx toknt install
+npx toknt config set mode balanced
+```
 
-</div>
+**VS Code / VSCodium:** install the extension from [`apps/vscode-extension`](apps/vscode-extension/README.md) for status bar stats and recall commands.
+
+<br/>
+
+---
+
+## How it works
 
 ```
 Claude Code ─┐
-Cursor      ─┼─→  TOKN'T  ─→  Optimized Context  ─→  AI Agent
+Cursor      ─┼─→  TOKN'T  ─→  Optimized context  ─→  AI agent
 Codex       ─┘       │
-                     ├── Deduplicate (hash files & tool output)
-                     ├── Compress (terminal, directories)
+Windsurf    ─┘       ├── Deduplicate (hash files & tool output)
+                     ├── Compress (terminal output, directories)
                      ├── Cache locally (~/.toknt/)
                      └── Recall (toknt://file/abc123)
 ```
 
-<div align="center">
+**Local-first & private** — never compresses secrets, diffs, or errors. Your code stays on your machine.
 
-🛡️ **Local survival mode** — never compresses secrets, diffs, or errors · your code stays on your machine
-
-</div>
+<br/>
 
 ---
 
-<div align="center">
+## Measured accuracy
 
-## 📜 Achievement log (honest stats)
-
-*2,000 automated quests · tiktoken cl100k_base · [`accuracy-2000.json`](benchmarks/results/accuracy-2000.json)*
-
-</div>
-
-<div align="center">
+*2,000 automated test cases · tiktoken cl100k_base · [`accuracy-2000.json`](benchmarks/results/accuracy-2000.json)*
 
 | Metric | Result |
-|:--|:--|
-| **Overall pass rate** | **2000/2000 (100%)** ✓ |
-| **Recall integrity** | **1055/1055 (100%)** ✓ |
-| **Critical/secret passthrough** | **400/400 (100%)** ✓ |
-| **Reduction % vs tiktoken** | **~4pp avg delta** |
-| **Absolute token counts** | **~27.5% avg underestimate** |
+|:-------|:-------|
+| Engine accuracy | **2000/2000 (100%)** |
+| Recall integrity | **1055/1055 (100%)** |
+| Critical/secret passthrough | **400/400 (100%)** |
+| Reduction % vs tiktoken | **~4pp avg delta** |
+
+<details>
+<summary><strong>All 2,000 test categories</strong></summary>
 
 | Category | Cases | Result |
-|:--|--:|:--|
-| Duplicate file reads | 350 | 350/350 ✓ |
-| Terminal output | 350 | 350/350 ✓ |
-| Directory listings | 350 | 350/350 ✓ |
-| Duplicate tool output | 200 | 200/200 ✓ |
-| Critical content | 250 | 250/250 ✓ |
-| Secret detection | 150 | 150/150 ✓ |
-| File invalidation | 200 | 200/200 ✓ |
-| Token estimator | 150 | 150/150 ✓ |
+|:---------|------:|:-------|
+| Duplicate file reads | 350 | 350/350 |
+| Terminal output | 350 | 350/350 |
+| Directory listings | 350 | 350/350 |
+| Duplicate tool output | 200 | 200/200 |
+| Critical content | 250 | 250/250 |
+| Secret detection | 150 | 150/150 |
+| File change invalidation | 200 | 200/200 |
+| Token estimator | 150 | 150/150 |
 
-*Reproduce: `npm run audit:2000`*
+</details>
 
-</div>
+Reproduce: `npm run audit:2000`
+
+<br/>
 
 ---
 
-<div align="center">
-
-## 📦 Command chest
-
-</div>
+## Commands
 
 ```bash
-toknt install | stats | benchmark --export run.json | recall <uri> | doctor
+toknt install [agent]     # claude, cursor, codex, windsurf
+toknt config set mode balanced
+toknt stats --json
+toknt recall toknt://file/<id> --json
+toknt benchmark --export run.json
+toknt watch .             # invalidate cache on file changes
+toknt doctor
 ```
 
 <details>
-<summary><div align="center"><strong>⛏️ All commands</strong></div></summary>
-
-<div align="center">
+<summary><strong>All commands</strong></summary>
 
 | Command | Description |
-|:--|:--|
-| `toknt install [agent]` | Install for claude, cursor, codex, windsurf |
+|:--------|:------------|
+| `toknt install [agent]` | Install hooks for detected agents |
+| `toknt config show` | View config and cache stats |
 | `toknt stats --json` | Token savings breakdown |
 | `toknt benchmark` | Before/after comparison |
 | `toknt recall <uri>` | Retrieve compressed content |
 | `toknt cache clear` | Reset local cache |
-
-</div>
+| `toknt watch [path]` | Watch files and invalidate duplicate cache |
 
 </details>
 
----
-
-<div align="center">
-
-## 🤝 Multiplayer — we need builders
-
-[![Good first issues](https://img.shields.io/badge/Good_first_issues-pick_one-17DD62?style=for-the-badge&labelColor=2a2a2a)](https://github.com/shubhransh-gupta/toknt/labels/good%20first%20issue)
-
-| Biome | Starter quest |
-|:--|:--|
-| `packages/core` | Safety classification rules |
-| `packages/optimizer` | Jest / pytest parsers |
-| `integrations/` | Cursor / Claude hooks |
-| `apps/observatory` | UI & animations |
-| `benchmarks/` | New benchmark tasks |
-
-**`main` is protected** — PRs required, CI must pass · [.github/BRANCH_PROTECTION.md](.github/BRANCH_PROTECTION.md)
-
-[CONTRIBUTING.md](CONTRIBUTING.md) · [ROADMAP.md](ROADMAP.md)
-
-</div>
-
-**`main` is protected** — PRs required, CI must pass. See [.github/BRANCH_PROTECTION.md](.github/BRANCH_PROTECTION.md).
+<br/>
 
 ---
 
-<div align="center">
+## Contributing
 
-## 📚 Map & scrolls
+Pick an [open issue](https://github.com/shubhransh-gupta/toknt/issues) or see [CONTRIBUTING.md](CONTRIBUTING.md).
 
-| Scroll | Description |
-|:--|:--|
-| **[Reduce token cost](docs/reduce-token-cost.md)** | Setup, modes, daily usage |
+| Area | Good first tasks |
+|:-----|:-----------------|
+| `packages/optimizer` | Go, Rust, Java test output parsers ([#12](https://github.com/shubhransh-gupta/toknt/issues/12)–[#14](https://github.com/shubhransh-gupta/toknt/issues/14)) |
+| `packages/core` | MCP server ([#15](https://github.com/shubhransh-gupta/toknt/issues/15)) |
+| `apps/observatory` | Session import ([#17](https://github.com/shubhransh-gupta/toknt/issues/17)) |
+
+`main` is protected — PRs required, CI must pass. See [.github/BRANCH_PROTECTION.md](.github/BRANCH_PROTECTION.md).
+
+<br/>
+
+---
+
+## Documentation
+
+| Doc | Description |
+|:----|:------------|
+| [Reduce token cost](docs/reduce-token-cost.md) | Setup, modes, daily usage |
+| [Getting started](docs/getting-started.md) | Install walkthrough |
 | [Architecture](ARCHITECTURE.md) | System design |
 | [Benchmarks](BENCHMARKS.md) | Methodology |
-| [Getting Started](docs/getting-started.md) | Install guide |
+| [VS Code extension](apps/vscode-extension/README.md) | Editor integration |
+| [Roadmap](ROADMAP.md) | What's next |
 
-<br />
+<br/>
 
-**Same agent. Same quest. Less context. More XP.**
+<div align="center">
 
-*Tokens? Tokn't.* ⛏️ 💎 🟩
+**Same agent. Same task. Less context.**
 
-<br />
+<br/>
 
-**Created with ❤️ by [Shubhransh Gupta](https://github.com/shubhransh-gupta)**
+If Tokn't saves you tokens, **[star the repo](https://github.com/shubhransh-gupta/toknt/stargazers)** — it helps other builders find it.
 
-<br />
+<br/>
 
-### ⭐ Support Tokn't
+Created with ❤️ by **[Shubhransh Gupta](https://github.com/shubhransh-gupta)**
 
-Tokn't is free, local-first, and MIT-licensed. A GitHub star helps other Cursor/Claude/Codex users discover it:
-
-**[→ Star toknt on GitHub](https://github.com/shubhransh-gupta/toknt/stargazers)** · **[→ Ask a question in Discussions](https://github.com/shubhransh-gupta/toknt/discussions)**
-
-<br />
+<br/>
 
 MIT — [LICENSE](LICENSE)
 
