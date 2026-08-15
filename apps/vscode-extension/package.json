@@ -1,0 +1,86 @@
+{
+  "name": "toknt-vscode",
+  "displayName": "Tokn't",
+  "description": "Local-first token optimization for AI coding agents — stats, recall, and mode control.",
+  "version": "1.0.0",
+  "publisher": "shubhransh-gupta",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/shubhransh-gupta/toknt"
+  },
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": ["Other", "Machine Learning"],
+  "keywords": ["ai", "tokens", "cursor", "claude", "optimization"],
+  "activationEvents": ["onStartupFinished"],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "toknt.showStats",
+        "title": "Tokn't: Show Stats"
+      },
+      {
+        "command": "toknt.recallUri",
+        "title": "Tokn't: Recall URI"
+      },
+      {
+        "command": "toknt.setModeSafe",
+        "title": "Tokn't: Set Mode — Safe"
+      },
+      {
+        "command": "toknt.setModeBalanced",
+        "title": "Tokn't: Set Mode — Balanced"
+      },
+      {
+        "command": "toknt.setModeAggressive",
+        "title": "Tokn't: Set Mode — Aggressive"
+      },
+      {
+        "command": "toknt.refreshStatus",
+        "title": "Tokn't: Refresh Status Bar"
+      }
+    ],
+    "configuration": {
+      "title": "Tokn't",
+      "properties": {
+        "toknt.enabled": {
+          "type": "boolean",
+          "default": true,
+          "description": "Show Tokn't status bar and enable commands."
+        },
+        "toknt.cliPath": {
+          "type": "string",
+          "default": "toknt",
+          "description": "Path to the toknt CLI binary (must be installed separately)."
+        },
+        "toknt.mode": {
+          "type": "string",
+          "enum": ["safe", "balanced", "aggressive"],
+          "default": "safe",
+          "description": "Optimization mode. Synced to ~/.toknt/config.json when changed."
+        },
+        "toknt.statusBarRefreshSeconds": {
+          "type": "number",
+          "default": 30,
+          "minimum": 5,
+          "description": "How often to refresh token savings in the status bar."
+        }
+      }
+    }
+  },
+  "scripts": {
+    "build": "tsc -p .",
+    "watch": "tsc -watch -p .",
+    "package": "vsce package --no-dependencies",
+    "typecheck": "tsc -p . --noEmit"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "@types/vscode": "^1.85.0",
+    "@vscode/vsce": "^3.2.1",
+    "typescript": "^5.7.2"
+  }
+}

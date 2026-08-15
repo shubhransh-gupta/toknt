@@ -33,7 +33,11 @@ program
 
 program.command('uninstall').description('Remove Tokn\'t integrations').action(uninstallCommand);
 program.command('status').description('Show Tokn\'t status').action(statusCommand);
-program.command('stats').description('Show token savings statistics').action(statsCommand);
+program
+  .command('stats')
+  .description('Show token savings statistics')
+  .option('--json', 'Output JSON')
+  .action((options: { json?: boolean }) => statsCommand(options));
 program.command('explain').description('Explain how Tokn\'t works').action(explainCommand);
 program
   .command('benchmark')
@@ -50,7 +54,8 @@ program.command('doctor').description('Diagnose Tokn\'t installation').action(do
 program
   .command('recall <uri>')
   .description('Recall compressed content by URI (toknt://type/id)')
-  .action(recallCommand);
+  .option('--json', 'Output JSON')
+  .action((uri: string, options: { json?: boolean }) => recallCommand(uri, options));
 
 registerConfigCommands(program);
 

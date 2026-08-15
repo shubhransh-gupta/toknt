@@ -1,13 +1,18 @@
 import { TokntEngine, detectContextType, type ContextItem } from '@toknt/core';
-import { LocalCache } from '@toknt/cache';
+import { LocalCache, StatsStore } from '@toknt/cache';
+import { estimateTokens } from '@toknt/tokenizer';
 import type { AgentAdapter, ToolInput, ToolOutput } from './types.js';
 import { BaseAdapter } from './types.js';
 
 export class OptimizingAdapterWrapper {
   private engine: TokntEngine;
+  private cache: LocalCache;
+  private statsStore: StatsStore;
 
   constructor(cache?: LocalCache, mode?: 'safe' | 'balanced' | 'aggressive') {
     const c = cache ?? new LocalCache();
+    this.cache = c;
+    this.statsStore = new StatsStore(c.getBaseDir());
     this.engine = new TokntEngine({ cache: c, mode });
   }
 
@@ -32,6 +37,13 @@ export class OptimizingAdapterWrapper {
 
     const result = await this.engine.processContextItem(item);
 
+    if (result.optimized) {
+      await this.statsStore.recordOptimization(
+        estimateTokens(output.content).tokens,
+        estimateTokens(result.content).tokens
+      );
+    }
+
     return {
       ...output,
       content: result.content,
@@ -48,7 +60,11 @@ export class OptimizingAdapterWrapper {
   }
 
   async processRecall(uri: string): Promise<string | null> {
-    return this.engine.recall(uri);
+    const content = await this.engine.recall(uri);
+    if (content) {
+      await this.statsStore.recordRecall();
+    }
+    return content;
   }
 }
 
