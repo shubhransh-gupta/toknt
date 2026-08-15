@@ -24,7 +24,7 @@ Help us build Tokn't. Pick any unchecked item and [open a PR](CONTRIBUTING.md).
 - [x] **Jest / Vitest / pytest output parsers** — terminal summarization
 - [ ] **Real agent benchmarks** — run against live Cursor/Claude sessions
 - [x] **GitHub Pages live demo** — deploy Observatory
-- [ ] **VS Code extension** — beyond Cursor plugin
+- [x] **VS Code extension** — beyond Cursor plugin
 - [x] **Windsurf adapter** — expand agent support
 - [x] **Cache size limits + LRU eviction** — Phase 2A
 - [x] **`toknt config` CLI** — set mode without editing JSON

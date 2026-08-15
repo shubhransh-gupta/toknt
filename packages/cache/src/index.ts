@@ -245,3 +245,5 @@ export class LocalCache {
 export async function ensureParentDir(filePath: string): Promise<void> {
   await mkdir(dirname(filePath), { recursive: true });
 }
+
+export * from './stats-store.js';

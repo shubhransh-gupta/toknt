@@ -17,7 +17,8 @@
   },
   "dependencies": {
     "@toknt/cache": "*",
-    "@toknt/core": "*"
+    "@toknt/core": "*",
+    "@toknt/tokenizer": "*"
   },
   "license": "MIT",
   "publishConfig": { "access": "public" },
