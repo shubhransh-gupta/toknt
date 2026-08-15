@@ -35,6 +35,13 @@
 
 > **Your AI agent keeps mining the same block. Stop paying for duplicate ore.**
 
+<br />
+
+[![Star progress](https://img.shields.io/github/stars/shubhransh-gupta/toknt?label=stars%20toward%20discovery&color=17DD62&style=flat-square)](https://github.com/shubhransh-gupta/toknt/stargazers)
+[![Discussions](https://img.shields.io/badge/Questions%3F-Ask%20in%20Discussions-4EE4EF?style=flat-square)](https://github.com/shubhransh-gupta/toknt/discussions)
+
+**Using Cursor, Claude Code, or Codex daily?** If Tokn't cuts your token bill, **[⭐ star the repo](https://github.com/shubhransh-gupta/toknt/stargazers)** so other builders find it.
+
 </div>
 
 <br />
@@ -316,6 +323,14 @@ toknt install | stats | benchmark --export run.json | recall <uri> | doctor
 <br />
 
 **Created with ❤️ by [Shubhransh Gupta](https://github.com/shubhransh-gupta)**
+
+<br />
+
+### ⭐ Support Tokn't
+
+Tokn't is free, local-first, and MIT-licensed. A GitHub star helps other Cursor/Claude/Codex users discover it:
+
+**[→ Star toknt on GitHub](https://github.com/shubhransh-gupta/toknt/stargazers)** · **[→ Ask a question in Discussions](https://github.com/shubhransh-gupta/toknt/discussions)**
 
 <br />
 
