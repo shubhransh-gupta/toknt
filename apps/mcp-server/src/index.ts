@@ -6,11 +6,11 @@ import {
   ListToolsRequestSchema,
 } from '@modelcontextprotocol/sdk/types.js';
 import { LocalCache, StatsStore } from '@toknt/cache';
-import { TokntEngine } from '@toknt/core';
+import { handleToolCall, MCP_TOOLS } from './handlers.js';
 
 const cache = new LocalCache();
-const engine = new TokntEngine({ cache });
 const statsStore = new StatsStore(cache.getBaseDir());
+const deps = { cache, statsStore };
 
 const server = new Server(
   { name: 'toknt', version: '1.0.0' },
@@ -18,64 +18,24 @@ const server = new Server(
 );
 
 server.setRequestHandler(ListToolsRequestSchema, async () => ({
-  tools: [
-    {
-      name: 'toknt_recall',
-      description: 'Recall full compressed content by toknt:// URI',
-      inputSchema: {
-        type: 'object',
-        properties: {
-          uri: {
-            type: 'string',
-            description: 'toknt://file|output|directory|tool/<id>',
-          },
-        },
-        required: ['uri'],
-      },
-    },
-    {
-      name: 'toknt_stats',
-      description: 'Get token savings statistics from ~/.toknt/stats.json',
-      inputSchema: { type: 'object', properties: {} },
-    },
-    {
-      name: 'toknt_config',
-      description: 'Read Toknt configuration and cache stats',
-      inputSchema: { type: 'object', properties: {} },
-    },
-  ],
+  tools: [...MCP_TOOLS],
 }));
 
 server.setRequestHandler(CallToolRequestSchema, async (request) => {
-  switch (request.params.name) {
-    case 'toknt_recall': {
-      const uri = String(request.params.arguments?.uri ?? '');
-      const content = await engine.recall(uri);
-      if (!content) {
-        return {
-          content: [{ type: 'text', text: JSON.stringify({ uri, content: null, error: 'not_found' }) }],
-          isError: true,
-        };
-      }
-      await statsStore.recordRecall();
-      return { content: [{ type: 'text', text: content }] };
-    }
-    case 'toknt_stats': {
-      const stats = await statsStore.load();
-      return { content: [{ type: 'text', text: JSON.stringify(stats, null, 2) }] };
-    }
-    case 'toknt_config': {
-      const config = await cache.getConfig();
-      const cacheStats = await cache.getStats();
-      return {
-        content: [{
-          type: 'text',
-          text: JSON.stringify({ config, cache: cacheStats, path: cache.getBaseDir() }, null, 2),
-        }],
-      };
-    }
-    default:
-      throw new Error(`Unknown tool: ${request.params.name}`);
+  try {
+    return await handleToolCall(
+      request.params.name,
+      request.params.arguments as Record<string, unknown> | undefined,
+      deps
+    ) as { content: Array<{ type: 'text'; text: string }>; isError?: boolean };
+  } catch (err) {
+    return {
+      content: [{
+        type: 'text',
+        text: JSON.stringify({ error: String(err) }),
+      }],
+      isError: true,
+    };
   }
 });
 

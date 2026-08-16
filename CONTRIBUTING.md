@@ -19,7 +19,7 @@ npm run build
 | 🟢 Easy | Add Go test output parser | Done ([#12](https://github.com/shubhransh-gupta/toknt/issues/12)) |
 | 🟢 Easy | Add Rust cargo test parser | Done ([#13](https://github.com/shubhransh-gupta/toknt/issues/13)) |
 | 🟢 Easy | Add Java/Maven test parser | Done ([#14](https://github.com/shubhransh-gupta/toknt/issues/14)) |
-| 🟡 Medium | MCP server (recall + stats) | Done ([#15](https://github.com/shubhransh-gupta/toknt/issues/15)) |
+| 🟡 Medium | MCP server (recall + stats + compress) | Done ([#15](https://github.com/shubhransh-gupta/toknt/issues/15), [#26](https://github.com/shubhransh-gupta/toknt/issues/26)) |
 | 🟡 Medium | VS Code extension | Done ([#16](https://github.com/shubhransh-gupta/toknt/issues/16)) |
 | 🟡 Medium | Observatory session import | Done ([#17](https://github.com/shubhransh-gupta/toknt/issues/17)) |
 | 🔴 Hard | Real agent session benchmarks | Done ([#18](https://github.com/shubhransh-gupta/toknt/issues/18)) |

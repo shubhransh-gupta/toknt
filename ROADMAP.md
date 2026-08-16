@@ -39,7 +39,7 @@ See [PHASE2.md](./PHASE2.md) for the full Phase 2 plan.
 - [ ] **Semantic stale-context pruning** (optional, off by default)
 - [ ] **Session replay** — debug what was compressed and why
 - [ ] **Team config sharing** — export/import rules (no code, config only)
-- [ ] **MCP server** — expose recall + stats to any MCP client
+- [x] **MCP server** — expose recall + stats to any MCP client
 - [ ] **TUI dashboard** — terminal UI for stats (`toknt tui`)
 
 ## v2.0 — Ecosystem

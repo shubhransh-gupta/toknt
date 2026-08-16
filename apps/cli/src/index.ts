@@ -12,7 +12,7 @@ import { doctorCommand } from './commands/doctor.js';
 import { recallCommand } from './commands/recall.js';
 import { registerConfigCommands } from './commands/config.js';
 import { watchCommand } from './commands/watch.js';
-import { mcpCommand } from './commands/mcp.js';
+import { mcpCommand, mcpInstallCommand } from './commands/mcp.js';
 
 const program = new Command();
 
@@ -67,11 +67,23 @@ program
     await watchCommand(path);
   });
 
-program
+const mcpCmd = program
   .command('mcp')
-  .description('Start Tokn\'t MCP server (stdio)')
+  .description('Tokn\'t MCP server commands');
+
+mcpCmd
+  .command('start', { isDefault: true })
+  .description('Start MCP server (stdio)')
   .action(async () => {
     await mcpCommand();
+  });
+
+mcpCmd
+  .command('install')
+  .description('Write Cursor MCP config for Tokn\'t')
+  .option('--global', 'Install to ~/.cursor/mcp.json instead of project .cursor/')
+  .action(async (options: { global?: boolean }) => {
+    await mcpInstallCommand(options);
   });
 
 program.parse();
