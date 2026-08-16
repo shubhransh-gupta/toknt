@@ -2,12 +2,20 @@ import { createHash } from 'node:crypto';
 import { summarizeByRunner } from './parsers.js';
 
 export type { TestRunner } from './parsers.js';
-export { detectTestRunner, parseJestOutput, parseVitestOutput, parsePytestOutput } from './parsers.js';
+export {
+  detectTestRunner,
+  parseJestOutput,
+  parseVitestOutput,
+  parsePytestOutput,
+  parseMavenOutput,
+} from './parsers.js';
 
 export interface TerminalSummary {
   totalTests: number;
   passed: number;
   failed: number;
+  errors?: number;
+  skipped?: number;
   failures: string[];
   lineCount: number;
   exitCode?: number;
@@ -31,6 +39,9 @@ export function formatTerminalSummary(summary: TerminalSummary, recallUri: strin
     `${summary.passed.toLocaleString()} passed`,
     `${summary.failed.toLocaleString()} failed`,
   ];
+
+  if (summary.errors !== undefined) parts.push(`${summary.errors.toLocaleString()} errors`);
+  if (summary.skipped !== undefined) parts.push(`${summary.skipped.toLocaleString()} skipped`);
 
   if (summary.failures.length > 0) {
     parts.push('', 'FAILURES', '');

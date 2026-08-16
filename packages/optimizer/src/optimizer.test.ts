@@ -7,6 +7,7 @@ import {
   parseJestOutput,
   parseVitestOutput,
   parsePytestOutput,
+  parseMavenOutput,
 } from '../src/index.js';
 
 describe('DuplicateTracker', () => {
@@ -39,6 +40,10 @@ describe('detectTestRunner', () => {
 
   it('detects pytest', () => {
     expect(detectTestRunner('FAILED tests/test_auth.py::test_login')).toBe('pytest');
+  });
+
+  it('detects Maven', () => {
+    expect(detectTestRunner('Tests run: 42, Failures: 2, Errors: 0, Skipped: 1')).toBe('maven');
   });
 });
 
@@ -97,6 +102,27 @@ FAILED tests/test_auth.py::test_logout - AssertionError: expected 200
   });
 });
 
+describe('parseMavenOutput', () => {
+  it('parses Maven Surefire summary and failed test names', () => {
+    const output = `
+[INFO] Running com.example.AuthTest
+[ERROR] testLogin(com.example.AuthTest)  Time elapsed: 0.01 s  <<< FAILURE!
+[ERROR] testRefresh(com.example.AuthTest)  Time elapsed: 0.01 s  <<< ERROR!
+[ERROR] Tests run: 42, Failures: 2, Errors: 1, Skipped: 1
+[INFO] BUILD FAILURE
+`.trim();
+
+    const summary = parseMavenOutput(output);
+    expect(summary.totalTests).toBe(42);
+    expect(summary.passed).toBe(38);
+    expect(summary.failed).toBe(2);
+    expect(summary.errors).toBe(1);
+    expect(summary.skipped).toBe(1);
+    expect(summary.failures).toContain('testLogin(com.example.AuthTest)');
+    expect(summary.failures).toContain('testRefresh(com.example.AuthTest)');
+  });
+});
+
 describe('summarizeTerminalOutput', () => {
   it('extracts generic test results', () => {
     const output = '100 tests, 95 passed, 5 failed\nFAIL AuthTests.swift:42';
@@ -115,6 +141,19 @@ describe('summarizeTerminalOutput', () => {
     const output = 'Tests: 2 failed, 48 passed, 50 total\nTest Suites: 1 failed';
     const summary = summarizeTerminalOutput(output);
     expect(summary.totalTests).toBe(50);
+  });
+
+  it('routes Maven output automatically', () => {
+    const output = `
+Tests run: 42, Failures: 2, Errors: 0, Skipped: 1
+<<< FAILURE!
+testLogin(com.example.AuthTest)
+`.trim();
+    const summary = summarizeTerminalOutput(output);
+    expect(summary.totalTests).toBe(42);
+    expect(summary.passed).toBe(39);
+    expect(summary.failed).toBe(2);
+    expect(summary.failures).toContain('testLogin(com.example.AuthTest)');
   });
 });
 

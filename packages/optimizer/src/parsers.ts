@@ -1,11 +1,12 @@
 import type { TerminalSummary } from './terminal.js';
 import { stripAnsi } from './terminal.js';
 
-export type TestRunner = 'jest' | 'vitest' | 'pytest' | 'generic';
+export type TestRunner = 'jest' | 'vitest' | 'pytest' | 'maven' | 'generic';
 
 export function detectTestRunner(content: string): TestRunner {
   const clean = stripAnsi(content);
 
+  if (/Tests run:\s*\d+|<<< (?:FAILURE|ERROR)!|BUILD FAILURE/i.test(clean)) return 'maven';
   if (/pytest|=== FAILURES ===|FAILED .*::|\d+ failed,\s*\d+ passed in/i.test(clean)) return 'pytest';
   if (/vitest|Test Files\s+\d+|RUN\s+v\d+\.\d+\.\d+/i.test(clean)) return 'vitest';
   if (/jest|Test Suites:|Tests:\s+\d+/.test(clean)) return 'jest';
@@ -143,6 +144,51 @@ export function parsePytestOutput(content: string): TerminalSummary {
   };
 }
 
+export function parseMavenOutput(content: string): TerminalSummary {
+  const clean = stripAnsi(content);
+  const lines = clean.split('\n');
+  const failures: string[] = [];
+  const summaryMatches = [...clean.matchAll(
+    /Tests run:\s*(\d+),\s*Failures:\s*(\d+),\s*Errors:\s*(\d+),\s*Skipped:\s*(\d+)/gi
+  )];
+  const summaryMatch = summaryMatches.at(-1);
+
+  const total = summaryMatch ? parseInt(summaryMatch[1], 10) : lines.length;
+  const failed = summaryMatch ? parseInt(summaryMatch[2], 10) : 0;
+  const errors = summaryMatch ? parseInt(summaryMatch[3], 10) : 0;
+  const skipped = summaryMatch ? parseInt(summaryMatch[4], 10) : 0;
+  const passed = Math.max(0, total - failed - errors - skipped);
+
+  for (let i = 0; i < lines.length; i++) {
+    if (!/<<< (?:FAILURE|ERROR)!/.test(lines[i])) continue;
+
+    const beforeMarker = lines[i].split(/<<< (?:FAILURE|ERROR)!/)[0];
+    const candidates = beforeMarker.trim() ? [beforeMarker] : lines.slice(i + 1);
+
+    for (const candidate of candidates) {
+      const trimmed = candidate.replace(/^\[ERROR\]\s*/, '').trim();
+      if (!trimmed) continue;
+
+      const nameMatch = trimmed.match(
+        /([A-Za-z_$][\w$]*\([\w$.[\]-]+\)|[\w$.[\]-]+\.[A-Za-z_$][\w$]*)/
+      );
+      if (nameMatch) failures.push(nameMatch[1]);
+      break;
+    }
+  }
+
+  return {
+    totalTests: total,
+    passed,
+    failed: summaryMatch ? failed : failures.length,
+    errors,
+    skipped,
+    failures: dedupeFailures(failures).slice(0, 20),
+    lineCount: lines.length,
+    exitCode: /BUILD FAILURE|<<< (?:FAILURE|ERROR)!/.test(clean) ? 1 : 0,
+  };
+}
+
 function dedupeFailures(failures: string[]): string[] {
   return [...new Set(failures)];
 }
@@ -156,6 +202,8 @@ export function summarizeByRunner(content: string): TerminalSummary {
       return parseVitestOutput(content);
     case 'pytest':
       return parsePytestOutput(content);
+    case 'maven':
+      return parseMavenOutput(content);
     default:
       return parseGenericOutput(content);
   }
