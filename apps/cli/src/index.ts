@@ -12,6 +12,7 @@ import { doctorCommand } from './commands/doctor.js';
 import { recallCommand } from './commands/recall.js';
 import { registerConfigCommands } from './commands/config.js';
 import { watchCommand } from './commands/watch.js';
+import { mcpCommand } from './commands/mcp.js';
 
 const program = new Command();
 
@@ -64,6 +65,13 @@ program
   .description('Watch files and invalidate duplicate cache on changes')
   .action(async (path?: string) => {
     await watchCommand(path);
+  });
+
+program
+  .command('mcp')
+  .description('Start Tokn\'t MCP server (stdio)')
+  .action(async () => {
+    await mcpCommand();
   });
 
 program.parse();

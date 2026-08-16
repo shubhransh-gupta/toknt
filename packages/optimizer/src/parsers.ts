@@ -1,12 +1,14 @@
 import type { TerminalSummary } from './terminal.js';
 import { stripAnsi } from './terminal.js';
 
-export type TestRunner = 'jest' | 'vitest' | 'pytest' | 'maven' | 'generic';
+export type TestRunner = 'jest' | 'vitest' | 'pytest' | 'maven' | 'go' | 'cargo' | 'generic';
 
 export function detectTestRunner(content: string): TestRunner {
   const clean = stripAnsi(content);
 
   if (/Tests run:\s*\d+|<<< (?:FAILURE|ERROR)!|BUILD FAILURE/i.test(clean)) return 'maven';
+  if (/^running \d+ tests$/m.test(clean) || /test result:\s*(?:FAILED|ok)/i.test(clean)) return 'cargo';
+  if (/^=== RUN\s/m.test(clean) || /^--- (?:PASS|FAIL):\s/m.test(clean) || /^FAIL\t/m.test(clean)) return 'go';
   if (/pytest|=== FAILURES ===|FAILED .*::|\d+ failed,\s*\d+ passed in/i.test(clean)) return 'pytest';
   if (/vitest|Test Files\s+\d+|RUN\s+v\d+\.\d+\.\d+/i.test(clean)) return 'vitest';
   if (/jest|Test Suites:|Tests:\s+\d+/.test(clean)) return 'jest';
@@ -189,6 +191,71 @@ export function parseMavenOutput(content: string): TerminalSummary {
   };
 }
 
+export function parseGoTestOutput(content: string): TerminalSummary {
+  const clean = stripAnsi(content);
+  const lines = clean.split('\n');
+  const failures: string[] = [];
+  let passed = 0;
+  let failed = 0;
+
+  for (const line of lines) {
+    const passMatch = line.match(/^--- PASS:\s+(\S+)/);
+    const failMatch = line.match(/^--- FAIL:\s+(\S+)/);
+    if (passMatch) {
+      passed++;
+    } else if (failMatch) {
+      failed++;
+      failures.push(failMatch[1]);
+    }
+  }
+
+  const total = (passed + failed) || lines.length;
+
+  return {
+    totalTests: total,
+    passed,
+    failed: failed || failures.length,
+    failures: dedupeFailures(failures).slice(0, 20),
+    lineCount: lines.length,
+    exitCode: /^FAIL\t/m.test(clean) || failed > 0 ? 1 : 0,
+  };
+}
+
+export function parseCargoTestOutput(content: string): TerminalSummary {
+  const clean = stripAnsi(content);
+  const lines = clean.split('\n');
+  const failures: string[] = [];
+
+  const summaryMatch = clean.match(
+    /test result:\s*(?:FAILED|ok)\.\s*(\d+)\s+passed;\s*(\d+)\s+failed(?:;\s*(\d+)\s+ignored)?(?:;\s*(\d+)\s+measured)?/i
+  );
+
+  let passed = summaryMatch ? parseInt(summaryMatch[1], 10) : 0;
+  let failed = summaryMatch ? parseInt(summaryMatch[2], 10) : 0;
+  const skipped = summaryMatch?.[3] ? parseInt(summaryMatch[3], 10) : 0;
+  const total = (passed + failed + skipped) || lines.length;
+
+  for (const line of lines) {
+    const failLine = line.match(/^test\s+(\S+)\s+\.\.\.\s+FAILED/i);
+    if (failLine) failures.push(failLine[1]);
+  }
+
+  if (!summaryMatch && failures.length > 0) {
+    failed = failures.length;
+    passed = Math.max(0, total - failed);
+  }
+
+  return {
+    totalTests: total,
+    passed,
+    failed: failed || failures.length,
+    skipped: skipped || undefined,
+    failures: dedupeFailures(failures).slice(0, 20),
+    lineCount: lines.length,
+    exitCode: /test result:\s*FAILED/i.test(clean) ? 1 : 0,
+  };
+}
+
 function dedupeFailures(failures: string[]): string[] {
   return [...new Set(failures)];
 }
@@ -204,6 +271,10 @@ export function summarizeByRunner(content: string): TerminalSummary {
       return parsePytestOutput(content);
     case 'maven':
       return parseMavenOutput(content);
+    case 'go':
+      return parseGoTestOutput(content);
+    case 'cargo':
+      return parseCargoTestOutput(content);
     default:
       return parseGenericOutput(content);
   }

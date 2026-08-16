@@ -8,6 +8,8 @@ import {
   parseVitestOutput,
   parsePytestOutput,
   parseMavenOutput,
+  parseGoTestOutput,
+  parseCargoTestOutput,
 } from '../src/index.js';
 
 describe('DuplicateTracker', () => {
@@ -44,6 +46,14 @@ describe('detectTestRunner', () => {
 
   it('detects Maven', () => {
     expect(detectTestRunner('Tests run: 42, Failures: 2, Errors: 0, Skipped: 1')).toBe('maven');
+  });
+
+  it('detects Go', () => {
+    expect(detectTestRunner('=== RUN   TestLogin\n--- FAIL: TestLogout')).toBe('go');
+  });
+
+  it('detects Cargo', () => {
+    expect(detectTestRunner('running 42 tests\ntest result: ok. 42 passed; 0 failed')).toBe('cargo');
   });
 });
 
@@ -123,6 +133,45 @@ describe('parseMavenOutput', () => {
   });
 });
 
+describe('parseGoTestOutput', () => {
+  it('parses go test summary and failed test names', () => {
+    const output = `
+=== RUN   TestLogin
+--- PASS: TestLogin (0.00s)
+=== RUN   TestLogout
+--- FAIL: TestLogout (0.01s)
+FAIL
+FAIL	example.com/auth	0.012s
+ok  	example.com/other	0.005s
+`.trim();
+
+    const summary = parseGoTestOutput(output);
+    expect(summary.totalTests).toBe(2);
+    expect(summary.passed).toBe(1);
+    expect(summary.failed).toBe(1);
+    expect(summary.failures).toContain('TestLogout');
+  });
+});
+
+describe('parseCargoTestOutput', () => {
+  it('parses cargo test summary and failed test names', () => {
+    const output = `
+running 42 tests
+test auth::login ... ok
+test auth::logout ... FAILED
+failures:
+---- auth::logout stdout ----
+test result: FAILED. 41 passed; 1 failed; 0 ignored; 42 measured; 0 filtered out
+`.trim();
+
+    const summary = parseCargoTestOutput(output);
+    expect(summary.totalTests).toBe(42);
+    expect(summary.passed).toBe(41);
+    expect(summary.failed).toBe(1);
+    expect(summary.failures).toContain('auth::logout');
+  });
+});
+
 describe('summarizeTerminalOutput', () => {
   it('extracts generic test results', () => {
     const output = '100 tests, 95 passed, 5 failed\nFAIL AuthTests.swift:42';
@@ -154,6 +203,20 @@ testLogin(com.example.AuthTest)
     expect(summary.passed).toBe(39);
     expect(summary.failed).toBe(2);
     expect(summary.failures).toContain('testLogin(com.example.AuthTest)');
+  });
+
+  it('routes Go output automatically', () => {
+    const output = '=== RUN   TestA\n--- FAIL: TestA (0.01s)\nFAIL';
+    const summary = summarizeTerminalOutput(output);
+    expect(summary.failed).toBe(1);
+    expect(summary.failures).toContain('TestA');
+  });
+
+  it('routes Cargo output automatically', () => {
+    const output = 'running 2 tests\ntest foo ... FAILED\ntest result: FAILED. 1 passed; 1 failed; 0 ignored; 2 measured; 0 filtered out';
+    const summary = summarizeTerminalOutput(output);
+    expect(summary.totalTests).toBe(2);
+    expect(summary.failed).toBe(1);
   });
 });
 

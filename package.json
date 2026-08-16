@@ -9,7 +9,7 @@
     "integrations/*"
   ],
   "scripts": {
-    "build": "npm run build -w @toknt/cache && npm run build -w @toknt/tokenizer && npm run build -w @toknt/core && npm run build -w @toknt/optimizer && npm run build -w @toknt/adapters && npm run build -w @toknt/benchmark && npm run build -w toknt && npm run build -w @toknt/integration-claude && npm run build -w @toknt/integration-cursor && npm run build -w @toknt/integration-codex && npm run build -w @toknt/integration-windsurf && npm run build -w @toknt/observatory && npm run build -w toknt-vscode",
+    "build": "npm run build -w @toknt/cache && npm run build -w @toknt/tokenizer && npm run build -w @toknt/core && npm run build -w @toknt/optimizer && npm run build -w @toknt/adapters && npm run build -w @toknt/benchmark && npm run build -w @toknt/mcp-server && npm run build -w toknt && npm run build -w @toknt/integration-claude && npm run build -w @toknt/integration-cursor && npm run build -w @toknt/integration-codex && npm run build -w @toknt/integration-windsurf && npm run build -w @toknt/observatory && npm run build -w toknt-vscode",
     "test": "vitest run",
     "test:watch": "vitest",
     "lint": "eslint . --ext .ts,.tsx",

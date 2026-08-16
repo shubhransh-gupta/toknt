@@ -13,6 +13,7 @@ import { HonestSummary } from './components/HonestSummary';
 import { DemoSection } from './components/DemoSection';
 import { StarBanner } from './components/StarBanner';
 import { SetupGuide } from './components/SetupGuide';
+import { SessionImport } from './components/SessionImport';
 
 export default function App() {
   const [results, setResults] = useState<BenchmarkResult[]>(BENCHMARK_RESULTS);
@@ -60,6 +61,8 @@ export default function App() {
       <SetupGuide />
       <PrivacyBanner />
       <HonestSummary />
+
+      <SessionImport onImport={() => {}} />
 
       <section id="demo" className="section section-spaced">
         <DemoSection />
