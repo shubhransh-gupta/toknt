@@ -22,7 +22,7 @@ Help us build Tokn't. Pick any unchecked item and [open a PR](CONTRIBUTING.md).
 
 - [ ] **npm publish** — `npx toknt` one-liner install
 - [x] **Jest / Vitest / pytest output parsers** — terminal summarization
-- [ ] **Real agent benchmarks** — run against live Cursor/Claude sessions
+- [x] **Real agent benchmarks** — `--input` / `--input-dir` for session JSON
 - [x] **GitHub Pages live demo** — deploy Observatory
 - [x] **VS Code extension** — beyond Cursor plugin
 - [x] **Windsurf adapter** — expand agent support

@@ -16,13 +16,13 @@ npm run build
 
 | Difficulty | Task | Issue |
 |------------|------|-------|
-| 🟢 Easy | Add Go test output parser | [#12](https://github.com/shubhransh-gupta/toknt/issues/12) |
-| 🟢 Easy | Add Rust cargo test parser | [#13](https://github.com/shubhransh-gupta/toknt/issues/13) |
-| 🟢 Easy | Add Java/Maven test parser | [#14](https://github.com/shubhransh-gupta/toknt/issues/14) |
-| 🟡 Medium | MCP server (recall + stats) | [#15](https://github.com/shubhransh-gupta/toknt/issues/15) |
-| 🟡 Medium | VS Code extension | [#16](https://github.com/shubhransh-gupta/toknt/issues/16) |
-| 🟡 Medium | Observatory session import | [#17](https://github.com/shubhransh-gupta/toknt/issues/17) |
-| 🔴 Hard | Real agent session benchmarks | [#18](https://github.com/shubhransh-gupta/toknt/issues/18) |
+| 🟢 Easy | Add Go test output parser | Done ([#12](https://github.com/shubhransh-gupta/toknt/issues/12)) |
+| 🟢 Easy | Add Rust cargo test parser | Done ([#13](https://github.com/shubhransh-gupta/toknt/issues/13)) |
+| 🟢 Easy | Add Java/Maven test parser | Done ([#14](https://github.com/shubhransh-gupta/toknt/issues/14)) |
+| 🟡 Medium | MCP server (recall + stats) | Done ([#15](https://github.com/shubhransh-gupta/toknt/issues/15)) |
+| 🟡 Medium | VS Code extension | Done ([#16](https://github.com/shubhransh-gupta/toknt/issues/16)) |
+| 🟡 Medium | Observatory session import | Done ([#17](https://github.com/shubhransh-gupta/toknt/issues/17)) |
+| 🔴 Hard | Real agent session benchmarks | Done ([#18](https://github.com/shubhransh-gupta/toknt/issues/18)) |
 
 Full list: [ROADMAP.md](./ROADMAP.md) · [open issues](https://github.com/shubhransh-gupta/toknt/issues)
 

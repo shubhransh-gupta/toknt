@@ -8,6 +8,8 @@ export {
   parseVitestOutput,
   parsePytestOutput,
   parseMavenOutput,
+  parseGoTestOutput,
+  parseCargoTestOutput,
 } from './parsers.js';
 
 export interface TerminalSummary {

@@ -1,19 +1,19 @@
 #!/usr/bin/env node
 /**
- * Phase 2B — Live session audit harness.
- * Runs multiple simulated agent sessions and reports token savings.
+ * Live session audit harness.
  *
  * Usage:
  *   node scripts/live-session-audit.mjs
- *   node scripts/live-session-audit.mjs --mode balanced
- *   node scripts/live-session-audit.mjs --sessions 15
+ *   node scripts/live-session-audit.mjs --mode balanced --sessions 15
+ *   node scripts/live-session-audit.mjs --input benchmarks/samples/sample-session.json
+ *   node scripts/live-session-audit.mjs --input-dir benchmarks/samples/
  */
-import { mkdtemp, rm, writeFile } from 'node:fs/promises';
-import { join } from 'node:path';
+import { mkdtemp, rm, readFile, readdir, writeFile } from 'node:fs/promises';
+import { join, extname } from 'node:path';
 import { tmpdir } from 'node:os';
 import { LocalCache } from '@toknt/cache';
 import { TokntEngine } from '@toknt/core';
-import { estimateTokens, countTokensExact, reductionPercent } from '@toknt/tokenizer';
+import { countTokensExact, reductionPercent } from '@toknt/tokenizer';
 
 function parseArgs() {
   const argv = process.argv.slice(2);
@@ -21,7 +21,9 @@ function parseArgs() {
   const sessions = argv.includes('--sessions')
     ? parseInt(argv[argv.indexOf('--sessions') + 1], 10)
     : 15;
-  return { mode, sessions };
+  const input = argv.includes('--input') ? argv[argv.indexOf('--input') + 1] : null;
+  const inputDir = argv.includes('--input-dir') ? argv[argv.indexOf('--input-dir') + 1] : null;
+  return { mode, sessions, input, inputDir };
 }
 
 function generateAuthFile(variant) {
@@ -66,6 +68,29 @@ function buildSessionTemplates(count) {
   return templates;
 }
 
+async function loadSessionFile(filePath) {
+  const raw = await readFile(filePath, 'utf-8');
+  const data = JSON.parse(raw);
+  if (Array.isArray(data.steps)) {
+    return {
+      id: data.id ?? filePath.replace(/\.json$/, ''),
+      label: data.label ?? 'imported',
+      steps: data.steps,
+    };
+  }
+  throw new Error(`Invalid session file: ${filePath}`);
+}
+
+async function loadSessionsFromDir(dirPath) {
+  const files = await readdir(dirPath);
+  const templates = [];
+  for (const file of files) {
+    if (extname(file) !== '.json') continue;
+    templates.push(await loadSessionFile(join(dirPath, file)));
+  }
+  return templates;
+}
+
 async function runSession(mode, template) {
   const tmpDir = await mkdtemp(join(tmpdir(), 'toknt-live-'));
   const cache = new LocalCache(tmpDir);
@@ -78,7 +103,7 @@ async function runSession(mode, template) {
 
   for (let i = 0; i < template.steps.length; i++) {
     const step = template.steps[i];
-    const item = { id: String(i), ...step };
+    const item = { id: String(i), type: step.type, content: step.content, path: step.path };
     orig += countTokensExact(item.content);
     const result = await engine.processContextItem(item);
     opt += countTokensExact(result.content);
@@ -103,10 +128,18 @@ async function runSession(mode, template) {
 }
 
 async function main() {
-  const { mode, sessions } = parseArgs();
-  const templates = buildSessionTemplates(sessions);
-  const results = [];
+  const { mode, sessions, input, inputDir } = parseArgs();
 
+  let templates;
+  if (input) {
+    templates = [await loadSessionFile(input)];
+  } else if (inputDir) {
+    templates = await loadSessionsFromDir(inputDir);
+  } else {
+    templates = buildSessionTemplates(sessions);
+  }
+
+  const results = [];
   for (const template of templates) {
     results.push(await runSession(mode, template));
   }
@@ -117,7 +150,8 @@ async function main() {
   const report = {
     timestamp: new Date().toISOString(),
     mode,
-    sessionCount: sessions,
+    sessionCount: results.length,
+    source: input ? 'file' : inputDir ? 'directory' : 'simulated',
     sessions: results,
     aggregate: {
       original: totalOrig,
@@ -126,15 +160,14 @@ async function main() {
       avgReductionPercent:
         Math.round((results.reduce((s, r) => s + r.reductionPercent, 0) / results.length) * 100) / 100,
     },
-    note: 'Phase 2B batch audit — 15 simulated sessions; replace with exported agent logs for production validation',
   };
 
   const outPath = join(process.cwd(), 'benchmarks/results/live-session-audit.json');
   await writeFile(outPath, JSON.stringify(report, null, 2));
 
-  console.log('TOKN\'T LIVE SESSION AUDIT (Phase 2B)');
+  console.log('TOKN\'T LIVE SESSION AUDIT');
   console.log('='.repeat(60));
-  console.log(`Mode: ${mode} | Sessions: ${sessions}`);
+  console.log(`Mode: ${mode} | Sessions: ${results.length} | Source: ${report.source}`);
   console.log(
     `Aggregate: ${totalOrig.toLocaleString()} → ${totalOpt.toLocaleString()} (${report.aggregate.reductionPercent}%)`
   );

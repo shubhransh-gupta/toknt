@@ -1,0 +1,12 @@
+{
+  "id": "sample-auth-fix",
+  "label": "bug-fix",
+  "steps": [
+    { "type": "user_request", "content": "Fix the auth bug without breaking logout" },
+    { "type": "file_read", "content": "export class AuthService {\n  login() {}\n  logout() {}\n}", "path": "AuthService.ts" },
+    { "type": "file_read", "content": "export class AuthService {\n  login() {}\n  logout() {}\n}", "path": "AuthService.ts" },
+    { "type": "terminal_output", "content": "=== RUN   TestLogin\n--- PASS: TestLogin (0.00s)\n=== RUN   TestLogout\n--- FAIL: TestLogout (0.01s)\nFAIL\nFAIL\texample.com/auth\t0.012s" },
+    { "type": "directory_listing", "content": "src/auth.ts\nsrc/user.ts\nsrc/index.ts" },
+    { "type": "git_diff", "content": "diff --git a/AuthService.ts\n+fixed validation" }
+  ]
+}

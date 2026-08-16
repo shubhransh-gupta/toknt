@@ -51,10 +51,10 @@ toknt watch .
 
 | Item | Status |
 |------|--------|
-| MCP server (recall + stats) | 🔲 |
-| VS Code extension | 🔲 | ✅ Shipped (`apps/vscode-extension`) |
-| Observatory session import | 🔲 |
-| More terminal parsers (Go, Rust, Java) | 🔲 |
+| MCP server (recall + stats) | ✅ Shipped (`toknt mcp`) |
+| VS Code extension | ✅ Shipped (`apps/vscode-extension`) |
+| Observatory session import | ✅ Shipped |
+| More terminal parsers (Go, Rust, Java) | ✅ Shipped |
 
 ---
 
