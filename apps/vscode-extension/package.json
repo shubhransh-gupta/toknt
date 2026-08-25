@@ -64,7 +64,7 @@
         },
         "toknt.statusBarRefreshSeconds": {
           "type": "number",
-          "default": 30,
+          "default": 5,
           "minimum": 5,
           "description": "How often to refresh token savings in the status bar."
         }

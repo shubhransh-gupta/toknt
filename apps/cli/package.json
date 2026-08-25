@@ -20,7 +20,7 @@
     "access": "public"
   },
   "scripts": {
-    "build": "tsc",
+    "build": "tsc && chmod +x dist/index.js",
     "typecheck": "tsc --noEmit",
     "dev": "tsc --watch",
     "prepublishOnly": "npm run build"

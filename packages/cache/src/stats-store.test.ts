@@ -40,4 +40,22 @@ describe('StatsStore', () => {
     const stats = await store.load();
     expect(stats.recalledOutputs).toBe(1);
   });
+
+  it('tracks opportunity and activity events', async () => {
+    const store = new StatsStore(tmpDir);
+    await store.recordOpportunity(1000, 100);
+    await store.recordEvent({
+      tool: 'Read',
+      delivered: false,
+      originalTokens: 1000,
+      optimizedTokens: 100,
+      savedTokens: 900,
+      strategy: 'duplicate_file',
+    });
+    const stats = await store.load();
+    expect(stats.opportunitySavedTokens).toBe(900);
+    expect(stats.toolCallsTracked).toBe(1);
+    const recent = await store.recentActivity();
+    expect(recent[0]?.tool).toBe('Read');
+  });
 });

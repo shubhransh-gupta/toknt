@@ -82,16 +82,35 @@ export function classifyContextItem(
     };
   }
 
+  if (item.type === 'file_read' && !item.metadata?.isDuplicate) {
+    const lines = item.content.split('\n').length;
+    if (lines > 80 && (mode === 'balanced' || mode === 'aggressive')) {
+      return {
+        level: 'RECOVERABLE',
+        compressible: true,
+        reason: `Large file read (${lines} lines)`,
+      };
+    }
+    if (lines > 40 && mode === 'aggressive') {
+      return {
+        level: 'RECOVERABLE',
+        compressible: true,
+        reason: `File read (${lines} lines) — aggressive mode`,
+      };
+    }
+  }
+
   if (item.type === 'terminal_output') {
     const lines = item.content.split('\n').length;
-    if (lines > 100 && (mode === 'balanced' || mode === 'aggressive')) {
+    // Lower bar so live Agent sessions show opportunity / wrap savings sooner
+    if (lines > 40 && (mode === 'balanced' || mode === 'aggressive')) {
       return {
         level: 'RECOVERABLE',
         compressible: true,
         reason: `Large terminal output (${lines} lines)`,
       };
     }
-    if (lines > 50 && mode === 'aggressive') {
+    if (lines > 20 && mode === 'aggressive') {
       return {
         level: 'RECOVERABLE',
         compressible: true,
@@ -102,7 +121,7 @@ export function classifyContextItem(
 
   if (item.type === 'directory_listing') {
     const lines = item.content.split('\n').length;
-    if (lines > 50 && (mode === 'balanced' || mode === 'aggressive')) {
+    if (lines > 30 && (mode === 'balanced' || mode === 'aggressive')) {
       return {
         level: 'RECOVERABLE',
         compressible: true,

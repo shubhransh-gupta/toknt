@@ -12,7 +12,7 @@ cd toknt && npm install && npm run build`,
     code: `npx toknt install cursor   # or claude, codex, windsurf
 npx toknt status
 npx toknt doctor`,
-    note: 'Hooks write to ~/.cursor/toknt/ (or ~/.claude/toknt/, etc.)',
+    note: 'Hooks write to ~/.cursor/hooks.json + ~/.cursor/toknt/ (plugin copied automatically)',
   },
   {
     n: 3,

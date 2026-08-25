@@ -37,14 +37,16 @@ async function updateStatusBar(): Promise<void> {
   try {
     const stats = await cli.getStats();
     const mode = await cli.getMode().catch(() => 'safe');
-    statusBarItem.text = `$(zap) Tokn\'t: ${formatTokenCount(stats.savedTokens)} saved (${stats.reductionPercent}%)`;
+    statusBarItem.text = `$(zap) Tokn\'t: ${formatTokenCount(stats.savedTokens)} saved`;
     statusBarItem.tooltip = [
       `Mode: ${mode}`,
-      `Saved: ${formatTokenCount(stats.savedTokens)} tokens (estimated)`,
-      `Compressed: ${stats.compressedOutputs} outputs`,
-      `Recalled: ${stats.recalledOutputs}`,
+      `Delivered saved: ${formatTokenCount(stats.savedTokens)} (${stats.reductionPercent}%)`,
+      `Tool calls tracked: ${stats.toolCallsTracked ?? 0}`,
+      `Tokens scanned: ${formatTokenCount(stats.tokensScanned ?? 0)}`,
+      `Opportunity (not deliverable): ${formatTokenCount(stats.opportunitySavedTokens ?? 0)}`,
+      `Compressed: ${stats.compressedOutputs} · Recalled: ${stats.recalledOutputs}`,
       '',
-      'Click for stats · Right-click for commands',
+      'Click for stats · Live CLI: toknt stats --watch',
     ].join('\n');
     statusBarItem.backgroundColor = undefined;
   } catch (err) {
@@ -73,12 +75,14 @@ async function showStats(): Promise<void> {
     const mode = await cli.getMode().catch(() => 'unknown');
     const message = [
       `Mode: ${mode}`,
-      `Tokens saved: ${formatTokenCount(stats.savedTokens)} (${stats.reductionPercent}%)`,
+      `Delivered saved: ${formatTokenCount(stats.savedTokens)} (${stats.reductionPercent}%)`,
+      `Tool calls tracked: ${stats.toolCallsTracked ?? 0}`,
+      `Opportunity (Cursor cannot strip): ${formatTokenCount(stats.opportunitySavedTokens ?? 0)}`,
       `Original → Optimized: ${formatTokenCount(stats.originalTokens)} → ${formatTokenCount(stats.optimizedTokens)}`,
       `Compressed outputs: ${stats.compressedOutputs}`,
       `Recalled: ${stats.recalledOutputs}`,
       '',
-      'Counts are estimates, not billing data.',
+      'Delivered = model got less context. Live: toknt stats --watch',
     ].join('\n');
 
     const action = await vscode.window.showInformationMessage(message, 'Recall URI', 'Set Mode');
@@ -165,7 +169,7 @@ async function setMode(mode: string): Promise<void> {
 
 function scheduleRefresh(): void {
   if (refreshTimer) clearInterval(refreshTimer);
-  const seconds = vscode.workspace.getConfiguration('toknt').get<number>('statusBarRefreshSeconds', 30);
+  const seconds = vscode.workspace.getConfiguration('toknt').get<number>('statusBarRefreshSeconds', 5);
   refreshTimer = setInterval(() => {
     void updateStatusBar();
   }, seconds * 1000);

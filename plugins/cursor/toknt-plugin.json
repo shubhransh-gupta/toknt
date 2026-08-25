@@ -6,7 +6,7 @@
   "license": "MIT",
   "hooks": {
     "./hooks/after-tool-call.js": {
-      "events": ["afterToolCall"]
+      "events": ["postToolUse", "afterToolCall"]
     }
   },
   "skills": [

@@ -1,4 +1,6 @@
-import { access } from 'node:fs/promises';
+import { access, readFile } from 'node:fs/promises';
+import { join } from 'node:path';
+import { homedir } from 'node:os';
 import { printBanner, detectAgents, getCache } from '../utils.js';
 import { isInstalled } from './install.js';
 
@@ -38,6 +40,33 @@ export async function doctorCommand(): Promise<void> {
       name: `${agent.name} integration`,
       ok: tokntOk,
       detail: tokntOk ? 'Active' : agent.installed ? 'Agent found, Tokn\'t not installed' : 'Not found',
+    });
+  }
+
+  try {
+    const hooksRaw = await readFile(join(homedir(), '.cursor', 'hooks.json'), 'utf-8');
+    const wired = hooksRaw.includes('toknt-') || hooksRaw.includes('toknt/hooks');
+    checks.push({
+      name: 'Cursor hooks.json',
+      ok: wired,
+      detail: wired ? 'Tokn\'t hooks registered' : 'Missing Tokn\'t hook entries',
+    });
+  } catch {
+    checks.push({
+      name: 'Cursor hooks.json',
+      ok: false,
+      detail: 'Not found — run toknt install cursor',
+    });
+  }
+
+  try {
+    await access(join(homedir(), '.cursor', 'plugins', 'toknt', 'toknt-plugin.json'));
+    checks.push({ name: 'Cursor plugin', ok: true, detail: '~/.cursor/plugins/toknt' });
+  } catch {
+    checks.push({
+      name: 'Cursor plugin',
+      ok: false,
+      detail: 'Not found — run toknt install cursor',
     });
   }
 

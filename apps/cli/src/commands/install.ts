@@ -40,6 +40,12 @@ export async function installCommand(): Promise<void> {
 export async function installAgentCommand(agent: string): Promise<void> {
   printBanner();
   await installAgent(agent);
+  const cache = getCache();
+  await cache.ensureDirs();
+  const config = await cache.getConfig();
+  await cache.saveConfig({
+    integrations: { ...config.integrations, [agent === 'all' ? 'cursor' : agent]: true },
+  });
   console.log(`\n✓ Tokn\'t installed for ${agent}.\n`);
 }
 
@@ -57,15 +63,21 @@ async function installAgent(agentId: string): Promise<void> {
     if (id === 'cursor') {
       const adapter = new CursorAdapter();
       await adapter.install();
-      const hookDir = getHookDir(id);
       const { mode } = await getCache().getConfig();
+      const hookDir = getHookDir(id);
       const configPath = join(hookDir, 'toknt.json');
-      const existing = JSON.parse(await readFile(configPath, 'utf-8'));
-      await writeFile(
-        configPath,
-        JSON.stringify({ ...existing, mode, provider: 'toknt', version: '1.0.0' }, null, 2)
-      );
-      console.log(`  → Configured ${id} integration at ${hookDir} (hooks installed)`);
+      try {
+        const existing = JSON.parse(await readFile(configPath, 'utf-8'));
+        await writeFile(
+          configPath,
+          JSON.stringify({ ...existing, mode, provider: 'toknt', version: '1.0.0' }, null, 2)
+        );
+      } catch {
+        // adapter.install already wrote toknt.json
+      }
+      console.log(`  → Configured ${id} integration`);
+      console.log(`     Hooks: ${join(homedir(), '.cursor', 'hooks.json')}`);
+      console.log(`     Plugin: ${join(homedir(), '.cursor', 'plugins', 'toknt')}`);
       continue;
     }
 
@@ -106,6 +118,10 @@ function getHookDir(agent: string): string {
 export async function isInstalled(agent: string): Promise<boolean> {
   try {
     await readFile(join(getHookDir(agent), 'toknt.json'), 'utf-8');
+    if (agent === 'cursor') {
+      const hooks = await readFile(join(homedir(), '.cursor', 'hooks.json'), 'utf-8');
+      return hooks.includes('toknt-') || hooks.includes('toknt/hooks');
+    }
     return true;
   } catch {
     return false;

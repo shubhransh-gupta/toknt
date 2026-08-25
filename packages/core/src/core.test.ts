@@ -43,6 +43,26 @@ describe('TokntEngine', () => {
     expect(result.recallUri).toBeTruthy();
   });
 
+  it('compresses duplicate file read across processes via persisted hashes', async () => {
+    const content = 'same file content across processes';
+    const item: ContextItem = { id: '1', type: 'file_read', content, path: 'dup.ts' };
+    await engine.processContextItem(item);
+
+    const engine2 = new TokntEngine({ cache: new LocalCache(tmpDir), mode: 'balanced' });
+    const item2: ContextItem = { id: '2', type: 'file_read', content, path: 'dup.ts' };
+    const result = await engine2.processContextItem(item2);
+    expect(result.optimized).toBe(true);
+    expect(result.content).toContain('[UNCHANGED FILE]');
+  });
+
+  it('compresses large file reads in balanced mode', async () => {
+    const content = Array.from({ length: 100 }, (_, i) => `line ${i}`).join('\n');
+    const item: ContextItem = { id: '1', type: 'file_read', content, path: 'big.ts' };
+    const result = await engine.processContextItem(item);
+    expect(result.optimized).toBe(true);
+    expect(result.strategy).toBe('large_file');
+  });
+
   it('compresses large terminal output', async () => {
     const lines = Array.from({ length: 200 }, (_, i) => `test ${i} passed`).join('\n');
     const item: ContextItem = { id: '1', type: 'terminal_output', content: lines };

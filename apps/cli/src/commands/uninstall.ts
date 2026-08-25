@@ -1,13 +1,21 @@
 import { rm } from 'node:fs/promises';
 import { join } from 'node:path';
 import { homedir } from 'node:os';
+import { CursorAdapter } from '@toknt/integration-cursor';
 import { printBanner, getCache } from '../utils.js';
 
 export async function uninstallCommand(): Promise<void> {
   printBanner();
   console.log('Removing Tokn\'t integrations...\n');
 
-  const agents = ['claude', 'cursor', 'codex', 'windsurf'];
+  try {
+    await new CursorAdapter().uninstall();
+    console.log('  ✓ Removed cursor integration (hooks + plugin)');
+  } catch {
+    console.log('  - cursor integration not found');
+  }
+
+  const agents = ['claude', 'codex', 'windsurf'];
   for (const agent of agents) {
     const hookDir = join(homedir(), `.${agent}`, 'toknt');
     try {

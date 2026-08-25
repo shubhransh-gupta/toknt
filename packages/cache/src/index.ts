@@ -240,6 +240,42 @@ export class LocalCache {
   makeUri(type: CacheEntryType, id: string): string {
     return `toknt://${type}/${id}`;
   }
+
+  private seenPath(): string {
+    return join(this.baseDir, 'indexes', 'seen-hashes.json');
+  }
+
+  /**
+   * Cross-process duplicate detection for Cursor hooks (each hook is a new Node process).
+   * Keys are `file:<path>` or `tool:<toolName>`.
+   */
+  async getSeenHash(key: string): Promise<string | undefined> {
+    try {
+      const raw = await readFile(this.seenPath(), 'utf-8');
+      const map = JSON.parse(raw) as Record<string, string>;
+      return map[key];
+    } catch {
+      return undefined;
+    }
+  }
+
+  async setSeenHash(key: string, hash: string): Promise<void> {
+    await this.ensureDirs();
+    let map: Record<string, string> = {};
+    try {
+      const raw = await readFile(this.seenPath(), 'utf-8');
+      map = JSON.parse(raw) as Record<string, string>;
+    } catch {
+      // first write
+    }
+    map[key] = hash;
+    // Cap growth — keep the most recent ~2000 keys
+    const keys = Object.keys(map);
+    if (keys.length > 2000) {
+      for (const k of keys.slice(0, keys.length - 2000)) delete map[k];
+    }
+    await writeFile(this.seenPath(), JSON.stringify(map));
+  }
 }
 
 export async function ensureParentDir(filePath: string): Promise<void> {

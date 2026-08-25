@@ -1,7 +1,8 @@
 #!/usr/bin/env node
 /**
- * Tokn't Cursor Hook
- * Intercepts tool output and applies token optimization.
+ * Tokn't Cursor Hook (plugin reference)
+ * Prefer the scripts installed by `toknt install cursor` under ~/.cursor/toknt/hooks/
+ * which speak Cursor's native stdin/stdout hooks protocol.
  */
 import { OptimizingAdapterWrapper } from '@toknt/adapters';
 

@@ -38,7 +38,7 @@ export class TokntEngine {
   async processContextItem(item: ContextItem): Promise<OptimizationResult> {
     this.metrics.recordToolCall();
 
-    const enriched = this.enrichWithDuplicateInfo(item);
+    const enriched = await this.enrichWithDuplicateInfo(item);
     const validation = validateOptimization(enriched, this.mode);
 
     if (validation.action === 'passthrough') {
@@ -62,25 +62,29 @@ export class TokntEngine {
     return result;
   }
 
-  private enrichWithDuplicateInfo(item: ContextItem): ContextItem {
+  private async enrichWithDuplicateInfo(item: ContextItem): Promise<ContextItem> {
     if (item.type === 'file_read' && item.path) {
       const hash = this.hashContent(item.content);
-      const prevHash = this.fileHashes.get(item.path);
+      const key = `file:${item.path}`;
+      const prevHash = this.fileHashes.get(item.path) ?? (await this.cache.getSeenHash(key));
       if (prevHash && prevHash === hash) {
         return { ...item, metadata: { ...item.metadata, isDuplicate: true, hash } };
       }
       this.fileHashes.set(item.path, hash);
+      await this.cache.setSeenHash(key, hash);
       return { ...item, metadata: { ...item.metadata, hash } };
     }
 
     if (item.type === 'tool_output') {
       const hash = this.hashContent(item.content);
-      const key = item.toolName ?? 'default';
-      const prevHash = this.toolOutputHashes.get(key);
+      const toolKey = item.toolName ?? 'default';
+      const key = `tool:${toolKey}`;
+      const prevHash = this.toolOutputHashes.get(toolKey) ?? (await this.cache.getSeenHash(key));
       if (prevHash && prevHash === hash) {
         return { ...item, metadata: { ...item.metadata, isDuplicate: true, hash } };
       }
-      this.toolOutputHashes.set(key, hash);
+      this.toolOutputHashes.set(toolKey, hash);
+      await this.cache.setSeenHash(key, hash);
       return { ...item, metadata: { ...item.metadata, hash } };
     }
 
@@ -96,6 +100,10 @@ export class TokntEngine {
       return this.compressDuplicateToolOutput(item);
     }
 
+    if (item.type === 'file_read') {
+      return this.compressLargeFile(item);
+    }
+
     if (item.type === 'terminal_output') {
       return this.compressTerminalOutput(item);
     }
@@ -109,6 +117,30 @@ export class TokntEngine {
       optimized: false,
       safetyConfidence: 0,
       passthroughReason: 'No applicable optimizer',
+    };
+  }
+
+  private async compressLargeFile(item: ContextItem): Promise<OptimizationResult> {
+    const lines = item.content.split('\n');
+    const path = item.path ?? 'unknown';
+    const entry = await this.cache.store('file', item.content, { path, lines: lines.length }, path);
+    const uri = this.cache.makeUri('file', entry.id);
+    const head = lines.slice(0, 40).join('\n');
+    const tail = lines.length > 60 ? lines.slice(-20).join('\n') : '';
+    const compressed = `[LARGE FILE — ${path}]
+${lines.length} lines · full content stored locally.
+Reference: ${uri}
+
+--- head ---
+${head}
+${tail ? `\n--- tail ---\n${tail}` : ''}`;
+
+    return {
+      content: compressed.trim(),
+      optimized: true,
+      strategy: 'large_file',
+      recallUri: uri,
+      safetyConfidence: 0.8,
     };
   }
 

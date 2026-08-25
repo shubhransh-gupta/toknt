@@ -10,3 +10,4 @@ coverage/
 !.env.example
 apps/observatory/dist/
 .toknt-local/
+tmp-toknt-*/

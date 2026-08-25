@@ -39,31 +39,20 @@ npx toknt install codex
 npx toknt install windsurf
 ```
 
-This writes config under each agent, e.g. `~/.cursor/toknt/toknt.json`, and creates `~/.toknt/config.json`.
+This writes config under each agent, e.g. `~/.cursor/toknt/toknt.json`, creates `~/.toknt/config.json`, and for Cursor also registers **`~/.cursor/hooks.json`** plus copies the plugin to `~/.cursor/plugins/toknt`.
 
 **Verify:**
 
 ```bash
 npx toknt status    # mode, cache, integrations
-npx toknt doctor    # health check
+npx toknt doctor    # health check (includes hooks.json + plugin)
 ```
+
+Restart Cursor after install so hooks reload. See [cursor.md](./cursor.md).
 
 ---
 
-## Step 3 — (Cursor only) Enable the plugin
-
-For full Cursor hook support, copy the bundled plugin:
-
-```bash
-cp -r plugins/cursor ~/.cursor/plugins/toknt
-# Restart Cursor
-```
-
-See [cursor.md](./cursor.md) for details.
-
----
-
-## Step 4 — Pick an optimization mode
+## Step 3 — Pick an optimization mode
 
 ```bash
 npx toknt config set mode balanced   # recommended for large test logs
@@ -98,7 +87,7 @@ Or edit **`~/.toknt/config.json`** manually:
 
 ---
 
-## Step 5 — Use your agent normally
+## Step 4 — Use your agent normally
 
 No workflow change. Open Cursor, Claude Code, or Codex and code as usual.
 
@@ -113,7 +102,7 @@ The model sees shorter context → **lower input token cost**.
 
 ---
 
-## Step 6 — Measure your savings
+## Step 5 — Measure your savings
 
 ```bash
 # After a coding session
@@ -131,7 +120,7 @@ Open the [Observatory](https://shubhransh-gupta.github.io/toknt/) and upload `my
 
 ---
 
-## Step 7 — Recall full content when needed
+## Step 6 — Recall full content when needed
 
 Compressed items are replaced with a short summary + recall link. To restore the original locally:
 

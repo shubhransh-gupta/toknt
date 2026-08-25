@@ -3,37 +3,49 @@
 ## Install
 
 ```bash
+npm install && npm run build
+npm link -w toknt   # optional: puts toknt on your PATH
 toknt install cursor
+toknt config set mode balanced
 ```
 
-## Plugin
+Restart Cursor after install.
 
-The Cursor plugin is at `plugins/cursor/` and includes:
+## What Tokn't can do in Cursor
 
-- **Hooks** — `after-tool-call.js` intercepts tool output
-- **Skills** — `toknt-optimize` for recall commands
-- **Rules** — `toknt-recall` for compressed content handling
+Cursor’s hooks API only lets us **rewrite** some outputs:
 
-## Manual Plugin Install
+| Path | Tracks live? | Saves tokens for the model? |
+|------|--------------|-------------------------------|
+| Shell (Agent) | Yes | **Yes** in `balanced`/`aggressive` via wrap |
+| MCP tools | Yes | **Yes** when compressible |
+| Read / Grep / etc. | Yes | **No** (Cursor cannot strip these yet) — counted as *opportunity* |
 
-1. Copy `plugins/cursor/` to your Cursor plugins directory
-2. Restart Cursor
-
-## How It Works
-
-Cursor hooks fire after each tool call. Tokn't:
-
-1. Receives the tool output
-2. Classifies and validates safety
-3. Compresses if safe (duplicates, large output)
-4. Returns optimized content to the agent
-5. Stores original locally for recall
-
-## Verify
+## Live savings
 
 ```bash
-toknt status
-toknt doctor
+toknt stats          # snapshot
+toknt stats --watch  # real-time dashboard
+toknt status         # includes tool-call counters
 ```
 
-Look for "Cursor integration: Active"
+VS Code / Cursor status bar (extension) also polls saved tokens.
+
+## Hooks installed
+
+| Hook | Behavior |
+|------|----------|
+| `preToolUse` (Shell) | Wraps known test runners (`npm test`, `pytest`, …) so large stdout can be compressed before the model sees it |
+| `postToolUse` | Tracks **every** tool call; delivers rewrites for MCP; records opportunity on Read/etc. |
+
+Files:
+
+- `~/.cursor/hooks.json`
+- `~/.cursor/hooks/toknt-*.mjs`
+- `~/.toknt/stats.json`, `live.json`, `activity.jsonl`
+
+## Uninstall
+
+```bash
+toknt uninstall
+```
