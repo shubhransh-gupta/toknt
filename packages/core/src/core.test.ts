@@ -75,6 +75,23 @@ describe('TokntEngine', () => {
     const recalled = await engine.recall(result.recallUri!);
     expect(recalled).toBe(content);
   });
+
+  it('detects duplicate file reads across separate engine instances sharing cache pool', async () => {
+    const content = 'export const API_CONFIG = { retries: 3 };';
+    const path = 'src/config.ts';
+
+    // Engine 1 reads the file
+    const item1: ContextItem = { id: '1', type: 'file_read', content, path };
+    const res1 = await engine.processContextItem(item1, 'cursor');
+    expect(res1.optimized).toBe(false);
+
+    // Engine 2 (new process/instance with separate memory) reads the same file
+    const engine2 = new TokntEngine({ cache: new LocalCache(tmpDir), mode: 'balanced' });
+    const item2: ContextItem = { id: '2', type: 'file_read', content, path };
+    const res2 = await engine2.processContextItem(item2, 'antigravity');
+    expect(res2.optimized).toBe(true);
+    expect(res2.content).toContain('[UNCHANGED FILE]');
+  });
 });
 
 describe('classifier', () => {

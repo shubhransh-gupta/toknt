@@ -54,6 +54,36 @@ describe('LocalCache', () => {
     const stats = await cache.getStats();
     expect(stats.entries).toBeLessThan(3);
   });
+
+  it('manages persistent cache pool across file reads', async () => {
+    const hash1 = hashContent('function hello() { return 42; }');
+    const path = '/workspace/src/hello.ts';
+
+    // First read -> not duplicate
+    const check1 = await cache.checkFileInPool(path, hash1);
+    expect(check1.isDuplicate).toBe(false);
+
+    await cache.registerFileInPool(path, hash1, 30, 'cursor');
+    const poolStats1 = await cache.getPoolStats();
+    expect(poolStats1.trackedFiles).toBe(1);
+    expect(poolStats1.totalReads).toBe(1);
+    expect(poolStats1.duplicateHits).toBe(0);
+
+    // Second read with same content -> duplicate!
+    const check2 = await cache.checkFileInPool(path, hash1);
+    expect(check2.isDuplicate).toBe(true);
+    expect(check2.record?.lastAgent).toBe('cursor');
+
+    await cache.registerFileInPool(path, hash1, 30, 'cursor');
+    const poolStats2 = await cache.getPoolStats();
+    expect(poolStats2.totalReads).toBe(2);
+    expect(poolStats2.duplicateHits).toBe(1);
+
+    // Invalidation
+    await cache.invalidateFileInPool(path);
+    const check3 = await cache.checkFileInPool(path, hash1);
+    expect(check3.isDuplicate).toBe(false);
+  });
 });
 
 describe('hashContent', () => {

@@ -35,10 +35,10 @@ export class TokntEngine {
     this.metrics = new MetricsEngine(options.sessionId);
   }
 
-  async processContextItem(item: ContextItem): Promise<OptimizationResult> {
+  async processContextItem(item: ContextItem, agentId?: string): Promise<OptimizationResult> {
     this.metrics.recordToolCall();
 
-    const enriched = this.enrichWithDuplicateInfo(item);
+    const enriched = await this.enrichWithDuplicateInfo(item, agentId);
     const validation = validateOptimization(enriched, this.mode);
 
     if (validation.action === 'passthrough') {
@@ -62,14 +62,26 @@ export class TokntEngine {
     return result;
   }
 
-  private enrichWithDuplicateInfo(item: ContextItem): ContextItem {
+  private async enrichWithDuplicateInfo(item: ContextItem, agentId?: string): Promise<ContextItem> {
     if (item.type === 'file_read' && item.path) {
       const hash = this.hashContent(item.content);
       const prevHash = this.fileHashes.get(item.path);
+
+      // Check in-memory hash first
       if (prevHash && prevHash === hash) {
+        await this.cache.registerFileInPool(item.path, hash, Buffer.byteLength(item.content, 'utf-8'), agentId);
         return { ...item, metadata: { ...item.metadata, isDuplicate: true, hash } };
       }
+
+      // Check persistent cache pool
+      const poolCheck = await this.cache.checkFileInPool(item.path, hash);
       this.fileHashes.set(item.path, hash);
+      await this.cache.registerFileInPool(item.path, hash, Buffer.byteLength(item.content, 'utf-8'), agentId);
+
+      if (poolCheck.isDuplicate) {
+        return { ...item, metadata: { ...item.metadata, isDuplicate: true, hash } };
+      }
+
       return { ...item, metadata: { ...item.metadata, hash } };
     }
 
@@ -219,6 +231,7 @@ Reference: ${uri}`;
 
   invalidateFile(path: string): void {
     this.fileHashes.delete(path);
+    void this.cache.invalidateFileInPool(path);
   }
 
   private hashContent(content: string): string {

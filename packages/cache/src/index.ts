@@ -16,6 +16,32 @@ export interface CacheEntry {
   lastAccessedAt: string;
 }
 
+export interface CachedFileRecord {
+  path: string;
+  hash: string;
+  sizeBytes: number;
+  readCount: number;
+  firstSeenAt: string;
+  lastAccessedAt: string;
+  lastAgent?: string;
+}
+
+export interface CachePoolData {
+  version: string;
+  files: Record<string, CachedFileRecord>;
+  totalReads: number;
+  duplicateHits: number;
+  updatedAt: string;
+}
+
+export const EMPTY_POOL: CachePoolData = {
+  version: '1.0.0',
+  files: {},
+  totalReads: 0,
+  duplicateHits: 0,
+  updatedAt: new Date(0).toISOString(),
+};
+
 export interface TokntConfig {
   mode: 'safe' | 'balanced' | 'aggressive';
   cacheDir?: string;
@@ -27,6 +53,7 @@ export interface TokntConfig {
     cursor?: boolean;
     codex?: boolean;
     windsurf?: boolean;
+    antigravity?: boolean;
   };
 }
 
@@ -47,14 +74,120 @@ export function hashContent(content: string | Buffer): string {
 export class LocalCache {
   private baseDir: string;
   private configPath: string;
+  private poolPath: string;
 
   constructor(baseDir?: string) {
     this.baseDir = baseDir ?? getDefaultCacheDir();
     this.configPath = join(this.baseDir, 'config.json');
+    this.poolPath = join(this.baseDir, 'pool.json');
   }
 
   getBaseDir(): string {
     return this.baseDir;
+  }
+
+  getPoolPath(): string {
+    return this.poolPath;
+  }
+
+  async getPool(): Promise<CachePoolData> {
+    try {
+      const raw = await readFile(this.poolPath, 'utf-8');
+      const parsed = JSON.parse(raw);
+      return {
+        ...EMPTY_POOL,
+        ...parsed,
+        files: parsed.files ?? {},
+      };
+    } catch {
+      return { ...EMPTY_POOL, files: {} };
+    }
+  }
+
+  async savePool(pool: CachePoolData): Promise<void> {
+    await this.ensureDirs();
+    pool.updatedAt = new Date().toISOString();
+    await writeFile(this.poolPath, JSON.stringify(pool, null, 2));
+  }
+
+  async checkFileInPool(
+    filePath: string,
+    contentHash: string
+  ): Promise<{ isDuplicate: boolean; record?: CachedFileRecord }> {
+    const pool = await this.getPool();
+    const existing = pool.files[filePath];
+    if (existing && existing.hash === contentHash) {
+      return { isDuplicate: true, record: existing };
+    }
+    return { isDuplicate: false, record: existing };
+  }
+
+  async registerFileInPool(
+    filePath: string,
+    contentHash: string,
+    sizeBytes: number,
+    agentId?: string
+  ): Promise<CachedFileRecord> {
+    const pool = await this.getPool();
+    const now = new Date().toISOString();
+    const existing = pool.files[filePath];
+
+    pool.totalReads += 1;
+    let isDup = false;
+
+    let record: CachedFileRecord;
+    if (existing && existing.hash === contentHash) {
+      isDup = true;
+      pool.duplicateHits += 1;
+      record = {
+        ...existing,
+        readCount: existing.readCount + 1,
+        lastAccessedAt: now,
+        lastAgent: agentId ?? existing.lastAgent,
+      };
+    } else {
+      record = {
+        path: filePath,
+        hash: contentHash,
+        sizeBytes,
+        readCount: (existing?.readCount ?? 0) + 1,
+        firstSeenAt: existing?.firstSeenAt ?? now,
+        lastAccessedAt: now,
+        lastAgent: agentId,
+      };
+    }
+
+    pool.files[filePath] = record;
+    await this.savePool(pool);
+    return record;
+  }
+
+  async invalidateFileInPool(filePath: string): Promise<boolean> {
+    const pool = await this.getPool();
+    if (pool.files[filePath]) {
+      delete pool.files[filePath];
+      await this.savePool(pool);
+      return true;
+    }
+    return false;
+  }
+
+  async getPoolStats(): Promise<{ trackedFiles: number; totalReads: number; duplicateHits: number }> {
+    const pool = await this.getPool();
+    const trackedFiles = Object.keys(pool.files).length;
+    return {
+      trackedFiles,
+      totalReads: pool.totalReads,
+      duplicateHits: pool.duplicateHits,
+    };
+  }
+
+  async clearPool(): Promise<void> {
+    try {
+      await unlink(this.poolPath);
+    } catch {
+      // ignore
+    }
   }
 
   async ensureDirs(): Promise<void> {
@@ -164,6 +297,7 @@ export class LocalCache {
         // dir may not exist
       }
     }
+    await this.clearPool();
     return count;
   }
 

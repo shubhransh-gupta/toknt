@@ -33,7 +33,11 @@ program
   });
 
 program.command('uninstall').description('Remove Tokn\'t integrations').action(uninstallCommand);
-program.command('status').description('Show Tokn\'t status').action(statusCommand);
+program
+  .command('status')
+  .description('Show Tokn\'t status and token metrics')
+  .option('--json', 'Output JSON')
+  .action((options: { json?: boolean }) => statusCommand(options));
 program
   .command('stats')
   .description('Show token savings statistics')

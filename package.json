@@ -19,7 +19,8 @@
     "audit": "npm run build && node scripts/accuracy-audit.mjs",
     "audit:2000": "npm run build && node scripts/accuracy-2000.mjs",
     "audit:live": "npm run build && node scripts/live-session-audit.mjs",
-    "toknt": "node apps/cli/dist/index.js"
+    "toknt": "node apps/cli/dist/index.js",
+    "tokent": "node apps/cli/dist/index.js"
   },
   "devDependencies": {
     "@types/node": "^22.10.0",

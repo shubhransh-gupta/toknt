@@ -65,4 +65,21 @@ describe('MCP handlers', () => {
 
     expect(result.isError).toBe(true);
   });
+
+  it('toknt_compress records per-agent token savings to statsStore', async () => {
+    await cache.saveConfig({ mode: 'balanced' });
+    const lines = Array.from({ length: 200 }, (_, i) => `line ${i} ok`).join('\n');
+    const output = `=== RUN TestBar\n${lines}\n--- PASS: TestBar\n`;
+
+    await handleToolCall('toknt_compress', {
+      type: 'terminal_output',
+      content: output,
+      agent: 'antigravity',
+    }, { cache, statsStore });
+
+    const stats = await statsStore.load();
+    expect(stats.byAgent['antigravity']).toBeDefined();
+    expect(stats.byAgent['antigravity'].originalTokens).toBeGreaterThan(0);
+    expect(stats.byAgent['antigravity'].savedTokens).toBeGreaterThan(0);
+  });
 });

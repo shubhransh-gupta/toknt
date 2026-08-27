@@ -4,7 +4,8 @@
   "description": "Tokn't — local-first token optimization for AI coding agents",
   "type": "module",
   "bin": {
-    "toknt": "./dist/index.js"
+    "toknt": "./dist/index.js",
+    "tokent": "./dist/index.js"
   },
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",

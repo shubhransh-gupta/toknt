@@ -26,6 +26,12 @@ export async function detectAgents(): Promise<DetectedAgent[]> {
       configPath: join(homedir(), '.cursor'),
     },
     {
+      name: 'Antigravity',
+      id: 'antigravity',
+      installed: await exists(join(homedir(), '.gemini', 'antigravity')) || await exists(join(homedir(), '.gemini')),
+      configPath: join(homedir(), '.gemini', 'antigravity'),
+    },
+    {
       name: 'Codex',
       id: 'codex',
       installed: await exists(join(homedir(), '.codex')),

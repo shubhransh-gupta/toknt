@@ -1,6 +1,7 @@
 import type { LocalCache } from '@toknt/cache';
 import { StatsStore } from '@toknt/cache';
 import { TokntEngine, type ContextItemType } from '@toknt/core';
+import { estimateTokens } from '@toknt/tokenizer';
 
 const COMPRESS_TYPES = new Set<ContextItemType>([
   'terminal_output',
@@ -19,6 +20,18 @@ export interface ToolResult {
   isError?: boolean;
 }
 
+let cachedEngine: TokntEngine | null = null;
+let cachedEngineMode: string | null = null;
+
+async function getSharedEngine(cache: LocalCache): Promise<TokntEngine> {
+  const { mode } = await cache.getConfig();
+  if (!cachedEngine || cachedEngineMode !== mode) {
+    cachedEngine = new TokntEngine({ cache, mode });
+    cachedEngineMode = mode;
+  }
+  return cachedEngine;
+}
+
 export async function handleToolCall(
   name: string,
   args: Record<string, unknown> | undefined,
@@ -26,7 +39,7 @@ export async function handleToolCall(
 ): Promise<ToolResult> {
   switch (name) {
     case 'toknt_recall':
-      return handleRecall(String(args?.uri ?? ''), deps);
+      return handleRecall(String(args?.uri ?? ''), String(args?.agent ?? 'mcp'), deps);
     case 'toknt_stats':
       return handleStats(deps);
     case 'toknt_config':
@@ -38,13 +51,8 @@ export async function handleToolCall(
   }
 }
 
-async function engineForCurrentMode(cache: LocalCache): Promise<TokntEngine> {
-  const { mode } = await cache.getConfig();
-  return new TokntEngine({ cache, mode });
-}
-
-async function handleRecall(uri: string, deps: McpDeps): Promise<ToolResult> {
-  const engine = await engineForCurrentMode(deps.cache);
+async function handleRecall(uri: string, agent: string, deps: McpDeps): Promise<ToolResult> {
+  const engine = await getSharedEngine(deps.cache);
   const content = await engine.recall(uri);
   if (!content) {
     return {
@@ -52,22 +60,33 @@ async function handleRecall(uri: string, deps: McpDeps): Promise<ToolResult> {
       isError: true,
     };
   }
-  await deps.statsStore.recordRecall();
+  await deps.statsStore.recordRecall(agent);
   return { content: [{ type: 'text', text: content }] };
 }
 
 async function handleStats(deps: McpDeps): Promise<ToolResult> {
   const stats = await deps.statsStore.load();
-  return { content: [{ type: 'text', text: JSON.stringify(stats, null, 2) }] };
+  const poolStats = await deps.cache.getPoolStats();
+  return {
+    content: [{
+      type: 'text',
+      text: JSON.stringify({ ...stats, pool: poolStats }, null, 2),
+    }],
+  };
 }
 
 async function handleConfig(deps: McpDeps): Promise<ToolResult> {
   const config = await deps.cache.getConfig();
   const cacheStats = await deps.cache.getStats();
+  const poolStats = await deps.cache.getPoolStats();
   return {
     content: [{
       type: 'text',
-      text: JSON.stringify({ config, cache: cacheStats, path: deps.cache.getBaseDir() }, null, 2),
+      text: JSON.stringify(
+        { config, cache: cacheStats, pool: poolStats, path: deps.cache.getBaseDir() },
+        null,
+        2
+      ),
     }],
   };
 }
@@ -78,6 +97,7 @@ async function handleCompress(
 ): Promise<ToolResult> {
   const type = String(args.type ?? '') as ContextItemType;
   const content = String(args.content ?? '');
+  const agent = String(args.agent ?? 'mcp');
 
   if (!COMPRESS_TYPES.has(type)) {
     return {
@@ -99,14 +119,22 @@ async function handleCompress(
     };
   }
 
-  const engine = await engineForCurrentMode(deps.cache);
+  const engine = await getSharedEngine(deps.cache);
   const result = await engine.processContextItem({
     id: `mcp-${Date.now()}`,
     type,
     content,
     path: args.path ? String(args.path) : undefined,
     toolName: args.toolName ? String(args.toolName) : undefined,
-  });
+  }, agent);
+
+  const origTokens = estimateTokens(content).tokens;
+  if (result.optimized) {
+    const optTokens = estimateTokens(result.content).tokens;
+    await deps.statsStore.recordOptimization(origTokens, optTokens, agent, result.strategy);
+  } else {
+    await deps.statsStore.recordPassthrough(origTokens, agent);
+  }
 
   return {
     content: [{
@@ -134,18 +162,22 @@ export const MCP_TOOLS = [
           type: 'string',
           description: 'toknt://file|output|directory|tool/<id>',
         },
+        agent: {
+          type: 'string',
+          description: 'Name of the calling AI agent (optional)',
+        },
       },
       required: ['uri'],
     },
   },
   {
     name: 'toknt_stats',
-    description: 'Get token savings statistics from ~/.toknt/stats.json',
+    description: 'Get token savings statistics and cache pool status from ~/.toknt/',
     inputSchema: { type: 'object', properties: {} },
   },
   {
     name: 'toknt_config',
-    description: 'Read Toknt configuration and cache stats',
+    description: 'Read Toknt configuration, cache stats, and cache pool info',
     inputSchema: { type: 'object', properties: {} },
   },
   {
@@ -162,8 +194,10 @@ export const MCP_TOOLS = [
         content: { type: 'string', description: 'Raw content to compress' },
         path: { type: 'string', description: 'File or directory path (optional)' },
         toolName: { type: 'string', description: 'Tool name for tool_output (optional)' },
+        agent: { type: 'string', description: 'Requesting AI agent name (e.g. antigravity, cursor, codex, claude)' },
       },
       required: ['type', 'content'],
     },
   },
 ] as const;
+

@@ -44,14 +44,14 @@ export async function installAgentCommand(agent: string): Promise<void> {
 }
 
 async function installAgent(agentId: string): Promise<void> {
-  const valid = ['claude', 'cursor', 'codex', 'windsurf', 'all'];
+  const valid = ['claude', 'cursor', 'codex', 'windsurf', 'antigravity', 'all'];
   if (!valid.includes(agentId)) {
     console.error(`Unknown agent: ${agentId}`);
-    console.error('Supported: claude, cursor, codex, windsurf, all');
+    console.error('Supported: claude, cursor, codex, windsurf, antigravity, all');
     process.exit(1);
   }
 
-  const agents = agentId === 'all' ? ['claude', 'cursor', 'codex', 'windsurf'] : [agentId];
+  const agents = agentId === 'all' ? ['claude', 'cursor', 'codex', 'windsurf', 'antigravity'] : [agentId];
 
   for (const id of agents) {
     if (id === 'cursor') {
@@ -60,12 +60,31 @@ async function installAgent(agentId: string): Promise<void> {
       const hookDir = getHookDir(id);
       const { mode } = await getCache().getConfig();
       const configPath = join(hookDir, 'toknt.json');
-      const existing = JSON.parse(await readFile(configPath, 'utf-8'));
-      await writeFile(
-        configPath,
-        JSON.stringify({ ...existing, mode, provider: 'toknt', version: '1.0.0' }, null, 2)
-      );
+      try {
+        const existing = JSON.parse(await readFile(configPath, 'utf-8'));
+        await writeFile(
+          configPath,
+          JSON.stringify({ ...existing, mode, provider: 'toknt', version: '1.0.0' }, null, 2)
+        );
+      } catch {
+        // file created by adapter
+      }
       console.log(`  → Configured ${id} integration at ${hookDir} (hooks installed)`);
+      continue;
+    }
+
+    if (id === 'antigravity') {
+      const { AntigravityAdapter } = await import('@toknt/adapters');
+      const adapter = new AntigravityAdapter();
+      await adapter.install();
+      const hookDir = getHookDir(id);
+      await mkdir(hookDir, { recursive: true });
+      const { mode } = await getCache().getConfig();
+      await writeFile(
+        join(hookDir, 'toknt.json'),
+        JSON.stringify({ version: '1.0.0', provider: 'toknt', mode, agent: 'antigravity' }, null, 2)
+      );
+      console.log(`  → Configured ${id} integration at ${hookDir} (MCP server configured)`);
       continue;
     }
 
@@ -98,6 +117,8 @@ function getHookDir(agent: string): string {
       return join(homedir(), '.codex', 'toknt');
     case 'windsurf':
       return join(homedir(), '.windsurf', 'toknt');
+    case 'antigravity':
+      return join(homedir(), '.gemini', 'antigravity', 'toknt');
     default:
       return join(homedir(), '.toknt', agent);
   }
@@ -108,6 +129,14 @@ export async function isInstalled(agent: string): Promise<boolean> {
     await readFile(join(getHookDir(agent), 'toknt.json'), 'utf-8');
     return true;
   } catch {
+    if (agent === 'antigravity') {
+      try {
+        await readFile(join(homedir(), '.gemini', 'antigravity', 'mcp', 'toknt', 'config.json'), 'utf-8');
+        return true;
+      } catch {
+        return false;
+      }
+    }
     return false;
   }
 }

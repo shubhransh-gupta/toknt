@@ -8,16 +8,22 @@ export class OptimizingAdapterWrapper {
   private engine: TokntEngine;
   private cache: LocalCache;
   private statsStore: StatsStore;
+  private agentName?: string;
 
-  constructor(cache?: LocalCache, mode?: 'safe' | 'balanced' | 'aggressive') {
+  constructor(cache?: LocalCache, mode?: 'safe' | 'balanced' | 'aggressive', agentName?: string) {
     const c = cache ?? new LocalCache();
     this.cache = c;
+    this.agentName = agentName;
     this.statsStore = new StatsStore(c.getBaseDir());
     this.engine = new TokntEngine({ cache: c, mode });
   }
 
   getEngine(): TokntEngine {
     return this.engine;
+  }
+
+  getAgentName(): string | undefined {
+    return this.agentName;
   }
 
   async processToolOutput(output: ToolOutput): Promise<ToolOutput> {
@@ -35,13 +41,20 @@ export class OptimizingAdapterWrapper {
       metadata: output.metadata,
     };
 
-    const result = await this.engine.processContextItem(item);
+    const agent = this.agentName ?? (output.metadata?.agent as string | undefined);
+    const result = await this.engine.processContextItem(item, agent);
+    const originalTokens = estimateTokens(output.content).tokens;
 
     if (result.optimized) {
+      const optimizedTokens = estimateTokens(result.content).tokens;
       await this.statsStore.recordOptimization(
-        estimateTokens(output.content).tokens,
-        estimateTokens(result.content).tokens
+        originalTokens,
+        optimizedTokens,
+        agent,
+        result.strategy
       );
+    } else {
+      await this.statsStore.recordPassthrough(originalTokens, agent);
     }
 
     return {
@@ -62,7 +75,7 @@ export class OptimizingAdapterWrapper {
   async processRecall(uri: string): Promise<string | null> {
     const content = await this.engine.recall(uri);
     if (content) {
-      await this.statsStore.recordRecall();
+      await this.statsStore.recordRecall(this.agentName);
     }
     return content;
   }
